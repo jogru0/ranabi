@@ -1,9 +1,42 @@
-use crate::card::{Card, Color, Number};
+use std::fmt::Display;
+
+use crate::{
+    card::{Card, Color, Number},
+    state::Rules,
+};
 
 pub trait Player {
     fn witness_action(&mut self, action: Action, player: usize);
     fn witness_draw(&mut self, player: usize, card: Option<Card>);
     fn request_action(&self) -> Action;
+}
+
+impl Display for Action {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Action::Play {
+                card: Some(card),
+                position,
+            } => write!(f, "play {} from position {}", card, position),
+            Action::Play {
+                card: None,
+                position,
+            } => write!(f, "play from position {}", position),
+            Action::Discard {
+                card: Some(card),
+                position,
+            } => write!(f, "discard {} from position {}", card, position),
+            Action::Discard {
+                card: None,
+                position,
+            } => write!(f, "discard from position {}", position),
+            Action::Hint {
+                receiver,
+                hinted_property,
+                positions,
+            } => write!(f, "Hint {} at {}: {}", hinted_property, receiver, positions),
+        }
+    }
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -44,11 +77,53 @@ pub enum Property {
     Number(Number),
 }
 
+impl Display for Property {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Property::Color(color) => write!(f, "{color}"),
+            Property::Number(number) => write!(f, "{number}"),
+        }
+    }
+}
+
+impl Property {
+    fn all(rules: &Rules) -> Vec<Self> {
+        let mut result = Vec::with_capacity(5 + rules.used_colors().len());
+        result.push(Property::Number(Number::One));
+        result.push(Property::Number(Number::Two));
+        result.push(Property::Number(Number::Three));
+        result.push(Property::Number(Number::Four));
+        result.push(Property::Number(Number::Five));
+        for color in rules.used_colors() {
+            result.push(Property::Color(color));
+        }
+        result
+    }
+}
+
 pub mod basic;
 
 #[derive(Clone, Copy, Debug)]
 pub struct PositionSet {
     positions: [bool; 6],
+    hand_size: usize,
+}
+
+impl Display for PositionSet {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn to_char(b: bool) -> char {
+            if b {
+                'X'
+            } else {
+                '-'
+            }
+        }
+
+        for &b in &self.positions[1..=self.hand_size] {
+            write!(f, "{}", to_char(b))?;
+        }
+        Ok(())
+    }
 }
 
 impl PositionSet {
@@ -68,7 +143,7 @@ impl PositionSet {
         self
     }
 
-    fn focus(&self, touched: PositionSet, hand_size: usize) -> usize {
+    fn focus_position(&self, touched: PositionSet, hand_size: usize) -> usize {
         if self.is_subset_of(touched, hand_size) {
             return self.smallest().unwrap();
         }

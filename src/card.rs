@@ -1,3 +1,5 @@
+use std::fmt::{Debug, Display};
+
 use indexmap::IndexSet;
 
 use crate::{player::Property, state::Rules};
@@ -7,6 +9,13 @@ pub struct Card {
     pub number: Number,
     pub color: Color,
 }
+
+impl Display for Card {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}{}", self.color, self.number)
+    }
+}
+
 impl Card {
     pub(crate) fn satisfies(&self, hinted_property: Property) -> bool {
         match hinted_property {
@@ -70,6 +79,16 @@ impl Number {
                 Number::Five => Some(Number::Four),
             }
     }
+
+    pub(crate) fn decrease(&self) -> Option<Self> {
+        match self {
+            Number::One => None,
+            Number::Two => Some(Number::One),
+            Number::Three => Some(Number::Two),
+            Number::Four => Some(Number::Three),
+            Number::Five => Some(Number::Four),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Hash, PartialEq, Eq, Debug)]
@@ -81,10 +100,48 @@ pub enum Color {
     Blue,
 }
 
+impl Display for Color {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let char = match self {
+            Color::White => 'w',
+            Color::Green => 'g',
+            Color::Yellow => 'y',
+            Color::Red => 'r',
+            Color::Blue => 'b',
+        };
+
+        write!(f, "{char}")
+    }
+}
+
+impl Display for Number {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let char = match self {
+            Number::One => '1',
+            Number::Two => '2',
+            Number::Three => '3',
+            Number::Four => '4',
+            Number::Five => '5',
+        };
+
+        write!(f, "{char}")
+    }
+}
+
 #[derive(Clone)]
 pub struct PossibleCards {
     pub hashed: IndexSet<Card>,
 }
+
+impl Debug for PossibleCards {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        for card in &self.hashed {
+            write!(f, "{card}")?;
+        }
+        Ok(())
+    }
+}
+
 impl PossibleCards {
     pub fn none() -> Self {
         Self {
@@ -151,11 +208,23 @@ impl PossibleCards {
         self.hashed.retain(|card| possibilities.contains(card));
     }
 
+    pub(crate) fn exclude(&mut self, possibilities: &PossibleCards) {
+        self.hashed.retain(|card| !possibilities.contains(card));
+    }
+
     pub fn contains(&self, card: &Card) -> bool {
         self.hashed.contains(card)
     }
 
     pub(crate) fn apply_not(&mut self, hinted_property: Property) {
         self.hashed.retain(|card| !card.satisfies(hinted_property));
+    }
+
+    pub(crate) fn remove(&mut self, card: &Card) -> bool {
+        self.hashed.remove(card)
+    }
+
+    pub(crate) fn merge(&mut self, possibilities: &PossibleCards) {
+        self.hashed.extend(&possibilities.hashed)
     }
 }

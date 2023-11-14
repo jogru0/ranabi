@@ -7,9 +7,77 @@ use crate::{
     player::{Action, Player},
 };
 
+pub struct Discard {
+    card_to_multiplicity: IndexMap<Card, usize>,
+}
+
+impl Discard {
+    fn contains(&self, card: &Card) -> bool {
+        self.card_to_multiplicity[card] != 0
+    }
+
+    fn new(rules: &Rules) -> Self {
+        Discard {
+            card_to_multiplicity: rules.possible_cards().into_iter().map(|c| (c, 0)).collect(),
+        }
+    }
+
+    fn unreachable(&self, rules: &Rules) -> PossibleCards {
+        let mut result = PossibleCards::all(rules);
+        for color in rules.used_colors() {
+            let one = Card {
+                color,
+                number: Number::One,
+            };
+            if self.card_to_multiplicity[&one] == 3 {
+                continue;
+            }
+            result.remove(&one);
+
+            let two = Card {
+                color,
+                number: Number::Two,
+            };
+            if self.card_to_multiplicity[&two] == 2 {
+                continue;
+            }
+            result.remove(&two);
+
+            let three = Card {
+                color,
+                number: Number::Three,
+            };
+            if self.card_to_multiplicity[&three] == 2 {
+                continue;
+            }
+            result.remove(&three);
+
+            let four = Card {
+                color,
+                number: Number::Four,
+            };
+            if self.card_to_multiplicity[&four] == 2 {
+                continue;
+            }
+            result.remove(&four);
+
+            let five = Card {
+                color,
+                number: Number::Five,
+            };
+            if self.card_to_multiplicity[&five] == 1 {
+                continue;
+            }
+            result.remove(&five);
+        }
+
+        result
+    }
+}
+
 pub struct PublicState {
     pub firework: Firework,
-    pub discard: Vec<Card>,
+    pub discard: Discard,
     pub rules: Rules,
     pub clues: usize,
     pub strikes: usize,
@@ -85,11 +153,17 @@ impl PublicState {
     pub(crate) fn new(rules: Rules) -> Self {
         Self {
             firework: Firework::new(&rules.used_colors()),
-            discard: Vec::new(),
+            discard: Discard::new(&rules),
             rules,
             clues: rules.max_clues,
             strikes: 0,
         }
+    }
+
+    pub(crate) fn definite_trash(&self) -> PossibleCards {
+        let mut result = self.firework.already_played();
+        result.merge(&self.discard.unreachable(&self.rules));
+        result
     }
 }
 
@@ -173,10 +247,12 @@ impl State {
                 let card = self.remove_card(position)?;
 
                 if self.firework.add(card) {
+                    println!("Played {card} successfully!");
                     if card.number == Number::Five && self.remaining_hints < rules.max_clues {
                         self.remaining_hints += 1;
                     }
                 } else {
+                    println!("Misplayed {card}!");
                     self.strikes += 1;
                 }
 
@@ -247,6 +323,34 @@ pub struct Rules {
 impl Rules {
     pub fn max_score(&self) -> usize {
         self.used_colors().len() * 5
+    }
+
+    fn possible_cards(&self) -> Vec<Card> {
+        let mut result = Vec::with_capacity(5 * self.used_colors().len());
+        for color in self.used_colors() {
+            result.push(Card {
+                number: Number::One,
+                color,
+            });
+            result.push(Card {
+                number: Number::Two,
+                color,
+            });
+            result.push(Card {
+                number: Number::Three,
+                color,
+            });
+            result.push(Card {
+                number: Number::Four,
+                color,
+            });
+            result.push(Card {
+                number: Number::Five,
+                color,
+            });
+        }
+
+        result
     }
 }
 
@@ -382,6 +486,19 @@ impl Firework {
     fn is_playable(&self, card: &Card) -> bool {
         self.currently_playable().contains(card)
     }
+
+    fn already_played(&self) -> PossibleCards {
+        let mut result = PossibleCards::none();
+
+        for (&color, &(mut maybe_number)) in &self.piles {
+            while let Some(number) = maybe_number {
+                result.add(Card { number, color });
+                maybe_number = number.decrease();
+            }
+        }
+
+        result
+    }
 }
 
 pub fn play_game(
@@ -410,10 +527,7 @@ pub fn play_game(
 
         let mut action = players[state.active_player_id].request_action();
 
-        println!(
-            "Requested action by {}: {:?}",
-            state.active_player_id, action
-        );
+        println!("Requested action by {}: {}", state.active_player_id, action);
 
         let (old, new) = state.apply_action(action, &rules).unwrap();
 
