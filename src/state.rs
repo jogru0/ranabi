@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use indexmap::{IndexMap, IndexSet};
 use rand::seq::SliceRandom;
 use rand_chacha::ChaCha20Rng;
@@ -7,17 +9,29 @@ use crate::{
     player::{Action, Player},
 };
 
-pub struct Discard {
+pub struct DiscardPile {
     card_to_multiplicity: IndexMap<Card, usize>,
 }
 
-impl Discard {
+impl Display for DiscardPile {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        for (card, &multiplicity) in &self.card_to_multiplicity {
+            for _ in 0..multiplicity {
+                write!(f, "{} ", card)?;
+            }
+        }
+
+        Ok(())
+    }
+}
+
+impl DiscardPile {
     fn contains(&self, card: &Card) -> bool {
         self.card_to_multiplicity[card] != 0
     }
 
     fn new(rules: &Rules) -> Self {
-        Discard {
+        DiscardPile {
             card_to_multiplicity: rules.possible_cards().into_iter().map(|c| (c, 0)).collect(),
         }
     }
@@ -73,11 +87,15 @@ impl Discard {
 
         result
     }
+
+    pub fn add(&mut self, card: &Card) {
+        self.card_to_multiplicity[card] += 1;
+    }
 }
 
 pub struct PublicState {
     pub firework: Firework,
-    pub discard: Discard,
+    pub discard_pile: DiscardPile,
     pub rules: Rules,
     pub clues: usize,
     pub strikes: usize,
@@ -90,7 +108,7 @@ impl PublicState {
                 color,
                 number: Number::Two,
             };
-            if self.discard.contains(&two) && maybe_number.is_none() {
+            if self.discard_pile.contains(&two) && maybe_number.is_none() {
                 result.add(two);
             }
 
@@ -98,8 +116,8 @@ impl PublicState {
                 color,
                 number: Number::Three,
             };
-            if self.discard.contains(&three) && maybe_number.is_none()
-                || maybe_number == Some(Number::One)
+            if self.discard_pile.contains(&three)
+                && (maybe_number.is_none() || maybe_number == Some(Number::One))
             {
                 result.add(three);
             }
@@ -108,9 +126,10 @@ impl PublicState {
                 color,
                 number: Number::Four,
             };
-            if self.discard.contains(&four) && maybe_number.is_none()
-                || maybe_number == Some(Number::One)
-                || maybe_number == Some(Number::Two)
+            if self.discard_pile.contains(&four)
+                && (maybe_number.is_none()
+                    || maybe_number == Some(Number::One)
+                    || maybe_number == Some(Number::Two))
             {
                 result.add(four);
             }
@@ -127,7 +146,9 @@ impl PublicState {
         succ
     }
 
-    pub(crate) fn discard(&mut self) {
+    pub(crate) fn discard(&mut self, card: Card) {
+        self.discard_pile.add(&card);
+
         let succ = self.add_clue();
         assert!(succ);
     }
@@ -136,6 +157,7 @@ impl PublicState {
         let succ = self.firework.add(card);
         if !succ {
             self.strikes += 1;
+            self.discard_pile.add(&card);
         } else if card.number == Number::Five {
             self.add_clue();
         }
@@ -153,7 +175,7 @@ impl PublicState {
     pub(crate) fn new(rules: Rules) -> Self {
         Self {
             firework: Firework::new(&rules.used_colors()),
-            discard: Discard::new(&rules),
+            discard_pile: DiscardPile::new(&rules),
             rules,
             clues: rules.max_clues,
             strikes: 0,
@@ -162,7 +184,7 @@ impl PublicState {
 
     pub(crate) fn definite_trash(&self) -> PossibleCards {
         let mut result = self.firework.already_played();
-        result.merge(&self.discard.unreachable(&self.rules));
+        result.merge(&self.discard_pile.unreachable(&self.rules));
         result
     }
 }
@@ -176,7 +198,44 @@ struct State {
     number_of_players: usize,
     number_of_actions_with_empty_deck: usize,
     hands: Vec<Vec<Card>>,
+    discard: DiscardPile,
 }
+
+impl Display for State {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn print_player(
+            state: &State,
+            id: usize,
+            f: &mut std::fmt::Formatter<'_>,
+        ) -> std::fmt::Result {
+            let prefix = if id == state.active_player_id {
+                '>'
+            } else {
+                ' '
+            };
+            write!(f, "{prefix} ")?;
+            for card in &state.hands[id] {
+                write!(f, "{card} ")?;
+            }
+
+            Ok(())
+        }
+
+        print_player(self, 0, f)?;
+        writeln!(f, "    {}", self.firework)?;
+        print_player(self, 1, f)?;
+        writeln!(f, "    {}     {}", self.remaining_hints, self.strikes)?;
+        print_player(self, 2, f)?;
+        writeln!(f, "    {}", self.discard)?;
+        for i in 3..self.number_of_players {
+            print_player(self, i, f)?;
+            writeln!(f)?;
+        }
+
+        Ok(())
+    }
+}
+
 impl State {
     fn new(rules: &Rules, rng: &mut ChaCha20Rng) -> Self {
         let mut deck = rules.all_cards();
@@ -194,6 +253,7 @@ impl State {
             number_of_players,
             number_of_actions_with_empty_deck: 0,
             hands: vec![Vec::new(); number_of_players],
+            discard: DiscardPile::new(rules),
         }
     }
 
@@ -254,6 +314,7 @@ impl State {
                 } else {
                     println!("Misplayed {card}!");
                     self.strikes += 1;
+                    self.discard.add(&card);
                 }
 
                 Ok((Some(card), self.draw()))
@@ -271,6 +332,7 @@ impl State {
                 }
 
                 let card = self.remove_card(position)?;
+                self.discard.add(&card);
 
                 self.remaining_hints += 1;
 
@@ -440,6 +502,19 @@ pub struct Firework {
     piles: IndexMap<Color, Option<Number>>,
 }
 
+impl Display for Firework {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        for (&color, &maybe_number) in &self.piles {
+            match maybe_number {
+                Some(number) => write!(f, "{} ", Card { number, color })?,
+                None => write!(f, "   ")?,
+            }
+        }
+
+        Ok(())
+    }
+}
+
 impl Firework {
     fn new(used_colors: &[Color]) -> Self {
         let mut piles = IndexMap::with_capacity(used_colors.len());
@@ -487,7 +562,7 @@ impl Firework {
         self.currently_playable().contains(card)
     }
 
-    fn already_played(&self) -> PossibleCards {
+    pub fn already_played(&self) -> PossibleCards {
         let mut result = PossibleCards::none();
 
         for (&color, &(mut maybe_number)) in &self.piles {
@@ -520,14 +595,19 @@ pub fn play_game(
         state.go_to_next_player();
     }
 
+    let mut turn = 1;
+
     loop {
         if let Some(score) = state.is_concluded() {
             return score;
         }
 
+        println!("\n==============\n");
+        println!("{state}");
+
         let mut action = players[state.active_player_id].request_action();
 
-        println!("Requested action by {}: {}", state.active_player_id, action);
+        println!("Turn {} action: {}", turn, action);
 
         let (old, new) = state.apply_action(action, &rules).unwrap();
 
@@ -549,5 +629,6 @@ pub fn play_game(
         }
 
         state.go_to_next_player();
+        turn += 1;
     }
 }

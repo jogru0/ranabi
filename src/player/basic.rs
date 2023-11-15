@@ -7,7 +7,10 @@ use crate::{
     state::{PublicState, Rules},
 };
 
-use self::inter::{Interpretation, Interpretations};
+use self::{
+    hint_value::HintValue,
+    inter::{Interpretation, Interpretations},
+};
 
 use super::{Action, Player, PositionSet, Property};
 
@@ -49,6 +52,18 @@ impl BasicPlayer {
 
     //     result
     // }
+
+    fn possible_touches_in_own_hand_or_more(&self) -> PossibleCards {
+        let mut result = PossibleCards::all(self.rules());
+
+        let played = self.public_state.firework.already_played();
+        result.exclude(&played);
+
+        let touched_in_other_hands = self.touched_in_other_hands();
+        result.exclude(&touched_in_other_hands);
+
+        result
+    }
 
     fn good_touchable_or_more(&self) -> PossibleCards {
         let mut result = PossibleCards::all(self.rules());
@@ -131,6 +146,8 @@ impl BasicPlayer {
     }
 
     fn suggest_hint(&self) -> Option<(usize, Property, PositionSet)> {
+        let mut options = Vec::new();
+
         for receiver in 0..self.public_state.rules.number_of_players {
             if receiver == self.player_id {
                 continue;
@@ -148,31 +165,37 @@ impl BasicPlayer {
                     &self.public_state,
                 );
 
-                if interpretations.is_none() {
-                    continue;
-                }
+                let correct_interpretation =
+                    interpretations.unwrap().get_truth(&self.witnessed_cards);
 
-                if !interpretations
-                    .unwrap()
-                    .are_the_truth(&self.witnessed_cards)
-                {
+                if correct_interpretation.is_none() {
                     continue;
                 }
 
                 let new_cards = self.new_cards(positions, receiver);
                 let mut touchable = self.good_touchable_or_less();
-                for new_card in new_cards {
+                for &new_card in &new_cards {
                     let succ = touchable.remove(&self.witnessed_cards[new_card].unwrap());
                     if !succ {
                         continue 'property;
                     }
                 }
 
-                return Some((receiver, hinted_property, positions));
+                //We probably need to add cards gotten by the correct interpretation here.
+                //And delay might also be faster due to prompts/finesses, or slower due to delayed play queue.
+                let hint_value = HintValue {
+                    new_touches: new_cards.len(),
+                    delay_until_relevant: (self.rules().number_of_players + receiver
+                        - self.player_id)
+                        % self.rules().number_of_players,
+                };
+
+                options.push((hint_value, (receiver, hinted_property, positions)));
             }
         }
 
-        None
+        options.sort_by_key(|(hint_value, _)| *hint_value);
+        options.last().map(|(_, v)| v).copied()
     }
 
     fn touched_in_other_hand(&self, player_id: usize) -> PossibleCards {
@@ -234,7 +257,7 @@ impl Player for BasicPlayer {
                 position,
             } => {
                 self.play_or_discard_card(card, player, position);
-                self.public_state.discard();
+                self.public_state.discard(card);
             }
             Action::Hint {
                 receiver,
@@ -259,9 +282,10 @@ impl Player for BasicPlayer {
     }
 
     fn request_action(&self) -> Action {
-        if let Some(index) = self.player_states[self.player_id]
-            .suggest_play(&self.public_state, &self.good_touchable_or_more())
-        {
+        if let Some(index) = self.player_states[self.player_id].suggest_play(
+            &self.public_state,
+            &self.possible_touches_in_own_hand_or_more(),
+        ) {
             return Action::Play {
                 card: None,
                 position: index,
@@ -345,13 +369,14 @@ impl PlayerState {
         let touches_no_new_cards = touched_positions.contains(focus_position);
 
         if touches_no_new_cards {
-            //Don't know yet how to interpret this.
-            return None;
+            //TODO: This implies more.
         }
 
         let focus_card_id = self.cards.cards[focus_position].unwrap();
 
         let is_chop_focused = self.chop_position() == Some(focus_position);
+
+        assert!(!(is_chop_focused && touches_no_new_cards));
 
         let mut direct_interpretation_focus_possibilities = PossibleCards::empty();
 
@@ -420,6 +445,7 @@ impl PlayerState {
         at_least_all_candidates_for_touched: &PossibleCards,
     ) -> Option<usize> {
         let mut possible = self.possible_cards.clone();
+
         for inter in &self.interpretations {
             if let Some(inter) = inter.unique_interpretation() {
                 for (&card_id, ps) in &inter.card_id_to_possibilities {
@@ -432,11 +458,13 @@ impl PlayerState {
         }
 
         for touched in &self.touched {
-            possible[touched].intersect(at_least_all_candidates_for_touched)
+            possible[touched].intersect(at_least_all_candidates_for_touched);
         }
 
         for (card_id, p) in possible {
-            assert!(!p.is_empty());
+            if p.is_empty() {
+                panic!()
+            }
             if p.hashed.iter().all(|card| state.is_playable(card)) {
                 let pos = self.cards.find(card_id).unwrap();
                 return Some(pos);
@@ -520,12 +548,20 @@ mod inter {
             }
         }
 
-        pub fn are_the_truth(&self, witnessed_cards: &[Option<Card>]) -> bool {
-            self.ors.iter().any(|or| or.is_true(witnessed_cards))
+        pub fn get_truth(&self, witnessed_cards: &[Option<Card>]) -> Option<Interpretation> {
+            let mut result = None;
+            for or in &self.ors {
+                if or.is_true(witnessed_cards) {
+                    assert!(result.is_none());
+                    result = Some(or);
+                }
+            }
+
+            result.cloned()
         }
     }
 
-    #[derive(Debug)]
+    #[derive(Debug, Clone)]
     pub struct Interpretation {
         pub card_id_to_possibilities: IndexMap<usize, PossibleCards>,
     }
@@ -537,5 +573,32 @@ mod inter {
                     possibilities.contains(&witnessed_cards[card_id].unwrap())
                 })
         }
+    }
+}
+
+mod hint_value {
+
+    #[derive(PartialEq, Eq, Clone, Copy)]
+    pub struct HintValue {
+        pub new_touches: usize,
+        pub delay_until_relevant: usize,
+    }
+}
+
+impl PartialOrd for HintValue {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        match self.new_touches.partial_cmp(&other.new_touches) {
+            Some(core::cmp::Ordering::Equal) => {}
+            ord => return ord,
+        }
+        other
+            .delay_until_relevant
+            .partial_cmp(&self.delay_until_relevant)
+    }
+}
+
+impl Ord for HintValue {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        self.partial_cmp(other).unwrap()
     }
 }

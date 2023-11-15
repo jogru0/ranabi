@@ -17,25 +17,41 @@ impl Display for Action {
             Action::Play {
                 card: Some(card),
                 position,
-            } => write!(f, "play {} from position {}", card, position),
+            } => write!(f, "Play {} from position {}", card, position),
             Action::Play {
                 card: None,
                 position,
-            } => write!(f, "play from position {}", position),
+            } => write!(f, "Play from position {}", position),
             Action::Discard {
                 card: Some(card),
                 position,
-            } => write!(f, "discard {} from position {}", card, position),
+            } => write!(f, "Discard {} from position {}", card, position),
             Action::Discard {
                 card: None,
                 position,
-            } => write!(f, "discard from position {}", position),
+            } => write!(f, "Discard from position {}", position),
             Action::Hint {
                 receiver,
                 hinted_property,
                 positions,
-            } => write!(f, "Hint {} at {}: {}", hinted_property, receiver, positions),
+            } => write!(
+                f,
+                "Hint {} at {}: {}",
+                hinted_property,
+                player_name(*receiver),
+                positions
+            ),
         }
+    }
+}
+
+fn player_name(player_id: usize) -> &'static str {
+    match player_id {
+        0 => "Alice",
+        1 => "Bob",
+        2 => "Cathy",
+        3 => "Donald",
+        _ => todo!(),
     }
 }
 
