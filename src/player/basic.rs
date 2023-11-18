@@ -186,9 +186,11 @@ impl BasicPlayer {
         //And delay might also be faster due to prompts/finesses, or slower due to delayed play cues.
         ActionAssessment {
             is_unconventional: false,
+
             new_touches: new_cards.len(),
             delay_until_relevant: (self.rules().number_of_players + receiver - self.player_id)
                 % self.rules().number_of_players,
+            plays_a_card_right_now: false,
         }
     }
 
@@ -461,39 +463,62 @@ impl PlayerState {
         }
     }
 
+    fn assess_play(
+        &self,
+        position: usize,
+        state: &PublicState,
+        at_least_all_candidates_for_touched: &PossibleCards,
+    ) -> ActionAssessment {
+        let card_id = self.cards.cards[position].unwrap();
+        let mut possible = self.possible_cards[&card_id].clone();
+
+        for inter in &self.interpretations {
+            if let Some(inter) = inter.unique_interpretation() {
+                if let Some(ps) = inter.card_id_to_possibilities.get(&card_id) {
+                    possible.intersect(ps);
+                }
+            }
+        }
+
+        if self.touched.contains(&card_id) {
+            possible.intersect(at_least_all_candidates_for_touched);
+        }
+
+        if possible.is_empty() {
+            panic!()
+        }
+        if possible.hashed.iter().all(|card| state.is_playable(card)) {
+            return ActionAssessment {
+                new_touches: 0,
+                delay_until_relevant: 0,
+                is_unconventional: false,
+                plays_a_card_right_now: true,
+            };
+        }
+
+        ActionAssessment::unconvectional()
+    }
+
     fn suggest_play(
         &self,
         state: &PublicState,
         at_least_all_candidates_for_touched: &PossibleCards,
     ) -> Option<usize> {
-        let mut possible = self.possible_cards.clone();
+        let mut options: Vec<_> = (1..=self.cards.current_hand_size)
+            .map(|position| {
+                (
+                    self.assess_play(position, state, at_least_all_candidates_for_touched),
+                    position,
+                )
+            })
+            .collect();
 
-        for inter in &self.interpretations {
-            if let Some(inter) = inter.unique_interpretation() {
-                for (&card_id, ps) in &inter.card_id_to_possibilities {
-                    //Currently, interpretations might contain restrictions about cards that are not on the hand anymore.
-                    if let Some(my_ps) = possible.get_mut(&card_id) {
-                        my_ps.intersect(ps);
-                    }
-                }
-            }
-        }
-
-        for touched in &self.touched {
-            possible[touched].intersect(at_least_all_candidates_for_touched);
-        }
-
-        for (card_id, p) in possible {
-            if p.is_empty() {
-                panic!()
-            }
-            if p.hashed.iter().all(|card| state.is_playable(card)) {
-                let pos = self.cards.find(card_id).unwrap();
-                return Some(pos);
-            }
-        }
-
-        None
+        options.sort_by_key(|(hint_value, _)| *hint_value);
+        options
+            .last()
+            .filter(|(a, _)| !a.is_unconventional)
+            .map(|(_, v)| v)
+            .copied()
     }
 }
 
@@ -537,10 +562,6 @@ impl HandCards {
             current_hand_size: 0,
         }
     }
-
-    fn find(&self, card_id: usize) -> Option<usize> {
-        self.cards.iter().position(|&id| id == Some(card_id))
-    }
 }
 
 mod inter {
@@ -583,6 +604,7 @@ mod inter {
         }
     }
 
+    //Currently, interpretations might contain restrictions about cards that are not on the hand anymore.
     #[derive(Debug, Clone)]
     pub struct Interpretation {
         pub card_id_to_possibilities: IndexMap<usize, PossibleCards>,
