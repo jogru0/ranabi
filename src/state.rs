@@ -169,10 +169,6 @@ impl PublicState {
         self.clues -= 1;
     }
 
-    pub(crate) fn is_playable(&self, card: &Card) -> bool {
-        self.firework.is_playable(card)
-    }
-
     pub(crate) fn new(rules: Rules) -> Self {
         Self {
             firework: Firework::new(&rules.used_colors()),
@@ -643,7 +639,7 @@ impl Firework {
         PossibleCards { hashed }
     }
 
-    fn is_playable(&self, card: &Card) -> bool {
+    pub fn is_playable(&self, card: &Card) -> bool {
         self.currently_playable().contains(card)
     }
 
@@ -658,6 +654,13 @@ impl Firework {
         }
 
         result
+    }
+
+    pub(crate) fn are_all_playable(&self, possibilities: &PossibleCards) -> bool {
+        possibilities
+            .hashed
+            .iter()
+            .all(|card| self.is_playable(card))
     }
 }
 

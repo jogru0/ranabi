@@ -7,7 +7,7 @@ use crate::{
         basic::inter::{Interpretation, Interpretations},
         PositionSet, Property,
     },
-    state::{PublicState, Rules},
+    state::{Firework, PublicState, Rules},
 };
 
 use super::{
@@ -139,12 +139,11 @@ impl PlayerState {
         }
     }
 
-    fn assess_play(
+    fn known_possibilities(
         &self,
         position: usize,
-        state: &PublicState,
-        at_least_all_candidates_for_touched: &PossibleCards,
-    ) -> ActionAssessment {
+        at_least_all_candidates_for_touched_known_by_self_player: &PossibleCards,
+    ) -> PossibleCards {
         let card_id = self.cards.cards[position].unwrap();
         let mut possible = self.possible_cards[&card_id].clone();
 
@@ -157,15 +156,25 @@ impl PlayerState {
         }
 
         if self.touched.contains(&card_id) {
-            possible.intersect(at_least_all_candidates_for_touched);
+            possible.intersect(at_least_all_candidates_for_touched_known_by_self_player);
         }
 
-        if possible.is_empty() {
-            panic!()
-        }
+        possible
+    }
 
-        if possible.hashed.iter().all(|card| state.is_playable(card)) {
-            let sure_influence_on_clue_count = if possible
+    fn assess_play(
+        &self,
+        position: usize,
+        firework: &Firework,
+        at_least_all_candidates_for_touched_known_by_self_player: &PossibleCards,
+    ) -> ActionAssessment {
+        let possibilities = self.known_possibilities(
+            position,
+            at_least_all_candidates_for_touched_known_by_self_player,
+        );
+
+        if firework.are_all_playable(&possibilities) {
+            let sure_influence_on_clue_count = if possibilities
                 .hashed
                 .iter()
                 .all(|card| card.number == Number::Five)
@@ -211,13 +220,13 @@ impl PlayerState {
 
     pub fn suggest_plays(
         &self,
-        state: &PublicState,
+        firework: &Firework,
         at_least_all_candidates_for_touched: &PossibleCards,
     ) -> Vec<(ActionAssessment, Action)> {
         let options: Vec<_> = (1..=self.cards.current_hand_size)
             .map(|position| {
                 (
-                    self.assess_play(position, state, at_least_all_candidates_for_touched),
+                    self.assess_play(position, firework, at_least_all_candidates_for_touched),
                     Action::Play {
                         card: None,
                         position,

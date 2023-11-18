@@ -309,7 +309,7 @@ impl Player for BasicPlayer {
         let mut options = Vec::new();
 
         options.extend(self.player_states[self.player_id].suggest_plays(
-            &self.public_state,
+            &self.public_state.firework,
             &self.possible_touches_in_own_hand_or_more(),
         ));
 
