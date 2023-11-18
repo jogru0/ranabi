@@ -120,7 +120,11 @@ impl PositionSet {
     }
 
     fn biggest(&self) -> Option<usize> {
-        self.positions.iter().rev().position(|&b| b)
+        self.positions[1..=self.hand_size]
+            .iter()
+            .rev()
+            .position(|&b| b)
+            .map(|backwards_index| self.hand_size - backwards_index)
     }
 
     fn inverse(mut self, hand_size: usize) -> Self {

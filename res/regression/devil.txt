@@ -15,7 +15,7 @@ Turn 1 action: Hint b at Donald: X-X-
   y2 w4 r4 g1     
   b1 g4 b3 r5 
 
-Turn 2 action: Hint g at Cathy: ---X
+Turn 2 action: Hint 2 at Alice: X-XX
 
 ==============
 
@@ -24,563 +24,482 @@ Turn 2 action: Hint g at Cathy: ---X
 > y2 w4 r4 g1     
   b1 g4 b3 r5 
 
-Turn 3 action: Play from position 4
+Turn 3 action: Hint 5 at Donald: ---X
 
 ==============
 
-  w2 y1 r2 g2           g1       
-  w1 r1 y5 r1     6     0
-  g5 y2 w4 r4     
+  w2 y1 r2 g2                    
+  w1 r1 y5 r1     5     0
+  y2 w4 r4 g1     
 > b1 g4 b3 r5 
 
 Turn 4 action: Play from position 1
 
 ==============
 
-> w2 y1 r2 g2        b1 g1       
-  w1 r1 y5 r1     6     0
-  g5 y2 w4 r4     
-  g1 g4 b3 r5 
+> w2 y1 r2 g2        b1          
+  w1 r1 y5 r1     5     0
+  y2 w4 r4 g1     
+  g5 g4 b3 r5 
 
 Turn 5 action: Hint w at Bob: X---
 
 ==============
 
-  w2 y1 r2 g2        b1 g1       
-> w1 r1 y5 r1     5     0
-  g5 y2 w4 r4     
-  g1 g4 b3 r5 
+  w2 y1 r2 g2        b1          
+> w1 r1 y5 r1     4     0
+  y2 w4 r4 g1     
+  g5 g4 b3 r5 
 
 Turn 6 action: Play from position 1
 
 ==============
 
-  w2 y1 r2 g2        b1 g1    w1 
-  g1 r1 y5 r1     5     0
-> g5 y2 w4 r4     
-  g1 g4 b3 r5 
-
-Turn 7 action: Hint 2 at Alice: X-XX
-
-==============
-
-  w2 y1 r2 g2        b1 g1    w1 
+  w2 y1 r2 g2        b1       w1 
   g1 r1 y5 r1     4     0
-  g5 y2 w4 r4     
-> g1 g4 b3 r5 
+> y2 w4 r4 g1     
+  g5 g4 b3 r5 
 
-Turn 8 action: Hint y at Alice: -X--
+Turn 7 action: Hint y at Alice: -X--
 
 ==============
 
-> w2 y1 r2 g2        b1 g1    w1 
+  w2 y1 r2 g2        b1       w1 
   g1 r1 y5 r1     3     0
-  g5 y2 w4 r4     
-  g1 g4 b3 r5 
+  y2 w4 r4 g1     
+> g5 g4 b3 r5 
+
+Turn 8 action: Hint g at Bob: X---
+
+==============
+
+> w2 y1 r2 g2        b1       w1 
+  g1 r1 y5 r1     2     0
+  y2 w4 r4 g1     
+  g5 g4 b3 r5 
 
 Turn 9 action: Play from position 2
 
 ==============
 
-  y2 w2 r2 g2        b1 g1 y1 w1 
-> g1 r1 y5 r1     3     0
-  g5 y2 w4 r4     
-  g1 g4 b3 r5 
+  g1 w2 r2 g2        b1    y1 w1 
+> g1 r1 y5 r1     2     0
+  y2 w4 r4 g1     
+  g5 g4 b3 r5 
 
-Turn 10 action: Hint y at Cathy: -X--
-
-==============
-
-  y2 w2 r2 g2        b1 g1 y1 w1 
-  g1 r1 y5 r1     2     0
-> g5 y2 w4 r4     
-  g1 g4 b3 r5 
-
-Turn 11 action: Play from position 2
+Turn 10 action: Play from position 1
 
 ==============
 
-  y2 w2 r2 g2        b1 g1 y2 w1 
-  g1 r1 y5 r1     2     0
-  w1 g5 w4 r4     
-> g1 g4 b3 r5 
+  g1 w2 r2 g2        b1 g1 y1 w1 
+  y2 r1 y5 r1     2     0
+> y2 w4 r4 g1     
+  g5 g4 b3 r5 
 
-Turn 12 action: Hint w at Alice: -X--
-
-==============
-
-> y2 w2 r2 g2        b1 g1 y2 w1 
-  g1 r1 y5 r1     1     0
-  w1 g5 w4 r4     
-  g1 g4 b3 r5 
-
-Turn 13 action: Play from position 2
+Turn 11 action: Hint y at Bob: X-X-
 
 ==============
 
-  g4 y2 r2 g2        b1 g1 y2 w2 
-> g1 r1 y5 r1     1     0
-  w1 g5 w4 r4     
-  g1 g4 b3 r5 
+  g1 w2 r2 g2        b1 g1 y1 w1 
+  y2 r1 y5 r1     1     0
+  y2 w4 r4 g1     
+> g5 g4 b3 r5 
 
-Turn 14 action: Hint 5 at Donald: ---X
+Turn 12 action: Discard from position 2
 
 ==============
 
-  g4 y2 r2 g2        b1 g1 y2 w2 
-  g1 r1 y5 r1     0     0
-> w1 g5 w4 r4     
-  g1 g4 b3 r5 
+> g1 w2 r2 g2        b1 g1 y1 w1 
+  y2 r1 y5 r1     2     0
+  y2 w4 r4 g1     g4 
+  w1 g5 b3 r5 
+
+Turn 13 action: Hint 5 at Donald: -X-X
+
+==============
+
+  g1 w2 r2 g2        b1 g1 y1 w1 
+> y2 r1 y5 r1     1     0
+  y2 w4 r4 g1     g4 
+  w1 g5 b3 r5 
+
+Turn 14 action: Play from position 1
+
+==============
+
+  g1 w2 r2 g2        b1 g1 y2 w1 
+  g4 r1 y5 r1     1     0
+> y2 w4 r4 g1     g4 
+  w1 g5 b3 r5 
 
 Turn 15 action: Discard from position 4
 
 ==============
 
-  g4 y2 r2 g2        b1 g1 y2 w2 
-  g1 r1 y5 r1     1     0
-  b4 w1 g5 w4     r4 
-> g1 g4 b3 r5 
+  g1 w2 r2 g2        b1 g1 y2 w1 
+  g4 r1 y5 r1     2     0
+  b4 y2 w4 r4     g1 g4 
+> w1 g5 b3 r5 
 
-Turn 16 action: Discard from position 2
-
-==============
-
-> g4 y2 r2 g2        b1 g1 y2 w2 
-  g1 r1 y5 r1     2     0
-  b4 w1 g5 w4     r4 g4 
-  b5 g1 b3 r5 
-
-Turn 17 action: Discard from position 2
+Turn 16 action: Discard from position 1
 
 ==============
 
-  g2 g4 r2 g2        b1 g1 y2 w2 
-> g1 r1 y5 r1     3     0
-  b4 w1 g5 w4     r4 g4 y2 
-  b5 g1 b3 r5 
+> g1 w2 r2 g2        b1 g1 y2 w1 
+  g4 r1 y5 r1     3     0
+  b4 y2 w4 r4     g1 g4 w1 
+  b5 g5 b3 r5 
 
-Turn 18 action: Hint 4 at Alice: -X--
-
-==============
-
-  g2 g4 r2 g2        b1 g1 y2 w2 
-  g1 r1 y5 r1     2     0
-> b4 w1 g5 w4     r4 g4 y2 
-  b5 g1 b3 r5 
-
-Turn 19 action: Discard from position 4
+Turn 17 action: Discard from position 1
 
 ==============
 
-  g2 g4 r2 g2        b1 g1 y2 w2 
-  g1 r1 y5 r1     3     0
-  y1 b4 w1 g5     r4 g4 y2 w4 
-> b5 g1 b3 r5 
+  g2 w2 r2 g2        b1 g1 y2 w1 
+> g4 r1 y5 r1     4     0
+  b4 y2 w4 r4     g1 g1 g4 w1 
+  b5 g5 b3 r5 
 
-Turn 20 action: Discard from position 2
-
-==============
-
-> g2 g4 r2 g2        b1 g1 y2 w2 
-  g1 r1 y5 r1     4     0
-  y1 b4 w1 g5     r4 g1 g4 y2 w4 
-  r3 b5 b3 r5 
-
-Turn 21 action: Hint 5 at Cathy: ---X
+Turn 18 action: Discard from position 4
 
 ==============
 
-  g2 g4 r2 g2        b1 g1 y2 w2 
-> g1 r1 y5 r1     3     0
-  y1 b4 w1 g5     r4 g1 g4 y2 w4 
-  r3 b5 b3 r5 
+  g2 w2 r2 g2        b1 g1 y2 w1 
+  y1 g4 r1 y5     5     0
+> b4 y2 w4 r4     r1 g1 g1 g4 w1 
+  b5 g5 b3 r5 
 
-Turn 22 action: Hint 5 at Donald: -X-X
-
-==============
-
-  g2 g4 r2 g2        b1 g1 y2 w2 
-  g1 r1 y5 r1     2     0
-> y1 b4 w1 g5     r4 g1 g4 y2 w4 
-  r3 b5 b3 r5 
-
-Turn 23 action: Discard from position 3
+Turn 19 action: Hint r at Bob: --X-
 
 ==============
 
-  g2 g4 r2 g2        b1 g1 y2 w2 
-  g1 r1 y5 r1     3     0
-  r1 y1 b4 g5     r4 g1 g4 y2 w1 w4 
-> r3 b5 b3 r5 
+  g2 w2 r2 g2        b1 g1 y2 w1 
+  y1 g4 r1 y5     4     0
+  b4 y2 w4 r4     r1 g1 g1 g4 w1 
+> b5 g5 b3 r5 
 
-Turn 24 action: Hint r at Cathy: X---
-
-==============
-
-> g2 g4 r2 g2        b1 g1 y2 w2 
-  g1 r1 y5 r1     2     0
-  r1 y1 b4 g5     r4 g1 g4 y2 w1 w4 
-  r3 b5 b3 r5 
-
-Turn 25 action: Hint r at Cathy: X---
+Turn 20 action: Hint g at Bob: -X--
 
 ==============
 
-  g2 g4 r2 g2        b1 g1 y2 w2 
-> g1 r1 y5 r1     1     0
-  r1 y1 b4 g5     r4 g1 g4 y2 w1 w4 
-  r3 b5 b3 r5 
+> g2 w2 r2 g2        b1 g1 y2 w1 
+  y1 g4 r1 y5     3     0
+  b4 y2 w4 r4     r1 g1 g1 g4 w1 
+  b5 g5 b3 r5 
 
-Turn 26 action: Hint r at Cathy: X---
-
-==============
-
-  g2 g4 r2 g2        b1 g1 y2 w2 
-  g1 r1 y5 r1     0     0
-> r1 y1 b4 g5     r4 g1 g4 y2 w1 w4 
-  r3 b5 b3 r5 
-
-Turn 27 action: Play from position 1
+Turn 21 action: Discard from position 1
 
 ==============
 
-  g2 g4 r2 g2     r1 b1 g1 y2 w2 
-  g1 r1 y5 r1     0     0
-  w3 y1 b4 g5     r4 g1 g4 y2 w1 w4 
-> r3 b5 b3 r5 
+  r3 w2 r2 g2        b1 g1 y2 w1 
+> y1 g4 r1 y5     4     0
+  b4 y2 w4 r4     r1 g1 g1 g2 g4 w1 
+  b5 g5 b3 r5 
 
-Turn 28 action: Discard from position 1
+Turn 22 action: Play from position 3
 
 ==============
 
-> g2 g4 r2 g2     r1 b1 g1 y2 w2 
-  g1 r1 y5 r1     1     0
-  w3 y1 b4 g5     r3 r4 g1 g4 y2 w1 w4 
-  g3 b5 b3 r5 
+  r3 w2 r2 g2     r1 b1 g1 y2 w1 
+  r1 y1 g4 y5     4     0
+> b4 y2 w4 r4     r1 g1 g1 g2 g4 w1 
+  b5 g5 b3 r5 
+
+Turn 23 action: Discard from position 4
+
+==============
+
+  r3 w2 r2 g2     r1 b1 g1 y2 w1 
+  r1 y1 g4 y5     5     0
+  w3 b4 y2 w4     r1 r4 g1 g1 g2 g4 w1 
+> b5 g5 b3 r5 
+
+Turn 24 action: Discard from position 1
+
+==============
+
+> r3 w2 r2 g2     r1 b1 g1 y2 w1 
+  r1 y1 g4 y5     6     0
+  w3 b4 y2 w4     r1 r4 b5 g1 g1 g2 g4 w1 
+  g3 g5 b3 r5 
+
+Turn 25 action: Play from position 4
+
+==============
+
+  y4 r3 w2 r2     r1 b1 g2 y2 w1 
+> r1 y1 g4 y5     6     0
+  w3 b4 y2 w4     r1 r4 b5 g1 g1 g2 g4 w1 
+  g3 g5 b3 r5 
+
+Turn 26 action: Discard from position 2
+
+==============
+
+  y4 r3 w2 r2     r1 b1 g2 y2 w1 
+  b3 r1 g4 y5     7     0
+> w3 b4 y2 w4     r1 r4 b5 g1 g1 g2 g4 y1 w1 
+  g3 g5 b3 r5 
+
+Turn 27 action: Hint 3 at Donald: X-X-
+
+==============
+
+  y4 r3 w2 r2     r1 b1 g2 y2 w1 
+  b3 r1 g4 y5     6     0
+  w3 b4 y2 w4     r1 r4 b5 g1 g1 g2 g4 y1 w1 
+> g3 g5 b3 r5 
+
+Turn 28 action: Play from position 1
+
+==============
+
+> y4 r3 w2 r2     r1 b1 g3 y2 w1 
+  b3 r1 g4 y5     6     0
+  w3 b4 y2 w4     r1 r4 b5 g1 g1 g2 g4 y1 w1 
+  w3 g5 b3 r5 
 
 Turn 29 action: Play from position 4
 
 ==============
 
-  y4 g2 g4 r2     r1 b1 g2 y2 w2 
-> g1 r1 y5 r1     1     0
-  w3 y1 b4 g5     r3 r4 g1 g4 y2 w1 w4 
-  g3 b5 b3 r5 
+  w1 y4 r3 w2     r2 b1 g3 y2 w1 
+> b3 r1 g4 y5     6     0
+  w3 b4 y2 w4     r1 r4 b5 g1 g1 g2 g4 y1 w1 
+  w3 g5 b3 r5 
 
-Turn 30 action: Hint w at Cathy: X---
-
-==============
-
-  y4 g2 g4 r2     r1 b1 g2 y2 w2 
-  g1 r1 y5 r1     0     0
-> w3 y1 b4 g5     r3 r4 g1 g4 y2 w1 w4 
-  g3 b5 b3 r5 
-
-Turn 31 action: Play from position 1
+Turn 30 action: Play from position 3
 
 ==============
 
-  y4 g2 g4 r2     r1 b1 g2 y2 w3 
-  g1 r1 y5 r1     0     0
-  b3 y1 b4 g5     r3 r4 g1 g4 y2 w1 w4 
-> g3 b5 b3 r5 
+  w1 y4 r3 w2     r2 b1 g4 y2 w1 
+  y4 b3 r1 y5     6     0
+> w3 b4 y2 w4     r1 r4 b5 g1 g1 g2 g4 y1 w1 
+  w3 g5 b3 r5 
+
+Turn 31 action: Hint r at Alice: --X-
+
+==============
+
+  w1 y4 r3 w2     r2 b1 g4 y2 w1 
+  y4 b3 r1 y5     5     0
+  w3 b4 y2 w4     r1 r4 b5 g1 g1 g2 g4 y1 w1 
+> w3 g5 b3 r5 
 
 Turn 32 action: Discard from position 1
 
 ==============
 
-> y4 g2 g4 r2     r1 b1 g2 y2 w3 
-  g1 r1 y5 r1     1     0
-  b3 y1 b4 g5     r3 r4 g1 g3 g4 y2 w1 w4 
-  w3 b5 b3 r5 
+> w1 y4 r3 w2     r2 b1 g4 y2 w1 
+  y4 b3 r1 y5     6     0
+  w3 b4 y2 w4     r1 r4 b5 g1 g1 g2 g4 y1 w1 w3 
+  b1 g5 b3 r5 
 
 Turn 33 action: Play from position 4
 
 ==============
 
-  w1 y4 g2 g4     r2 b1 g2 y2 w3 
-> g1 r1 y5 r1     1     0
-  b3 y1 b4 g5     r3 r4 g1 g3 g4 y2 w1 w4 
-  w3 b5 b3 r5 
+  w5 w1 y4 r3     r2 b1 g4 y2 w2 
+> y4 b3 r1 y5     6     0
+  w3 b4 y2 w4     r1 r4 b5 g1 g1 g2 g4 y1 w1 w3 
+  b1 g5 b3 r5 
 
-Turn 34 action: Discard from position 4
-
-==============
-
-  w1 y4 g2 g4     r2 b1 g2 y2 w3 
-  y4 g1 r1 y5     2     0
-> b3 y1 b4 g5     r1 r3 r4 g1 g3 g4 y2 w1 w4 
-  w3 b5 b3 r5 
-
-Turn 35 action: Hint 5 at Bob: ---X
+Turn 34 action: Hint 3 at Cathy: X---
 
 ==============
 
-  w1 y4 g2 g4     r2 b1 g2 y2 w3 
-  y4 g1 r1 y5     1     0
-  b3 y1 b4 g5     r1 r3 r4 g1 g3 g4 y2 w1 w4 
-> w3 b5 b3 r5 
+  w5 w1 y4 r3     r2 b1 g4 y2 w2 
+  y4 b3 r1 y5     5     0
+> w3 b4 y2 w4     r1 r4 b5 g1 g1 g2 g4 y1 w1 w3 
+  b1 g5 b3 r5 
 
-Turn 36 action: Discard from position 1
+Turn 35 action: Play from position 1
 
 ==============
 
-> w1 y4 g2 g4     r2 b1 g2 y2 w3 
-  y4 g1 r1 y5     2     0
-  b3 y1 b4 g5     r1 r3 r4 g1 g3 g4 y2 w1 w3 w4 
-  b1 b5 b3 r5 
+  w5 w1 y4 r3     r2 b1 g4 y2 w3 
+  y4 b3 r1 y5     5     0
+  g3 b4 y2 w4     r1 r4 b5 g1 g1 g2 g4 y1 w1 w3 
+> b1 g5 b3 r5 
+
+Turn 36 action: Hint 4 at Cathy: -X-X
+
+==============
+
+> w5 w1 y4 r3     r2 b1 g4 y2 w3 
+  y4 b3 r1 y5     4     0
+  g3 b4 y2 w4     r1 r4 b5 g1 g1 g2 g4 y1 w1 w3 
+  b1 g5 b3 r5 
 
 Turn 37 action: Discard from position 3
 
 ==============
 
-  w5 w1 y4 g4     r2 b1 g2 y2 w3 
-> y4 g1 r1 y5     3     0
-  b3 y1 b4 g5     r1 r3 r4 g1 g2 g3 g4 y2 w1 w3 w4 
-  b1 b5 b3 r5 
+  r4 w5 w1 r3     r2 b1 g4 y2 w3 
+> y4 b3 r1 y5     5     0
+  g3 b4 y2 w4     r1 r4 b5 g1 g1 g2 g4 y1 y4 w1 w3 
+  b1 g5 b3 r5 
 
-Turn 38 action: Discard from position 3
-
-==============
-
-  w5 w1 y4 g4     r2 b1 g2 y2 w3 
-  g3 y4 g1 y5     4     0
-> b3 y1 b4 g5     r1 r1 r3 r4 g1 g2 g3 g4 y2 w1 w3 w4 
-  b1 b5 b3 r5 
-
-Turn 39 action: Hint 3 at Bob: X---
+Turn 38 action: Hint r at Alice: X--X
 
 ==============
 
-  w5 w1 y4 g4     r2 b1 g2 y2 w3 
-  g3 y4 g1 y5     3     0
-  b3 y1 b4 g5     r1 r1 r3 r4 g1 g2 g3 g4 y2 w1 w3 w4 
-> b1 b5 b3 r5 
+  r4 w5 w1 r3     r2 b1 g4 y2 w3 
+  y4 b3 r1 y5     4     0
+> g3 b4 y2 w4     r1 r4 b5 g1 g1 g2 g4 y1 y4 w1 w3 
+  b1 g5 b3 r5 
 
-Turn 40 action: Hint 3 at Bob: X---
-
-==============
-
-> w5 w1 y4 g4     r2 b1 g2 y2 w3 
-  g3 y4 g1 y5     2     0
-  b3 y1 b4 g5     r1 r1 r3 r4 g1 g2 g3 g4 y2 w1 w3 w4 
-  b1 b5 b3 r5 
-
-Turn 41 action: Hint 3 at Bob: X---
+Turn 39 action: Play from position 4
 
 ==============
 
-  w5 w1 y4 g4     r2 b1 g2 y2 w3 
-> g3 y4 g1 y5     1     0
-  b3 y1 b4 g5     r1 r1 r3 r4 g1 g2 g3 g4 y2 w1 w3 w4 
-  b1 b5 b3 r5 
+  r4 w5 w1 r3     r2 b1 g4 y2 w4 
+  y4 b3 r1 y5     4     0
+  b2 g3 b4 y2     r1 r4 b5 g1 g1 g2 g4 y1 y4 w1 w3 
+> b1 g5 b3 r5 
 
-Turn 42 action: Play from position 1
-
-==============
-
-  w5 w1 y4 g4     r2 b1 g3 y2 w3 
-  r4 y4 g1 y5     1     0
-> b3 y1 b4 g5     r1 r1 r3 r4 g1 g2 g3 g4 y2 w1 w3 w4 
-  b1 b5 b3 r5 
-
-Turn 43 action: Hint g at Alice: ---X
+Turn 40 action: Discard from position 1
 
 ==============
 
-  w5 w1 y4 g4     r2 b1 g3 y2 w3 
-  r4 y4 g1 y5     0     0
-  b3 y1 b4 g5     r1 r1 r3 r4 g1 g2 g3 g4 y2 w1 w3 w4 
-> b1 b5 b3 r5 
+> r4 w5 w1 r3     r2 b1 g4 y2 w4 
+  y4 b3 r1 y5     5     0
+  b2 g3 b4 y2     r1 r4 b1 b5 g1 g1 g2 g4 y1 y4 w1 w3 
+  y1 g5 b3 r5 
 
-Turn 44 action: Discard from position 1
-
-==============
-
-> w5 w1 y4 g4     r2 b1 g3 y2 w3 
-  r4 y4 g1 y5     1     0
-  b3 y1 b4 g5     r1 r1 r3 r4 b1 g1 g2 g3 g4 y2 w1 w3 w4 
-  b2 b5 b3 r5 
-
-Turn 45 action: Play from position 4
+Turn 41 action: Play from position 4
 
 ==============
 
-  y1 w5 w1 y4     r2 b1 g4 y2 w3 
-> r4 y4 g1 y5     1     0
-  b3 y1 b4 g5     r1 r1 r3 r4 b1 g1 g2 g3 g4 y2 w1 w3 w4 
-  b2 b5 b3 r5 
+  b4 r4 w5 w1     r3 b1 g4 y2 w4 
+> y4 b3 r1 y5     5     0
+  b2 g3 b4 y2     r1 r4 b1 b5 g1 g1 g2 g4 y1 y4 w1 w3 
+  y1 g5 b3 r5 
 
-Turn 46 action: Hint b at Donald: XXX-
-
-==============
-
-  y1 w5 w1 y4     r2 b1 g4 y2 w3 
-  r4 y4 g1 y5     0     0
-> b3 y1 b4 g5     r1 r1 r3 r4 b1 g1 g2 g3 g4 y2 w1 w3 w4 
-  b2 b5 b3 r5 
-
-Turn 47 action: Play from position 4
+Turn 42 action: Hint 5 at Alice: --X-
 
 ==============
 
-  y1 w5 w1 y4     r2 b1 g5 y2 w3 
-  r4 y4 g1 y5     1     0
-  b4 b3 y1 b4     r1 r1 r3 r4 b1 g1 g2 g3 g4 y2 w1 w3 w4 
-> b2 b5 b3 r5 
+  b4 r4 w5 w1     r3 b1 g4 y2 w4 
+  y4 b3 r1 y5     4     0
+> b2 g3 b4 y2     r1 r4 b1 b5 g1 g1 g2 g4 y1 y4 w1 w3 
+  y1 g5 b3 r5 
 
-Turn 48 action: Play from position 1
-
-==============
-
-> y1 w5 w1 y4     r2 b2 g5 y2 w3 
-  r4 y4 g1 y5     1     0
-  b4 b3 y1 b4     r1 r1 r3 r4 b1 g1 g2 g3 g4 y2 w1 w3 w4 
-  w4 b5 b3 r5 
-
-Turn 49 action: Hint w at Donald: X---
+Turn 43 action: Discard from position 4
 
 ==============
 
-  y1 w5 w1 y4     r2 b2 g5 y2 w3 
-> r4 y4 g1 y5     0     0
-  b4 b3 y1 b4     r1 r1 r3 r4 b1 g1 g2 g3 g4 y2 w1 w3 w4 
-  w4 b5 b3 r5 
+  b4 r4 w5 w1     r3 b1 g4 y2 w4 
+  y4 b3 r1 y5     5     0
+  w4 b2 g3 b4     r1 r4 b1 b5 g1 g1 g2 g4 y1 y2 y4 w1 w3 
+> y1 g5 b3 r5 
+
+Turn 44 action: Hint 2 at Cathy: -X--
+
+==============
+
+> b4 r4 w5 w1     r3 b1 g4 y2 w4 
+  y4 b3 r1 y5     4     0
+  w4 b2 g3 b4     r1 r4 b1 b5 g1 g1 g2 g4 y1 y2 y4 w1 w3 
+  y1 g5 b3 r5 
+
+Turn 45 action: Play from position 3
+
+==============
+
+  r2 b4 r4 w1     r3 b1 g4 y2 w5 
+> y4 b3 r1 y5     5     0
+  w4 b2 g3 b4     r1 r4 b1 b5 g1 g1 g2 g4 y1 y2 y4 w1 w3 
+  y1 g5 b3 r5 
+
+Turn 46 action: Discard from position 3
+
+==============
+
+  r2 b4 r4 w1     r3 b1 g4 y2 w5 
+  w2 y4 b3 y5     6     0
+> w4 b2 g3 b4     r1 r1 r4 b1 b5 g1 g1 g2 g4 y1 y2 y4 w1 w3 
+  y1 g5 b3 r5 
+
+Turn 47 action: Play from position 2
+
+==============
+
+  r2 b4 r4 w1     r3 b2 g4 y2 w5 
+  w2 y4 b3 y5     6     0
+  b1 w4 g3 b4     r1 r1 r4 b1 b5 g1 g1 g2 g4 y1 y2 y4 w1 w3 
+> y1 g5 b3 r5 
+
+Turn 48 action: Play from position 3
+
+==============
+
+> r2 b4 r4 w1     r3 b3 g4 y2 w5 
+  w2 y4 b3 y5     6     0
+  b1 w4 g3 b4     r1 r1 r4 b1 b5 g1 g1 g2 g4 y1 y2 y4 w1 w3 
+  b2 y1 g5 r5 
+
+Turn 49 action: Play from position 3
+
+==============
+
+  r3 r2 b4 w1     r4 b3 g4 y2 w5 
+> w2 y4 b3 y5     6     0
+  b1 w4 g3 b4     r1 r1 r4 b1 b5 g1 g1 g2 g4 y1 y2 y4 w1 w3 
+  b2 y1 g5 r5 
 
 Turn 50 action: Discard from position 3
 
 ==============
 
-  y1 w5 w1 y4     r2 b2 g5 y2 w3 
-  r2 r4 y4 y5     1     0
-> b4 b3 y1 b4     r1 r1 r3 r4 b1 g1 g1 g2 g3 g4 y2 w1 w3 w4 
-  w4 b5 b3 r5 
+  r3 r2 b4 w1     r4 b3 g4 y2 w5 
+  y3 w2 y4 y5     7     0
+> b1 w4 g3 b4     r1 r1 r4 b1 b3 b5 g1 g1 g2 g4 y1 y2 y4 w1 w3 
+  b2 y1 g5 r5 
 
-Turn 51 action: Hint w at Donald: X---
-
-==============
-
-  y1 w5 w1 y4     r2 b2 g5 y2 w3 
-  r2 r4 y4 y5     0     0
-  b4 b3 y1 b4     r1 r1 r3 r4 b1 g1 g1 g2 g3 g4 y2 w1 w3 w4 
-> w4 b5 b3 r5 
-
-Turn 52 action: Play from position 1
+Turn 51 action: Hint 3 at Bob: X---
 
 ==============
 
-> y1 w5 w1 y4     r2 b2 g5 y2 w4 
-  r2 r4 y4 y5     0     0
-  b4 b3 y1 b4     r1 r1 r3 r4 b1 g1 g1 g2 g3 g4 y2 w1 w3 w4 
-  w2 b5 b3 r5 
+  r3 r2 b4 w1     r4 b3 g4 y2 w5 
+  y3 w2 y4 y5     6     0
+  b1 w4 g3 b4     r1 r1 r4 b1 b3 b5 g1 g1 g2 g4 y1 y2 y4 w1 w3 
+> b2 y1 g5 r5 
 
-Turn 53 action: Discard from position 4
-
-==============
-
-  b1 y1 w5 w1     r2 b2 g5 y2 w4 
-> r2 r4 y4 y5     1     0
-  b4 b3 y1 b4     r1 r1 r3 r4 b1 g1 g1 g2 g3 g4 y2 y4 w1 w3 w4 
-  w2 b5 b3 r5 
-
-Turn 54 action: Hint 5 at Alice: --X-
+Turn 52 action: Play from position 4
 
 ==============
 
-  b1 y1 w5 w1     r2 b2 g5 y2 w4 
-  r2 r4 y4 y5     0     0
-> b4 b3 y1 b4     r1 r1 r3 r4 b1 g1 g1 g2 g3 g4 y2 y4 w1 w3 w4 
-  w2 b5 b3 r5 
+> r3 r2 b4 w1     r5 b3 g4 y2 w5 
+  y3 w2 y4 y5     7     0
+  b1 w4 g3 b4     r1 r1 r4 b1 b3 b5 g1 g1 g2 g4 y1 y2 y4 w1 w3 
+  y3 b2 y1 g5 
 
-Turn 55 action: Discard from position 4
-
-==============
-
-  b1 y1 w5 w1     r2 b2 g5 y2 w4 
-  r2 r4 y4 y5     1     0
-  b2 b4 b3 y1     r1 r1 r3 r4 b1 b4 g1 g1 g2 g3 g4 y2 y4 w1 w3 w4 
-> w2 b5 b3 r5 
-
-Turn 56 action: Hint y at Bob: --XX
+Turn 53 action: Hint 4 at Bob: --X-
 
 ==============
 
-> b1 y1 w5 w1     r2 b2 g5 y2 w4 
-  r2 r4 y4 y5     0     0
-  b2 b4 b3 y1     r1 r1 r3 r4 b1 b4 g1 g1 g2 g3 g4 y2 y4 w1 w3 w4 
-  w2 b5 b3 r5 
+  r3 r2 b4 w1     r5 b3 g4 y2 w5 
+> y3 w2 y4 y5     6     0
+  b1 w4 g3 b4     r1 r1 r4 b1 b3 b5 g1 g1 g2 g4 y1 y2 y4 w1 w3 
+  y3 b2 y1 g5 
 
-Turn 57 action: Play from position 3
-
-==============
-
-  r3 b1 y1 w1     r2 b2 g5 y2 w5 
-> r2 r4 y4 y5     1     0
-  b2 b4 b3 y1     r1 r1 r3 r4 b1 b4 g1 g1 g2 g3 g4 y2 y4 w1 w3 w4 
-  w2 b5 b3 r5 
-
-Turn 58 action: Hint r at Alice: X---
+Turn 54 action: Play from position 1
 
 ==============
 
-  r3 b1 y1 w1     r2 b2 g5 y2 w5 
-  r2 r4 y4 y5     0     0
-> b2 b4 b3 y1     r1 r1 r3 r4 b1 b4 g1 g1 g2 g3 g4 y2 y4 w1 w3 w4 
-  w2 b5 b3 r5 
+  r3 r2 b4 w1     r5 b3 g4 y3 w5 
+  w2 y4 y5     6     0
+> b1 w4 g3 b4     r1 r1 r4 b1 b3 b5 g1 g1 g2 g4 y1 y2 y4 w1 w3 
+  y3 b2 y1 g5 
 
-Turn 59 action: Discard from position 4
-
-==============
-
-  r3 b1 y1 w1     r2 b2 g5 y2 w5 
-  r2 r4 y4 y5     1     0
-  y3 b2 b4 b3     r1 r1 r3 r4 b1 b4 g1 g1 g2 g3 g4 y1 y2 y4 w1 w3 w4 
-> w2 b5 b3 r5 
-
-Turn 60 action: Hint y at Cathy: X---
+Turn 55 action: Play from position 4
 
 ==============
 
-> r3 b1 y1 w1     r2 b2 g5 y2 w5 
-  r2 r4 y4 y5     0     0
-  y3 b2 b4 b3     r1 r1 r3 r4 b1 b4 g1 g1 g2 g3 g4 y1 y2 y4 w1 w3 w4 
-  w2 b5 b3 r5 
+  r3 r2 b4 w1     r5 b4 g4 y3 w5 
+  w2 y4 y5     6     0
+  b1 w4 g3     r1 r1 r4 b1 b3 b5 g1 g1 g2 g4 y1 y2 y4 w1 w3 
+> y3 b2 y1 g5 
 
-Turn 61 action: Play from position 1
-
-==============
-
-  y3 b1 y1 w1     r3 b2 g5 y2 w5 
-> r2 r4 y4 y5     0     0
-  y3 b2 b4 b3     r1 r1 r3 r4 b1 b4 g1 g1 g2 g3 g4 y1 y2 y4 w1 w3 w4 
-  w2 b5 b3 r5 
-
-Turn 62 action: Discard from position 2
-
-==============
-
-  y3 b1 y1 w1     r3 b2 g5 y2 w5 
-  r2 y4 y5     1     0
-> y3 b2 b4 b3     r1 r1 r3 r4 r4 b1 b4 g1 g1 g2 g3 g4 y1 y2 y4 w1 w3 w4 
-  w2 b5 b3 r5 
-
-Turn 63 action: Play from position 1
-
-==============
-
-  y3 b1 y1 w1     r3 b2 g5 y3 w5 
-  r2 y4 y5     1     0
-  b2 b4 b3     r1 r1 r3 r4 r4 b1 b4 g1 g1 g2 g3 g4 y1 y2 y4 w1 w3 w4 
-> w2 b5 b3 r5 
-
-Turn 64 action: Hint y at Bob: -XX
-
-==============
-
-> y3 b1 y1 w1     r3 b2 g5 y3 w5 
-  r2 y4 y5     0     0
-  b2 b4 b3     r1 r1 r3 r4 r4 b1 b4 g1 g1 g2 g3 g4 y1 y2 y4 w1 w3 w4 
-  w2 b5 b3 r5 
-
-Turn 65 action: Discard from position 4
-Won with 18 points.
+Turn 56 action: Play from position 4
+Won with 22 points.

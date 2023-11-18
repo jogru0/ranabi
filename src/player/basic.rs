@@ -192,6 +192,7 @@ impl BasicPlayer {
             delay_until_relevant: (self.rules().number_of_players + receiver - self.player_id)
                 % self.rules().number_of_players,
             action_type: ActionType::Hint,
+            sure_influence_on_clue_count: -1,
         }
     }
 
@@ -481,12 +482,24 @@ impl PlayerState {
         if possible.is_empty() {
             panic!()
         }
+
         if possible.hashed.iter().all(|card| state.is_playable(card)) {
+            let sure_influence_on_clue_count = if possible
+                .hashed
+                .iter()
+                .all(|card| card.number == Number::Five)
+            {
+                1
+            } else {
+                0
+            };
+
             return ActionAssessment {
                 new_touches: 0,
                 delay_until_relevant: 0,
                 is_unconventional: false,
                 action_type: ActionType::Play,
+                sure_influence_on_clue_count,
             };
         }
 
@@ -534,6 +547,7 @@ impl PlayerState {
                 delay_until_relevant: 0,
                 is_unconventional: false,
                 action_type: ActionType::Discard,
+                sure_influence_on_clue_count: 1,
             }
         } else {
             ActionAssessment::unconvectional()

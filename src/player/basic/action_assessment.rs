@@ -4,6 +4,7 @@ pub struct ActionAssessment {
     pub delay_until_relevant: usize,
     pub is_unconventional: bool,
     pub action_type: ActionType,
+    pub sure_influence_on_clue_count: i8,
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -20,6 +21,7 @@ impl ActionAssessment {
             new_touches: 100,
             delay_until_relevant: 0,
             action_type: ActionType::Hint,
+            sure_influence_on_clue_count: 9,
         }
     }
 }
@@ -43,17 +45,19 @@ impl Ord for ActionAssessment {
             ord => return ord,
         }
 
-        match (self.action_type == ActionType::Hint).cmp(&(other.action_type == ActionType::Hint)) {
-            core::cmp::Ordering::Equal => {}
-            ord => return ord,
-        }
-
-        assert_eq!(self.action_type, other.action_type);
-
         match self.new_touches.cmp(&other.new_touches) {
             core::cmp::Ordering::Equal => {}
             ord => return ord,
         }
+
+        match self
+            .sure_influence_on_clue_count
+            .cmp(&other.sure_influence_on_clue_count)
+        {
+            core::cmp::Ordering::Equal => {}
+            ord => return ord,
+        }
+
         other.delay_until_relevant.cmp(&self.delay_until_relevant)
     }
 }
