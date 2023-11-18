@@ -1,541 +1,541 @@
-
+[32m
 ==============
-
+[0m
 > w2 y1 r2 g2                    
   w1 r1 y5 r1     8     0
   y2 w4 r4 g1     
   b1 g4 b3 r5 
 
 Turn 1 action: Hint b at Donald: X-X-
-
+[32m
 ==============
-
+[0m
   w2 y1 r2 g2                    
 > w1 r1 y5 r1     7     0
   y2 w4 r4 g1     
-  b1 g4 b3 r5 
+  [1mb1[0m g4 [1mb3[0m r5 
 
 Turn 2 action: Hint 2 at Alice: X-XX
-
+[32m
 ==============
-
-  w2 y1 r2 g2                    
+[0m
+  [1mw2[0m y1 [1mr2[0m [1mg2[0m                    
   w1 r1 y5 r1     6     0
 > y2 w4 r4 g1     
-  b1 g4 b3 r5 
+  [1mb1[0m g4 [1mb3[0m r5 
 
 Turn 3 action: Hint 5 at Donald: ---X
-
+[32m
 ==============
-
-  w2 y1 r2 g2                    
+[0m
+  [1mw2[0m y1 [1mr2[0m [1mg2[0m                    
   w1 r1 y5 r1     5     0
   y2 w4 r4 g1     
-> b1 g4 b3 r5 
+> [1mb1[0m g4 [1mb3[0m [1mr5[0m 
 
 Turn 4 action: Play from position 1
-
+[32m
 ==============
-
-> w2 y1 r2 g2        b1          
+[0m
+> [1mw2[0m y1 [1mr2[0m [1mg2[0m        b1          
   w1 r1 y5 r1     5     0
   y2 w4 r4 g1     
-  g5 g4 b3 r5 
+  g5 g4 [1mb3[0m [1mr5[0m 
 
 Turn 5 action: Hint w at Bob: X---
-
+[32m
 ==============
-
-  w2 y1 r2 g2        b1          
-> w1 r1 y5 r1     4     0
+[0m
+  [1mw2[0m y1 [1mr2[0m [1mg2[0m        b1          
+> [1mw1[0m r1 y5 r1     4     0
   y2 w4 r4 g1     
-  g5 g4 b3 r5 
+  g5 g4 [1mb3[0m [1mr5[0m 
 
 Turn 6 action: Play from position 1
-
+[32m
 ==============
-
-  w2 y1 r2 g2        b1       w1 
+[0m
+  [1mw2[0m y1 [1mr2[0m [1mg2[0m        b1       w1 
   g1 r1 y5 r1     4     0
 > y2 w4 r4 g1     
-  g5 g4 b3 r5 
+  g5 g4 [1mb3[0m [1mr5[0m 
 
 Turn 7 action: Hint y at Alice: -X--
-
+[32m
 ==============
-
-  w2 y1 r2 g2        b1       w1 
+[0m
+  [1mw2[0m [1my1[0m [1mr2[0m [1mg2[0m        b1       w1 
   g1 r1 y5 r1     3     0
   y2 w4 r4 g1     
-> g5 g4 b3 r5 
+> g5 g4 [1mb3[0m [1mr5[0m 
 
 Turn 8 action: Hint g at Bob: X---
-
+[32m
 ==============
-
-> w2 y1 r2 g2        b1       w1 
-  g1 r1 y5 r1     2     0
+[0m
+> [1mw2[0m [1my1[0m [1mr2[0m [1mg2[0m        b1       w1 
+  [1mg1[0m r1 y5 r1     2     0
   y2 w4 r4 g1     
-  g5 g4 b3 r5 
+  g5 g4 [1mb3[0m [1mr5[0m 
 
 Turn 9 action: Play from position 2
-
+[32m
 ==============
-
-  g1 w2 r2 g2        b1    y1 w1 
-> g1 r1 y5 r1     2     0
+[0m
+  g1 [1mw2[0m [1mr2[0m [1mg2[0m        b1    y1 w1 
+> [1mg1[0m r1 y5 r1     2     0
   y2 w4 r4 g1     
-  g5 g4 b3 r5 
+  g5 g4 [1mb3[0m [1mr5[0m 
 
 Turn 10 action: Play from position 1
-
+[32m
 ==============
-
-  g1 w2 r2 g2        b1 g1 y1 w1 
+[0m
+  g1 [1mw2[0m [1mr2[0m [1mg2[0m        b1 g1 y1 w1 
   y2 r1 y5 r1     2     0
 > y2 w4 r4 g1     
-  g5 g4 b3 r5 
+  g5 g4 [1mb3[0m [1mr5[0m 
 
 Turn 11 action: Hint y at Bob: X-X-
-
+[32m
 ==============
-
-  g1 w2 r2 g2        b1 g1 y1 w1 
-  y2 r1 y5 r1     1     0
+[0m
+  g1 [1mw2[0m [1mr2[0m [1mg2[0m        b1 g1 y1 w1 
+  [1my2[0m r1 [1my5[0m r1     1     0
   y2 w4 r4 g1     
-> g5 g4 b3 r5 
+> g5 g4 [1mb3[0m [1mr5[0m 
 
-Turn 12 action: Hint w at Alice: -X--
-
+Turn 12 action: Discard from position 2
+[32m
 ==============
+[0m
+> g1 [1mw2[0m [1mr2[0m [1mg2[0m        b1 g1 y1 w1 
+  [1my2[0m r1 [1my5[0m r1     2     0
+  y2 w4 r4 g1     g4 
+  w1 g5 [1mb3[0m [1mr5[0m 
 
-> g1 w2 r2 g2        b1 g1 y1 w1 
-  y2 r1 y5 r1     0     0
-  y2 w4 r4 g1     
-  g5 g4 b3 r5 
-
-Turn 13 action: Play from position 2
-
+Turn 13 action: Hint 5 at Donald: -X-X
+[32m
 ==============
-
-  w1 g1 r2 g2        b1 g1 y1 w2 
-> y2 r1 y5 r1     0     0
-  y2 w4 r4 g1     
-  g5 g4 b3 r5 
+[0m
+  g1 [1mw2[0m [1mr2[0m [1mg2[0m        b1 g1 y1 w1 
+> [1my2[0m r1 [1my5[0m r1     1     0
+  y2 w4 r4 g1     g4 
+  w1 [1mg5[0m [1mb3[0m [1mr5[0m 
 
 Turn 14 action: Play from position 1
-
+[32m
 ==============
-
-  w1 g1 r2 g2        b1 g1 y2 w2 
-  g4 r1 y5 r1     0     0
-> y2 w4 r4 g1     
-  g5 g4 b3 r5 
+[0m
+  g1 [1mw2[0m [1mr2[0m [1mg2[0m        b1 g1 y2 w1 
+  g4 r1 [1my5[0m r1     1     0
+> y2 w4 r4 g1     g4 
+  w1 [1mg5[0m [1mb3[0m [1mr5[0m 
 
 Turn 15 action: Discard from position 4
-
+[32m
 ==============
-
-  w1 g1 r2 g2        b1 g1 y2 w2 
-  g4 r1 y5 r1     1     0
-  b4 y2 w4 r4     g1 
-> g5 g4 b3 r5 
-
-Turn 16 action: Discard from position 2
-
-==============
-
-> w1 g1 r2 g2        b1 g1 y2 w2 
-  g4 r1 y5 r1     2     0
+[0m
+  g1 [1mw2[0m [1mr2[0m [1mg2[0m        b1 g1 y2 w1 
+  g4 r1 [1my5[0m r1     2     0
   b4 y2 w4 r4     g1 g4 
-  b5 g5 b3 r5 
+> w1 [1mg5[0m [1mb3[0m [1mr5[0m 
+
+Turn 16 action: Discard from position 1
+[32m
+==============
+[0m
+> g1 [1mw2[0m [1mr2[0m [1mg2[0m        b1 g1 y2 w1 
+  g4 r1 [1my5[0m r1     3     0
+  b4 y2 w4 r4     g1 g4 w1 
+  b5 [1mg5[0m [1mb3[0m [1mr5[0m 
 
 Turn 17 action: Hint 5 at Donald: XX-X
-
+[32m
 ==============
-
-  w1 g1 r2 g2        b1 g1 y2 w2 
-> g4 r1 y5 r1     1     0
-  b4 y2 w4 r4     g1 g4 
-  b5 g5 b3 r5 
+[0m
+  g1 [1mw2[0m [1mr2[0m [1mg2[0m        b1 g1 y2 w1 
+> g4 r1 [1my5[0m r1     2     0
+  b4 y2 w4 r4     g1 g4 w1 
+  [1mb5[0m [1mg5[0m [1mb3[0m [1mr5[0m 
 
 Turn 18 action: Discard from position 4
-
+[32m
 ==============
-
-  w1 g1 r2 g2        b1 g1 y2 w2 
-  g2 g4 r1 y5     2     0
-> b4 y2 w4 r4     r1 g1 g4 
-  b5 g5 b3 r5 
+[0m
+  g1 [1mw2[0m [1mr2[0m [1mg2[0m        b1 g1 y2 w1 
+  g2 g4 r1 [1my5[0m     3     0
+> b4 y2 w4 r4     r1 g1 g4 w1 
+  [1mb5[0m [1mg5[0m [1mb3[0m [1mr5[0m 
 
 Turn 19 action: Hint r at Bob: --X-
-
+[32m
 ==============
-
-  w1 g1 r2 g2        b1 g1 y2 w2 
-  g2 g4 r1 y5     1     0
-  b4 y2 w4 r4     r1 g1 g4 
-> b5 g5 b3 r5 
+[0m
+  g1 [1mw2[0m [1mr2[0m [1mg2[0m        b1 g1 y2 w1 
+  g2 g4 [1mr1[0m [1my5[0m     2     0
+  b4 y2 w4 r4     r1 g1 g4 w1 
+> [1mb5[0m [1mg5[0m [1mb3[0m [1mr5[0m 
 
 Turn 20 action: Hint 4 at Bob: -X--
-
+[32m
 ==============
+[0m
+> g1 [1mw2[0m [1mr2[0m [1mg2[0m        b1 g1 y2 w1 
+  g2 [1mg4[0m [1mr1[0m [1my5[0m     1     0
+  b4 y2 w4 r4     r1 g1 g4 w1 
+  [1mb5[0m [1mg5[0m [1mb3[0m [1mr5[0m 
 
-> w1 g1 r2 g2        b1 g1 y2 w2 
-  g2 g4 r1 y5     0     0
-  b4 y2 w4 r4     r1 g1 g4 
-  b5 g5 b3 r5 
-
-Turn 21 action: Discard from position 2
-
+Turn 21 action: Discard from position 1
+[32m
 ==============
-
-  y1 w1 r2 g2        b1 g1 y2 w2 
-> g2 g4 r1 y5     1     0
-  b4 y2 w4 r4     r1 g1 g1 g4 
-  b5 g5 b3 r5 
+[0m
+  y1 [1mw2[0m [1mr2[0m [1mg2[0m        b1 g1 y2 w1 
+> g2 [1mg4[0m [1mr1[0m [1my5[0m     2     0
+  b4 y2 w4 r4     r1 g1 g1 g4 w1 
+  [1mb5[0m [1mg5[0m [1mb3[0m [1mr5[0m 
 
 Turn 22 action: Play from position 3
-
+[32m
 ==============
+[0m
+  y1 [1mw2[0m [1mr2[0m [1mg2[0m     r1 b1 g1 y2 w1 
+  r3 g2 [1mg4[0m [1my5[0m     2     0
+> b4 y2 w4 r4     r1 g1 g1 g4 w1 
+  [1mb5[0m [1mg5[0m [1mb3[0m [1mr5[0m 
 
-  y1 w1 r2 g2     r1 b1 g1 y2 w2 
-  r3 g2 g4 y5     1     0
-> b4 y2 w4 r4     r1 g1 g1 g4 
-  b5 g5 b3 r5 
-
-Turn 23 action: Hint g at Alice: ---X
-
+Turn 23 action: Discard from position 4
+[32m
 ==============
+[0m
+  y1 [1mw2[0m [1mr2[0m [1mg2[0m     r1 b1 g1 y2 w1 
+  r3 g2 [1mg4[0m [1my5[0m     3     0
+  r1 b4 y2 w4     r1 r4 g1 g1 g4 w1 
+> [1mb5[0m [1mg5[0m [1mb3[0m [1mr5[0m 
 
-  y1 w1 r2 g2     r1 b1 g1 y2 w2 
-  r3 g2 g4 y5     0     0
-  b4 y2 w4 r4     r1 g1 g1 g4 
-> b5 g5 b3 r5 
-
-Turn 24 action: Discard from position 4
-
+Turn 24 action: Hint w at Alice: -X--
+[32m
 ==============
-
-> y1 w1 r2 g2     r1 b1 g1 y2 w2 
-  r3 g2 g4 y5     1     0
-  b4 y2 w4 r4     r1 r5 g1 g1 g4 
-  r1 b5 g5 b3 
+[0m
+> y1 [1mw2[0m [1mr2[0m [1mg2[0m     r1 b1 g1 y2 w1 
+  r3 g2 [1mg4[0m [1my5[0m     2     0
+  r1 b4 y2 w4     r1 r4 g1 g1 g4 w1 
+  [1mb5[0m [1mg5[0m [1mb3[0m [1mr5[0m 
 
 Turn 25 action: Play from position 4
-
+[32m
 ==============
+[0m
+  w3 y1 [1mw2[0m [1mr2[0m     r1 b1 g2 y2 w1 
+> r3 g2 [1mg4[0m [1my5[0m     2     0
+  r1 b4 y2 w4     r1 r4 g1 g1 g4 w1 
+  [1mb5[0m [1mg5[0m [1mb3[0m [1mr5[0m 
 
-  w3 y1 w1 r2     r1 b1 g2 y2 w2 
-> r3 g2 g4 y5     1     0
-  b4 y2 w4 r4     r1 r5 g1 g1 g4 
-  r1 b5 g5 b3 
-
-Turn 26 action: Hint 3 at Alice: X---
-
+Turn 26 action: Discard from position 2
+[32m
 ==============
+[0m
+  w3 y1 [1mw2[0m [1mr2[0m     r1 b1 g2 y2 w1 
+  g3 r3 [1mg4[0m [1my5[0m     3     0
+> r1 b4 y2 w4     r1 r4 g1 g1 g2 g4 w1 
+  [1mb5[0m [1mg5[0m [1mb3[0m [1mr5[0m 
 
-  w3 y1 w1 r2     r1 b1 g2 y2 w2 
-  r3 g2 g4 y5     0     0
-> b4 y2 w4 r4     r1 r5 g1 g1 g4 
-  r1 b5 g5 b3 
-
-Turn 27 action: Discard from position 4
-
+Turn 27 action: Hint g at Bob: X-X-
+[32m
 ==============
+[0m
+  w3 y1 [1mw2[0m [1mr2[0m     r1 b1 g2 y2 w1 
+  [1mg3[0m r3 [1mg4[0m [1my5[0m     2     0
+  r1 b4 y2 w4     r1 r4 g1 g1 g2 g4 w1 
+> [1mb5[0m [1mg5[0m [1mb3[0m [1mr5[0m 
 
-  w3 y1 w1 r2     r1 b1 g2 y2 w2 
-  r3 g2 g4 y5     1     0
-  g3 b4 y2 w4     r1 r4 r5 g1 g1 g4 
-> r1 b5 g5 b3 
-
-Turn 28 action: Hint g at Cathy: X---
-
+Turn 28 action: Hint r at Alice: ---X
+[32m
 ==============
-
-> w3 y1 w1 r2     r1 b1 g2 y2 w2 
-  r3 g2 g4 y5     0     0
-  g3 b4 y2 w4     r1 r4 r5 g1 g1 g4 
-  r1 b5 g5 b3 
+[0m
+> w3 y1 [1mw2[0m [1mr2[0m     r1 b1 g2 y2 w1 
+  [1mg3[0m r3 [1mg4[0m [1my5[0m     1     0
+  r1 b4 y2 w4     r1 r4 g1 g1 g2 g4 w1 
+  [1mb5[0m [1mg5[0m [1mb3[0m [1mr5[0m 
 
 Turn 29 action: Play from position 4
-
+[32m
 ==============
+[0m
+  y4 w3 y1 [1mw2[0m     r2 b1 g2 y2 w1 
+> [1mg3[0m r3 [1mg4[0m [1my5[0m     1     0
+  r1 b4 y2 w4     r1 r4 g1 g1 g2 g4 w1 
+  [1mb5[0m [1mg5[0m [1mb3[0m [1mr5[0m 
 
-  y4 w3 y1 w1     r2 b1 g2 y2 w2 
-> r3 g2 g4 y5     0     0
-  g3 b4 y2 w4     r1 r4 r5 g1 g1 g4 
-  r1 b5 g5 b3 
-
-Turn 30 action: Discard from position 2
-
+Turn 30 action: Play from position 1
+[32m
 ==============
+[0m
+  y4 w3 y1 [1mw2[0m     r2 b1 g3 y2 w1 
+  b3 r3 [1mg4[0m [1my5[0m     1     0
+> r1 b4 y2 w4     r1 r4 g1 g1 g2 g4 w1 
+  [1mb5[0m [1mg5[0m [1mb3[0m [1mr5[0m 
 
-  y4 w3 y1 w1     r2 b1 g2 y2 w2 
-  b3 r3 g4 y5     1     0
-> g3 b4 y2 w4     r1 r4 r5 g1 g1 g2 g4 
-  r1 b5 g5 b3 
-
-Turn 31 action: Play from position 1
-
+Turn 31 action: Hint r at Bob: -X--
+[32m
 ==============
+[0m
+  y4 w3 y1 [1mw2[0m     r2 b1 g3 y2 w1 
+  b3 [1mr3[0m [1mg4[0m [1my5[0m     0     0
+  r1 b4 y2 w4     r1 r4 g1 g1 g2 g4 w1 
+> [1mb5[0m [1mg5[0m [1mb3[0m [1mr5[0m 
 
-  y4 w3 y1 w1     r2 b1 g3 y2 w2 
-  b3 r3 g4 y5     1     0
-  w3 b4 y2 w4     r1 r4 r5 g1 g1 g2 g4 
-> r1 b5 g5 b3 
-
-Turn 32 action: Hint r at Bob: -X--
-
+Turn 32 action: Play from position 4
+[32m
 ==============
+[0m
+> y4 w3 y1 [1mw2[0m     r2 b1 g3 y2 w1 
+  b3 [1mr3[0m [1mg4[0m [1my5[0m     0     1
+  r1 b4 y2 w4     r1 r4 r5 g1 g1 g2 g4 w1 
+  w3 [1mb5[0m [1mg5[0m [1mb3[0m 
 
-> y4 w3 y1 w1     r2 b1 g3 y2 w2 
-  b3 r3 g4 y5     0     0
-  w3 b4 y2 w4     r1 r4 r5 g1 g1 g2 g4 
-  r1 b5 g5 b3 
-
-Turn 33 action: Play from position 2
-
+Turn 33 action: Play from position 4
+[32m
 ==============
-
-  w1 y4 y1 w1     r2 b1 g3 y2 w3 
-> b3 r3 g4 y5     0     0
-  w3 b4 y2 w4     r1 r4 r5 g1 g1 g2 g4 
-  r1 b5 g5 b3 
+[0m
+  w1 y4 w3 y1     r2 b1 g3 y2 w2 
+> b3 [1mr3[0m [1mg4[0m [1my5[0m     0     1
+  r1 b4 y2 w4     r1 r4 r5 g1 g1 g2 g4 w1 
+  w3 [1mb5[0m [1mg5[0m [1mb3[0m 
 
 Turn 34 action: Play from position 3
-
+[32m
 ==============
-
-  w1 y4 y1 w1     r2 b1 g4 y2 w3 
-  y4 b3 r3 y5     0     0
-> w3 b4 y2 w4     r1 r4 r5 g1 g1 g2 g4 
-  r1 b5 g5 b3 
+[0m
+  w1 y4 w3 y1     r2 b1 g4 y2 w2 
+  y4 b3 [1mr3[0m [1my5[0m     0     1
+> r1 b4 y2 w4     r1 r4 r5 g1 g1 g2 g4 w1 
+  w3 [1mb5[0m [1mg5[0m [1mb3[0m 
 
 Turn 35 action: Discard from position 4
-
+[32m
 ==============
+[0m
+  w1 y4 w3 y1     r2 b1 g4 y2 w2 
+  y4 b3 [1mr3[0m [1my5[0m     1     1
+  b1 r1 b4 y2     r1 r4 r5 g1 g1 g2 g4 w1 w4 
+> w3 [1mb5[0m [1mg5[0m [1mb3[0m 
 
-  w1 y4 y1 w1     r2 b1 g4 y2 w3 
-  y4 b3 r3 y5     1     0
-  b1 w3 b4 y2     r1 r4 r5 g1 g1 g2 g4 w4 
-> r1 b5 g5 b3 
-
-Turn 36 action: Hint r at Bob: --X-
-
+Turn 36 action: Hint 3 at Alice: --X-
+[32m
 ==============
+[0m
+> w1 y4 [1mw3[0m y1     r2 b1 g4 y2 w2 
+  y4 b3 [1mr3[0m [1my5[0m     0     1
+  b1 r1 b4 y2     r1 r4 r5 g1 g1 g2 g4 w1 w4 
+  w3 [1mb5[0m [1mg5[0m [1mb3[0m 
 
-> w1 y4 y1 w1     r2 b1 g4 y2 w3 
-  y4 b3 r3 y5     0     0
-  b1 w3 b4 y2     r1 r4 r5 g1 g1 g2 g4 w4 
-  r1 b5 g5 b3 
-
-Turn 37 action: Discard from position 4
-
+Turn 37 action: Play from position 3
+[32m
 ==============
-
+[0m
   w5 w1 y4 y1     r2 b1 g4 y2 w3 
-> y4 b3 r3 y5     1     0
-  b1 w3 b4 y2     r1 r4 r5 g1 g1 g2 g4 w1 w4 
-  r1 b5 g5 b3 
+> y4 b3 [1mr3[0m [1my5[0m     0     1
+  b1 r1 b4 y2     r1 r4 r5 g1 g1 g2 g4 w1 w4 
+  w3 [1mb5[0m [1mg5[0m [1mb3[0m 
 
-Turn 38 action: Play from position 3
-
+Turn 38 action: Discard from position 2
+[32m
 ==============
+[0m
+  w5 w1 y4 y1     r2 b1 g4 y2 w3 
+  g3 y4 [1mr3[0m [1my5[0m     1     1
+> b1 r1 b4 y2     r1 r4 r5 b3 g1 g1 g2 g4 w1 w4 
+  w3 [1mb5[0m [1mg5[0m [1mb3[0m 
 
-  w5 w1 y4 y1     r3 b1 g4 y2 w3 
-  g3 y4 b3 y5     1     0
-> b1 w3 b4 y2     r1 r4 r5 g1 g1 g2 g4 w1 w4 
-  r1 b5 g5 b3 
-
-Turn 39 action: Hint g at Donald: --X-
-
+Turn 39 action: Discard from position 4
+[32m
 ==============
+[0m
+  w5 w1 y4 y1     r2 b1 g4 y2 w3 
+  g3 y4 [1mr3[0m [1my5[0m     2     1
+  r4 b1 r1 b4     r1 r4 r5 b3 g1 g1 g2 g4 y2 w1 w4 
+> w3 [1mb5[0m [1mg5[0m [1mb3[0m 
 
-  w5 w1 y4 y1     r3 b1 g4 y2 w3 
-  g3 y4 b3 y5     0     0
-  b1 w3 b4 y2     r1 r4 r5 g1 g1 g2 g4 w1 w4 
-> r1 b5 g5 b3 
-
-Turn 40 action: Play from position 3
-
+Turn 40 action: Discard from position 1
+[32m
 ==============
+[0m
+> w5 w1 y4 y1     r2 b1 g4 y2 w3 
+  g3 y4 [1mr3[0m [1my5[0m     3     1
+  r4 b1 r1 b4     r1 r4 r5 b3 g1 g1 g2 g4 y2 w1 w3 w4 
+  b2 [1mb5[0m [1mg5[0m [1mb3[0m 
 
-> w5 w1 y4 y1     r3 b1 g5 y2 w3 
-  g3 y4 b3 y5     1     0
-  b1 w3 b4 y2     r1 r4 r5 g1 g1 g2 g4 w1 w4 
-  r4 r1 b5 b3 
-
-Turn 41 action: Hint 4 at Donald: X---
-
+Turn 41 action: Hint b at Donald: XX-X
+[32m
 ==============
+[0m
+  w5 w1 y4 y1     r2 b1 g4 y2 w3 
+> g3 y4 [1mr3[0m [1my5[0m     2     1
+  r4 b1 r1 b4     r1 r4 r5 b3 g1 g1 g2 g4 y2 w1 w3 w4 
+  [1mb2[0m [1mb5[0m [1mg5[0m [1mb3[0m 
 
-  w5 w1 y4 y1     r3 b1 g5 y2 w3 
-> g3 y4 b3 y5     0     0
-  b1 w3 b4 y2     r1 r4 r5 g1 g1 g2 g4 w1 w4 
-  r4 r1 b5 b3 
-
-Turn 42 action: Discard from position 3
-
+Turn 42 action: Discard from position 2
+[32m
 ==============
+[0m
+  w5 w1 y4 y1     r2 b1 g4 y2 w3 
+  y1 g3 [1mr3[0m [1my5[0m     3     1
+> r4 b1 r1 b4     r1 r4 r5 b3 g1 g1 g2 g4 y2 y4 w1 w3 w4 
+  [1mb2[0m [1mb5[0m [1mg5[0m [1mb3[0m 
 
-  w5 w1 y4 y1     r3 b1 g5 y2 w3 
-  b2 g3 y4 y5     1     0
-> b1 w3 b4 y2     r1 r4 r5 b3 g1 g1 g2 g4 w1 w4 
-  r4 r1 b5 b3 
-
-Turn 43 action: Hint b at Bob: X---
-
+Turn 43 action: Discard from position 4
+[32m
 ==============
+[0m
+  w5 w1 y4 y1     r2 b1 g4 y2 w3 
+  y1 g3 [1mr3[0m [1my5[0m     4     1
+  b4 r4 b1 r1     r1 r4 r5 b3 b4 g1 g1 g2 g4 y2 y4 w1 w3 w4 
+> [1mb2[0m [1mb5[0m [1mg5[0m [1mb3[0m 
 
-  w5 w1 y4 y1     r3 b1 g5 y2 w3 
-  b2 g3 y4 y5     0     0
-  b1 w3 b4 y2     r1 r4 r5 b3 g1 g1 g2 g4 w1 w4 
-> r4 r1 b5 b3 
-
-Turn 44 action: Play from position 1
-
+Turn 44 action: Hint r at Bob: --X-
+[32m
 ==============
-
-> w5 w1 y4 y1     r4 b1 g5 y2 w3 
-  b2 g3 y4 y5     0     0
-  b1 w3 b4 y2     r1 r4 r5 b3 g1 g1 g2 g4 w1 w4 
-  y1 r1 b5 b3 
+[0m
+> w5 w1 y4 y1     r2 b1 g4 y2 w3 
+  y1 g3 [1mr3[0m [1my5[0m     3     1
+  b4 r4 b1 r1     r1 r4 r5 b3 b4 g1 g1 g2 g4 y2 y4 w1 w3 w4 
+  [1mb2[0m [1mb5[0m [1mg5[0m [1mb3[0m 
 
 Turn 45 action: Discard from position 4
-
+[32m
 ==============
+[0m
+  w4 w5 w1 y4     r2 b1 g4 y2 w3 
+> y1 g3 [1mr3[0m [1my5[0m     4     1
+  b4 r4 b1 r1     r1 r4 r5 b3 b4 g1 g1 g2 g4 y1 y2 y4 w1 w3 w4 
+  [1mb2[0m [1mb5[0m [1mg5[0m [1mb3[0m 
 
-  b4 w5 w1 y4     r4 b1 g5 y2 w3 
-> b2 g3 y4 y5     1     0
-  b1 w3 b4 y2     r1 r4 r5 b3 g1 g1 g2 g4 y1 w1 w4 
-  y1 r1 b5 b3 
-
-Turn 46 action: Play from position 1
-
+Turn 46 action: Play from position 3
+[32m
 ==============
+[0m
+  w4 w5 w1 y4     r3 b1 g4 y2 w3 
+  r2 y1 g3 [1my5[0m     4     1
+> b4 r4 b1 r1     r1 r4 r5 b3 b4 g1 g1 g2 g4 y1 y2 y4 w1 w3 w4 
+  [1mb2[0m [1mb5[0m [1mg5[0m [1mb3[0m 
 
-  b4 w5 w1 y4     r4 b2 g5 y2 w3 
-  w4 g3 y4 y5     1     0
-> b1 w3 b4 y2     r1 r4 r5 b3 g1 g1 g2 g4 y1 w1 w4 
-  y1 r1 b5 b3 
-
-Turn 47 action: Hint w at Bob: X---
-
+Turn 47 action: Hint 4 at Alice: X--X
+[32m
 ==============
+[0m
+  [1mw4[0m w5 w1 [1my4[0m     r3 b1 g4 y2 w3 
+  r2 y1 g3 [1my5[0m     3     1
+  b4 r4 b1 r1     r1 r4 r5 b3 b4 g1 g1 g2 g4 y1 y2 y4 w1 w3 w4 
+> [1mb2[0m [1mb5[0m [1mg5[0m [1mb3[0m 
 
-  b4 w5 w1 y4     r4 b2 g5 y2 w3 
-  w4 g3 y4 y5     0     0
-  b1 w3 b4 y2     r1 r4 r5 b3 g1 g1 g2 g4 y1 w1 w4 
-> y1 r1 b5 b3 
-
-Turn 48 action: Play from position 4
-
+Turn 48 action: Hint 4 at Alice: X--X
+[32m
 ==============
+[0m
+> [1mw4[0m w5 w1 [1my4[0m     r3 b1 g4 y2 w3 
+  r2 y1 g3 [1my5[0m     2     1
+  b4 r4 b1 r1     r1 r4 r5 b3 b4 g1 g1 g2 g4 y1 y2 y4 w1 w3 w4 
+  [1mb2[0m [1mb5[0m [1mg5[0m [1mb3[0m 
 
-> b4 w5 w1 y4     r4 b3 g5 y2 w3 
-  w4 g3 y4 y5     0     0
-  b1 w3 b4 y2     r1 r4 r5 b3 g1 g1 g2 g4 y1 w1 w4 
-  r2 y1 r1 b5 
-
-Turn 49 action: Discard from position 4
-
+Turn 49 action: Play from position 1
+[32m
 ==============
+[0m
+  w2 w5 w1 [1my4[0m     r3 b1 g4 y2 w4 
+> r2 y1 g3 [1my5[0m     2     1
+  b4 r4 b1 r1     r1 r4 r5 b3 b4 g1 g1 g2 g4 y1 y2 y4 w1 w3 w4 
+  [1mb2[0m [1mb5[0m [1mg5[0m [1mb3[0m 
 
-  w2 b4 w5 w1     r4 b3 g5 y2 w3 
-> w4 g3 y4 y5     1     0
-  b1 w3 b4 y2     r1 r4 r5 b3 g1 g1 g2 g4 y1 y4 w1 w4 
-  r2 y1 r1 b5 
-
-Turn 50 action: Play from position 1
-
+Turn 50 action: Hint 5 at Alice: -X--
+[32m
 ==============
+[0m
+  w2 [1mw5[0m w1 [1my4[0m     r3 b1 g4 y2 w4 
+  r2 y1 g3 [1my5[0m     1     1
+> b4 r4 b1 r1     r1 r4 r5 b3 b4 g1 g1 g2 g4 y1 y2 y4 w1 w3 w4 
+  [1mb2[0m [1mb5[0m [1mg5[0m [1mb3[0m 
 
-  w2 b4 w5 w1     r4 b3 g5 y2 w4 
-  b1 g3 y4 y5     1     0
-> b1 w3 b4 y2     r1 r4 r5 b3 g1 g1 g2 g4 y1 y4 w1 w4 
-  r2 y1 r1 b5 
-
-Turn 51 action: Hint b at Alice: -X--
-
+Turn 51 action: Discard from position 4
+[32m
 ==============
+[0m
+  w2 [1mw5[0m w1 [1my4[0m     r3 b1 g4 y2 w4 
+  r2 y1 g3 [1my5[0m     2     1
+  b1 b4 r4 b1     r1 r1 r4 r5 b3 b4 g1 g1 g2 g4 y1 y2 y4 w1 w3 w4 
+> [1mb2[0m [1mb5[0m [1mg5[0m [1mb3[0m 
 
-  w2 b4 w5 w1     r4 b3 g5 y2 w4 
-  b1 g3 y4 y5     0     0
-  b1 w3 b4 y2     r1 r4 r5 b3 g1 g1 g2 g4 y1 y4 w1 w4 
-> r2 y1 r1 b5 
-
-Turn 52 action: Discard from position 3
-
+Turn 52 action: Hint r at Cathy: --X-
+[32m
 ==============
-
-> w2 b4 w5 w1     r4 b3 g5 y2 w4 
-  b1 g3 y4 y5     1     0
-  b1 w3 b4 y2     r1 r1 r4 r5 b3 g1 g1 g2 g4 y1 y4 w1 w4 
-  b2 r2 y1 b5 
+[0m
+> w2 [1mw5[0m w1 [1my4[0m     r3 b1 g4 y2 w4 
+  r2 y1 g3 [1my5[0m     1     1
+  b1 b4 [1mr4[0m b1     r1 r1 r4 r5 b3 b4 g1 g1 g2 g4 y1 y2 y4 w1 w3 w4 
+  [1mb2[0m [1mb5[0m [1mg5[0m [1mb3[0m 
 
 Turn 53 action: Play from position 2
-
+[32m
 ==============
+[0m
+  b2 w2 w1 [1my4[0m     r3 b1 g4 y2 w5 
+> r2 y1 g3 [1my5[0m     2     1
+  b1 b4 [1mr4[0m b1     r1 r1 r4 r5 b3 b4 g1 g1 g2 g4 y1 y2 y4 w1 w3 w4 
+  [1mb2[0m [1mb5[0m [1mg5[0m [1mb3[0m 
 
-  r3 w2 w5 w1     r4 b4 g5 y2 w4 
-> b1 g3 y4 y5     1     0
-  b1 w3 b4 y2     r1 r1 r4 r5 b3 g1 g1 g2 g4 y1 y4 w1 w4 
-  b2 r2 y1 b5 
-
-Turn 54 action: Hint 5 at Alice: --X-
-
+Turn 54 action: Discard from position 3
+[32m
 ==============
+[0m
+  b2 w2 w1 [1my4[0m     r3 b1 g4 y2 w5 
+  r3 r2 y1 [1my5[0m     3     1
+> b1 b4 [1mr4[0m b1     r1 r1 r4 r5 b3 b4 g1 g1 g2 g3 g4 y1 y2 y4 w1 w3 w4 
+  [1mb2[0m [1mb5[0m [1mg5[0m [1mb3[0m 
 
-  r3 w2 w5 w1     r4 b4 g5 y2 w4 
-  b1 g3 y4 y5     0     0
-> b1 w3 b4 y2     r1 r1 r4 r5 b3 g1 g1 g2 g4 y1 y4 w1 w4 
-  b2 r2 y1 b5 
-
-Turn 55 action: Discard from position 4
-
+Turn 55 action: Play from position 3
+[32m
 ==============
+[0m
+  b2 w2 w1 [1my4[0m     r4 b1 g4 y2 w5 
+  r3 r2 y1 [1my5[0m     3     1
+  y3 b1 b4 b1     r1 r1 r4 r5 b3 b4 g1 g1 g2 g3 g4 y1 y2 y4 w1 w3 w4 
+> [1mb2[0m [1mb5[0m [1mg5[0m [1mb3[0m 
 
-  r3 w2 w5 w1     r4 b4 g5 y2 w4 
-  b1 g3 y4 y5     1     0
-  y3 b1 w3 b4     r1 r1 r4 r5 b3 g1 g1 g2 g4 y1 y2 y4 w1 w4 
-> b2 r2 y1 b5 
-
-Turn 56 action: Play from position 4
-
+Turn 56 action: Play from position 3
+[32m
 ==============
+[0m
+> b2 w2 w1 [1my4[0m     r4 b1 g5 y2 w5 
+  r3 r2 y1 [1my5[0m     4     1
+  y3 b1 b4 b1     r1 r1 r4 r5 b3 b4 g1 g1 g2 g3 g4 y1 y2 y4 w1 w3 w4 
+  y3 [1mb2[0m [1mb5[0m [1mb3[0m 
 
-> r3 w2 w5 w1     r4 b5 g5 y2 w4 
-  b1 g3 y4 y5     2     0
-  y3 b1 w3 b4     r1 r1 r4 r5 b3 g1 g1 g2 g4 y1 y2 y4 w1 w4 
-  y3 b2 r2 y1 
-
-Turn 57 action: Play from position 3
-
+Turn 57 action: Hint y at Cathy: X---
+[32m
 ==============
-
-  r3 w2 w1     r4 b5 g5 y2 w5 
-> b1 g3 y4 y5     3     0
-  y3 b1 w3 b4     r1 r1 r4 r5 b3 g1 g1 g2 g4 y1 y2 y4 w1 w4 
-  y3 b2 r2 y1 
+[0m
+  b2 w2 w1 [1my4[0m     r4 b1 g5 y2 w5 
+> r3 r2 y1 [1my5[0m     3     1
+  [1my3[0m b1 b4 b1     r1 r1 r4 r5 b3 b4 g1 g1 g2 g3 g4 y1 y2 y4 w1 w3 w4 
+  y3 [1mb2[0m [1mb5[0m [1mb3[0m 
 
 Turn 58 action: Discard from position 3
-
+[32m
 ==============
+[0m
+  b2 w2 w1 [1my4[0m     r4 b1 g5 y2 w5 
+  r3 r2 [1my5[0m     4     1
+> [1my3[0m b1 b4 b1     r1 r1 r4 r5 b3 b4 g1 g1 g2 g3 g4 y1 y1 y2 y4 w1 w3 w4 
+  y3 [1mb2[0m [1mb5[0m [1mb3[0m 
 
-  r3 w2 w1     r4 b5 g5 y2 w5 
-  b1 g3 y5     4     0
-> y3 b1 w3 b4     r1 r1 r4 r5 b3 g1 g1 g2 g4 y1 y2 y4 y4 w1 w4 
-  y3 b2 r2 y1 
-
-Turn 59 action: Hint 3 at Donald: X---
-
+Turn 59 action: Play from position 1
+[32m
 ==============
+[0m
+  b2 w2 w1 [1my4[0m     r4 b1 g5 y3 w5 
+  r3 r2 [1my5[0m     4     1
+  b1 b4 b1     r1 r1 r4 r5 b3 b4 g1 g1 g2 g3 g4 y1 y1 y2 y4 w1 w3 w4 
+> y3 [1mb2[0m [1mb5[0m [1mb3[0m 
 
-  r3 w2 w1     r4 b5 g5 y2 w5 
-  b1 g3 y5     3     0
-  y3 b1 w3 b4     r1 r1 r4 r5 b3 g1 g1 g2 g4 y1 y2 y4 y4 w1 w4 
-> y3 b2 r2 y1 
-
-Turn 60 action: Play from position 1
-Won with 22 points.
+Turn 60 action: Discard from position 1
+Won with 18 points.

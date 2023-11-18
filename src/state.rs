@@ -1,12 +1,13 @@
 use std::fmt::Display;
 
+use colored::Colorize;
 use indexmap::{IndexMap, IndexSet};
 use rand::seq::SliceRandom;
 use rand_chacha::ChaCha20Rng;
 
 use crate::{
     card::{Card, Color, Number, PossibleCards},
-    player::{action::Action, basic::BasicPlayer, Player},
+    player::{action::Action, basic::BasicPlayer, Player, Property},
 };
 
 pub struct DiscardPile {
@@ -197,8 +198,81 @@ struct State {
     firework: Firework,
     number_of_players: usize,
     number_of_actions_with_empty_deck: usize,
-    hands: Vec<Vec<Card>>,
+    hands: Vec<Hand>,
     discard: DiscardPile,
+}
+
+#[derive(Clone)]
+struct Hand {
+    clued_cards: Vec<(Card, Vec<Property>, Vec<Property>)>,
+    max_size: usize,
+}
+
+impl Hand {
+    pub fn new(max_size: usize) -> Self {
+        Self {
+            clued_cards: Vec::new(),
+            max_size,
+        }
+    }
+
+    fn draw(&mut self, card: Card) {
+        self.clued_cards.insert(0, (card, Vec::new(), Vec::new()))
+    }
+
+    fn remove(&mut self, position: usize) -> Result<Card, RuleViolation> {
+        let internal_index = position
+            .checked_sub(1)
+            .ok_or(RuleViolation::InvalidCardPosition)?;
+        if self.clued_cards.len() <= internal_index {
+            return Err(RuleViolation::InvalidCardPosition);
+        }
+        Ok(self.clued_cards.remove(internal_index).0)
+    }
+
+    fn give_hint(
+        &mut self,
+        hinted_property: Property,
+        positions: crate::player::PositionSet,
+    ) -> Result<(), RuleViolation> {
+        for (ii, (card, pos, neg)) in self.clued_cards.iter_mut().enumerate() {
+            let i = ii + 1;
+
+            let satisfied = card.satisfies(hinted_property);
+
+            if satisfied != positions.contains(i) {
+                Err(RuleViolation::IncorrectHint)?;
+            }
+
+            if satisfied {
+                pos.push(hinted_property);
+            } else {
+                neg.push(hinted_property);
+            }
+        }
+
+        Ok(())
+    }
+}
+
+impl Display for Hand {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        for ii in 0..self.max_size {
+            if let Some((card, pos, _)) = self.clued_cards.get(ii) {
+                let card_string = format!("{card}");
+
+                if pos.is_empty() {
+                    write!(f, "{} ", card_string)?;
+                } else {
+                    write!(f, "{} ", card_string.bold())?;
+                }
+            } else {
+                write!(f, "   ")?;
+            }
+        }
+
+        Ok(())
+    }
 }
 
 impl Display for State {
@@ -214,8 +288,14 @@ impl Display for State {
                 ' '
             };
             write!(f, "{prefix} ")?;
-            for card in &state.hands[id] {
-                write!(f, "{card} ")?;
+            for (card, pos, _) in &state.hands[id].clued_cards {
+                let card_string = format!("{card}");
+
+                if pos.is_empty() {
+                    write!(f, "{} ", card_string)?;
+                } else {
+                    write!(f, "{} ", card_string.bold())?;
+                }
             }
 
             Ok(())
@@ -249,14 +329,14 @@ impl State {
             firework,
             number_of_players,
             number_of_actions_with_empty_deck: 0,
-            hands: vec![Vec::new(); number_of_players],
+            hands: vec![Hand::new(rules.hand_size); number_of_players],
             discard: DiscardPile::new(rules),
         }
     }
 
     fn draw(&mut self) -> Option<Card> {
         let new = self.deck.draw()?;
-        self.hands[self.active_player_id].insert(0, new);
+        self.hands[self.active_player_id].draw(new);
         Some(new)
     }
 
@@ -273,14 +353,7 @@ impl State {
     }
 
     fn remove_card(&mut self, position: usize) -> Result<Card, RuleViolation> {
-        let internal_index = position
-            .checked_sub(1)
-            .ok_or(RuleViolation::InvalidCardPosition)?;
-        let cards = &mut self.hands[self.active_player_id];
-        if cards.len() <= internal_index {
-            return Err(RuleViolation::InvalidCardPosition);
-        }
-        Ok(cards.remove(internal_index))
+        self.hands[self.active_player_id].remove(position)
     }
 
     fn apply_action(
@@ -304,12 +377,10 @@ impl State {
                 let card = self.remove_card(position)?;
 
                 if self.firework.add(card) {
-                    println!("Played {card} successfully!");
                     if card.number == Number::Five && self.remaining_hints < rules.max_clues {
                         self.remaining_hints += 1;
                     }
                 } else {
-                    println!("Misplayed {card}!");
                     self.strikes += 1;
                     self.discard.add(&card);
                 }
@@ -353,12 +424,7 @@ impl State {
                     Err(RuleViolation::NullHint)?;
                 }
 
-                for (ii, card) in self.hands[receiver].iter().enumerate() {
-                    let i = ii + 1;
-                    if card.satisfies(hinted_property) != positions.contains(i) {
-                        Err(RuleViolation::IncorrectHint)?;
-                    }
-                }
+                self.hands[receiver].give_hint(hinted_property, positions)?;
 
                 self.remaining_hints -= 1;
                 Ok((None, None))
@@ -617,7 +683,7 @@ impl Display for Record {
         for &action in &self.actions {
             assert!(state.is_concluded().is_none());
 
-            writeln!(f, "\n==============\n")?;
+            writeln!(f, "{}", "\n==============\n".green())?;
             writeln!(f, "{state}")?;
 
             writeln!(f, "Turn {} action: {}", turn, action)?;
@@ -679,6 +745,7 @@ pub fn record_game(
         state.go_to_next_player();
     }
 
+    #[allow(unused_variables)]
     let mut turn = 1;
 
     loop {
@@ -693,12 +760,7 @@ pub fn record_game(
             );
         }
 
-        println!("\n==============\n");
-        println!("{state}");
-
         let mut action = players[state.active_player_id].request_action();
-
-        println!("Turn {} action: {}", turn, action);
 
         let (old, new) = state.apply_action(action, &rules).unwrap();
 

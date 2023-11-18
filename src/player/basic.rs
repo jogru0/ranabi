@@ -505,7 +505,14 @@ impl PlayerState {
             };
         }
 
-        ActionAssessment::unconvectional()
+        ActionAssessment {
+            new_touches: 0,
+            delay_until_relevant: 0,
+            is_unconventional: false,
+            action_type: ActionType::Play,
+            sure_influence_on_clue_count: 0,
+            last_resort: true,
+        }
     }
 
     fn suggest_discards(&self) -> Vec<(ActionAssessment, Action)> {
@@ -543,16 +550,21 @@ impl PlayerState {
     }
 
     fn assess_discard(&self, position: usize) -> ActionAssessment {
-        match self.chop_position() {
-            Some(pos) if position != pos => ActionAssessment::unconvectional(),
-            _ => ActionAssessment {
-                new_touches: 0,
-                delay_until_relevant: 0,
-                is_unconventional: false,
-                action_type: ActionType::Discard,
-                sure_influence_on_clue_count: 1,
-                last_resort: true,
-            },
+        let last_resort = if let Some(chop_position) = self.chop_position() {
+            if position != chop_position {
+                return ActionAssessment::unconvectional();
+            }
+            false
+        } else {
+            true
+        };
+        ActionAssessment {
+            new_touches: 0,
+            delay_until_relevant: 0,
+            is_unconventional: false,
+            action_type: ActionType::Discard,
+            sure_influence_on_clue_count: 1,
+            last_resort,
         }
     }
 }

@@ -18,5 +18,5 @@ fn devil_game() {
 
     write!(&mut file, "{record}").unwrap();
 
-    assert_eq!(score, Some(22));
+    assert_eq!(score, Some(18));
 }
