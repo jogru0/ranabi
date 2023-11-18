@@ -8,7 +8,7 @@ use crate::{
 };
 
 use self::{
-    hint_value::HintValue,
+    action_assessment::ActionAssessment,
     inter::{Interpretation, Interpretations},
 };
 
@@ -185,7 +185,8 @@ impl BasicPlayer {
 
                 //We probably need to add cards gotten by the correct interpretation here.
                 //And delay might also be faster due to prompts/finesses, or slower due to delayed play queue.
-                let hint_value = HintValue {
+                let hint_value = ActionAssessment {
+                    is_unconventional: false,
                     new_touches: new_cards.len(),
                     delay_until_relevant: (self.rules().number_of_players + receiver
                         - self.player_id)
@@ -578,4 +579,4 @@ mod inter {
     }
 }
 
-mod hint_value;
+mod action_assessment;
