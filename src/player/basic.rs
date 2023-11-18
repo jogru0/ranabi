@@ -193,6 +193,7 @@ impl BasicPlayer {
                 % self.rules().number_of_players,
             action_type: ActionType::Hint,
             sure_influence_on_clue_count: -1,
+            last_resort: false,
         }
     }
 
@@ -500,6 +501,7 @@ impl PlayerState {
                 is_unconventional: false,
                 action_type: ActionType::Play,
                 sure_influence_on_clue_count,
+                last_resort: false,
             };
         }
 
@@ -541,16 +543,16 @@ impl PlayerState {
     }
 
     fn assess_discard(&self, position: usize) -> ActionAssessment {
-        if Some(position) == self.chop_position() {
-            ActionAssessment {
+        match self.chop_position() {
+            Some(pos) if position != pos => ActionAssessment::unconvectional(),
+            _ => ActionAssessment {
                 new_touches: 0,
                 delay_until_relevant: 0,
                 is_unconventional: false,
                 action_type: ActionType::Discard,
                 sure_influence_on_clue_count: 1,
-            }
-        } else {
-            ActionAssessment::unconvectional()
+                last_resort: true,
+            },
         }
     }
 }
