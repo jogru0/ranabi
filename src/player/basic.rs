@@ -132,7 +132,9 @@ impl BasicPlayer {
         let mut positions = [false; 6];
 
         for (pos, pos_b) in positions.iter_mut().enumerate() {
-            let Some(card_id) = receiver_cards.cards[pos] else {continue;};
+            let Some(card_id) = receiver_cards.cards[pos] else {
+                continue;
+            };
             let card = self.witnessed_cards[card_id].unwrap();
             if card.satisfies(hinted_property) {
                 *pos_b = true;
@@ -587,18 +589,16 @@ mod hint_value {
 
 impl PartialOrd for HintValue {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        match self.new_touches.partial_cmp(&other.new_touches) {
-            Some(core::cmp::Ordering::Equal) => {}
-            ord => return ord,
-        }
-        other
-            .delay_until_relevant
-            .partial_cmp(&self.delay_until_relevant)
+        Some(self.cmp(other))
     }
 }
 
 impl Ord for HintValue {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        self.partial_cmp(other).unwrap()
+        match self.new_touches.cmp(&other.new_touches) {
+            core::cmp::Ordering::Equal => {}
+            ord => return ord,
+        }
+        other.delay_until_relevant.cmp(&self.delay_until_relevant)
     }
 }

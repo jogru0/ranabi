@@ -1,16 +1,10 @@
 use rand::SeedableRng;
 use rand_chacha::ChaCha20Rng;
 
-use crate::{
+use ranabi::{
     player::{basic::BasicPlayer, Player},
     state::{play_game, Rules},
 };
-
-mod card;
-
-mod state;
-
-mod player;
 
 fn main() {
     println!("Hello, world!");

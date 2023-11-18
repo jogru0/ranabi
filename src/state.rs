@@ -6,7 +6,7 @@ use rand_chacha::ChaCha20Rng;
 
 use crate::{
     card::{Card, Color, Number, PossibleCards},
-    player::{Action, Player},
+    player::{basic::BasicPlayer, Action, Player},
 };
 
 pub struct DiscardPile {
@@ -190,7 +190,7 @@ impl PublicState {
 }
 
 struct State {
-    deck: Vec<Card>,
+    deck: Deck,
     active_player_id: usize,
     remaining_hints: usize,
     strikes: usize,
@@ -237,10 +237,7 @@ impl Display for State {
 }
 
 impl State {
-    fn new(rules: &Rules, rng: &mut ChaCha20Rng) -> Self {
-        let mut deck = rules.all_cards();
-        deck.shuffle(rng);
-
+    fn new(rules: &Rules, deck: Deck) -> Self {
         let firework = Firework::new(&rules.used_colors());
         let number_of_players = rules.number_of_players;
 
@@ -258,7 +255,7 @@ impl State {
     }
 
     fn draw(&mut self) -> Option<Card> {
-        let Some(new) = self.deck.pop() else {return None};
+        let new = self.deck.draw()?;
         self.hands[self.active_player_id].insert(0, new);
         Some(new)
     }
@@ -383,6 +380,18 @@ pub struct Rules {
 }
 
 impl Rules {
+    pub fn get_shuffled_deck(&self, rng: &mut ChaCha20Rng) -> Deck {
+        let mut deck = self.all_cards();
+        deck.shuffle(rng);
+        Deck::new(deck)
+    }
+
+    pub fn get_basic_player(&self) -> Vec<Box<dyn Player>> {
+        (0..self.number_of_players)
+            .map(|id| Box::new(BasicPlayer::new(*self, id)) as Box<dyn Player>)
+            .collect()
+    }
+
     pub fn max_score(&self) -> usize {
         self.used_colors().len() * 5
     }
@@ -489,12 +498,18 @@ impl Rules {
         result
     }
 
-    pub(crate) fn new() -> Rules {
+    pub fn new() -> Rules {
         Rules {
             number_of_players: 4,
             hand_size: 4,
             max_clues: 8,
         }
+    }
+}
+
+impl Default for Rules {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -576,14 +591,79 @@ impl Firework {
     }
 }
 
-pub fn play_game(
+pub struct Record {
     rules: Rules,
-    rng: &mut ChaCha20Rng,
+    deck: Deck,
+    actions: Vec<Action>,
+}
+
+impl Display for Record {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let mut state = State::new(&self.rules, self.deck.clone());
+
+        for _ in 0..self.rules.number_of_players {
+            for _ in 0..self.rules.hand_size {
+                state.draw().unwrap();
+            }
+            state.go_to_next_player();
+        }
+
+        let mut turn = 1;
+
+        for &action in &self.actions {
+            assert!(state.is_concluded().is_none());
+
+            writeln!(f, "\n==============\n")?;
+            writeln!(f, "{state}")?;
+
+            writeln!(f, "Turn {} action: {}", turn, action)?;
+
+            let (_old, _new) = state.apply_action(action, &self.rules).unwrap();
+
+            if let Some(_old) = _old {
+                // action.add_card_information(old);
+            }
+
+            state.go_to_next_player();
+            turn += 1;
+        }
+
+        match state.is_concluded() {
+            Some(Some(score)) => writeln!(f, "Won with {score} points."),
+            Some(None) => writeln!(f, "Lost."),
+            None => panic!(),
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct Deck {
+    cards: Vec<Card>,
+}
+impl Deck {
+    fn draw(&mut self) -> Option<Card> {
+        self.cards.pop()
+    }
+
+    fn is_empty(&self) -> bool {
+        self.cards.is_empty()
+    }
+
+    fn new(cards: Vec<Card>) -> Self {
+        Self { cards }
+    }
+}
+
+pub fn record_game(
+    rules: Rules,
+    deck: Deck,
     mut players: Vec<Box<dyn Player>>,
-) -> Option<usize> {
+) -> (Option<usize>, Record) {
     assert_eq!(rules.number_of_players, players.len());
 
-    let mut state = State::new(&rules, rng);
+    let mut state = State::new(&rules, deck.clone());
+
+    let mut record = Vec::new();
 
     for p_id in 0..players.len() {
         for _ in 0..rules.hand_size {
@@ -599,7 +679,14 @@ pub fn play_game(
 
     loop {
         if let Some(score) = state.is_concluded() {
-            return score;
+            return (
+                score,
+                Record {
+                    rules,
+                    deck,
+                    actions: record,
+                },
+            );
         }
 
         println!("\n==============\n");
@@ -610,6 +697,8 @@ pub fn play_game(
         println!("Turn {} action: {}", turn, action);
 
         let (old, new) = state.apply_action(action, &rules).unwrap();
+
+        record.push(action);
 
         if let Some(old) = old {
             action.add_card_information(old);
@@ -631,4 +720,13 @@ pub fn play_game(
         state.go_to_next_player();
         turn += 1;
     }
+}
+
+pub fn play_game(
+    rules: Rules,
+    rng: &mut ChaCha20Rng,
+    players: Vec<Box<dyn Player>>,
+) -> Option<usize> {
+    let deck = rules.get_shuffled_deck(rng);
+    record_game(rules, deck, players).0
 }
