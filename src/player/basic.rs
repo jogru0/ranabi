@@ -4,6 +4,7 @@ use indexmap::{IndexMap, IndexSet};
 
 use crate::{
     card::{Card, Number, PossibleCards},
+    player::basic::action_assessment::ActionType,
     state::{PublicState, Rules},
 };
 
@@ -190,7 +191,7 @@ impl BasicPlayer {
             new_touches: new_cards.len(),
             delay_until_relevant: (self.rules().number_of_players + receiver - self.player_id)
                 % self.rules().number_of_players,
-            plays_a_card_right_now: false,
+            action_type: ActionType::Hint,
         }
     }
 
@@ -306,13 +307,13 @@ impl Player for BasicPlayer {
     }
 
     fn request_action(&self) -> Action {
-        if let Some(index) = self.player_states[self.player_id].suggest_play(
+        if let Some(position) = self.player_states[self.player_id].suggest_play(
             &self.public_state,
             &self.possible_touches_in_own_hand_or_more(),
         ) {
             return Action::Play {
                 card: None,
-                position: index,
+                position,
             };
         }
 
@@ -326,11 +327,11 @@ impl Player for BasicPlayer {
             }
         }
 
-        if let Some(chop) = self.player_states[self.player_id].chop_position() {
-            if self.public_state.clues != self.public_state.rules.max_clues {
+        if self.public_state.clues != self.public_state.rules.max_clues {
+            if let Some(position) = self.player_states[self.player_id].suggest_discard() {
                 return Action::Discard {
                     card: None,
-                    position: chop,
+                    position,
                 };
             }
         }
@@ -492,11 +493,24 @@ impl PlayerState {
                 new_touches: 0,
                 delay_until_relevant: 0,
                 is_unconventional: false,
-                plays_a_card_right_now: true,
+                action_type: ActionType::Play,
             };
         }
 
         ActionAssessment::unconvectional()
+    }
+
+    fn suggest_discard(&self) -> Option<usize> {
+        let mut options: Vec<_> = (1..=self.cards.current_hand_size)
+            .map(|position| (self.assess_discard(position), position))
+            .collect();
+
+        options.sort_by_key(|(hint_value, _)| *hint_value);
+        options
+            .last()
+            .filter(|(a, _)| !a.is_unconventional)
+            .map(|(_, v)| v)
+            .copied()
     }
 
     fn suggest_play(
@@ -519,6 +533,19 @@ impl PlayerState {
             .filter(|(a, _)| !a.is_unconventional)
             .map(|(_, v)| v)
             .copied()
+    }
+
+    fn assess_discard(&self, position: usize) -> ActionAssessment {
+        if Some(position) == self.chop_position() {
+            ActionAssessment {
+                new_touches: 0,
+                delay_until_relevant: 0,
+                is_unconventional: false,
+                action_type: ActionType::Discard,
+            }
+        } else {
+            ActionAssessment::unconvectional()
+        }
     }
 }
 

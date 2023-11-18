@@ -1,17 +1,25 @@
-#[derive(PartialEq, Eq, Clone, Copy)]
+#[derive(PartialEq, Eq, Clone, Copy, Debug)]
 pub struct ActionAssessment {
     pub new_touches: usize,
     pub delay_until_relevant: usize,
     pub is_unconventional: bool,
-    pub plays_a_card_right_now: bool,
+    pub action_type: ActionType,
 }
+
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum ActionType {
+    Play,
+    Discard,
+    Hint,
+}
+
 impl ActionAssessment {
     pub(crate) fn unconvectional() -> Self {
         Self {
             is_unconventional: true,
             new_touches: 100,
             delay_until_relevant: 0,
-            plays_a_card_right_now: true,
+            action_type: ActionType::Hint,
         }
     }
 }
@@ -30,13 +38,17 @@ impl Ord for ActionAssessment {
             ord => return ord,
         }
 
-        match self
-            .plays_a_card_right_now
-            .cmp(&self.plays_a_card_right_now)
-        {
+        match (self.action_type == ActionType::Play).cmp(&(self.action_type == ActionType::Play)) {
             core::cmp::Ordering::Equal => {}
             ord => return ord,
         }
+
+        match (self.action_type == ActionType::Hint).cmp(&(self.action_type == ActionType::Hint)) {
+            core::cmp::Ordering::Equal => {}
+            ord => return ord,
+        }
+
+        assert_eq!(self.action_type, other.action_type);
 
         match self.new_touches.cmp(&other.new_touches) {
             core::cmp::Ordering::Equal => {}
