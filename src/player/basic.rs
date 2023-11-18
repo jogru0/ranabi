@@ -364,6 +364,40 @@ impl BasicPlayer {
     fn this_player(&self) -> &PlayerState {
         &self.player_states[self.player_id]
     }
+
+    fn assedd_discards_this_player(&self) -> Vec<(ActionAssessment, Action)> {
+        (1..=self.this_player().cards.current_hand_size)
+            .map(|position| {
+                (
+                    self.assess_discard(position),
+                    Action::Discard {
+                        card: None,
+                        position,
+                    },
+                )
+            })
+            .collect()
+    }
+
+    pub fn assess_discard(&self, position: usize) -> ActionAssessment {
+        let last_resort = if let Some(chop_position) = self.this_player().chop_position() {
+            if position != chop_position {
+                return ActionAssessment::unconvectional();
+            }
+            false
+        } else {
+            true
+        };
+        ActionAssessment {
+            new_touches: 0,
+            delay_until_relevant: 0,
+            is_unconventional: false,
+            action_type: ActionType::Discard,
+            sure_influence_on_clue_count: 1,
+            last_resort,
+            next_player_might_be_locked_with_no_clue: false,
+        }
+    }
 }
 
 impl Player for BasicPlayer {
@@ -416,7 +450,7 @@ impl Player for BasicPlayer {
         }
 
         if self.public_state.clues != self.public_state.rules.max_clues {
-            options.extend(self.player_states[self.player_id].suggest_discards());
+            options.extend(self.assedd_discards_this_player());
         }
 
         options.sort_by_key(|(hint_value, _)| *hint_value);

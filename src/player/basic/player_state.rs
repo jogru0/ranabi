@@ -3,17 +3,13 @@ use indexmap::{IndexMap, IndexSet};
 use crate::{
     card::{Number, PossibleCards},
     player::{
-        action::Action,
         basic::inter::{Interpretation, Interpretations},
         PositionSet, Property,
     },
     state::{Firework, PublicState, Rules},
 };
 
-use super::{
-    action_assessment::{ActionAssessment, ActionType},
-    HandCards,
-};
+use super::HandCards;
 
 #[derive(Clone)]
 pub struct PlayerState {
@@ -208,39 +204,5 @@ impl PlayerState {
                 firework,
                 potentially_entertained_candidates_for_touched_in_own_hand,
             )
-    }
-
-    pub fn suggest_discards(&self) -> Vec<(ActionAssessment, Action)> {
-        (1..=self.cards.current_hand_size)
-            .map(|position| {
-                (
-                    self.assess_discard(position),
-                    Action::Discard {
-                        card: None,
-                        position,
-                    },
-                )
-            })
-            .collect()
-    }
-
-    pub fn assess_discard(&self, position: usize) -> ActionAssessment {
-        let last_resort = if let Some(chop_position) = self.chop_position() {
-            if position != chop_position {
-                return ActionAssessment::unconvectional();
-            }
-            false
-        } else {
-            true
-        };
-        ActionAssessment {
-            new_touches: 0,
-            delay_until_relevant: 0,
-            is_unconventional: false,
-            action_type: ActionType::Discard,
-            sure_influence_on_clue_count: 1,
-            last_resort,
-            next_player_might_be_locked_with_no_clue: false,
-        }
     }
 }
