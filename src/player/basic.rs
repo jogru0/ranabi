@@ -72,7 +72,8 @@ impl BasicPlayer {
             //We could apply additional information we have from interpretations to try to recuce the possible touches.
             //However, maybe we don't alyways want to do that? Not sure at the moment.
             //For now, it should suffice to just use the hint information directly.
-            result.extend(self_state.possible_cards[card_id].clone());
+            result
+                .extend(self_state.objectively_possible_cards_according_to_hints[card_id].clone());
         }
 
         result

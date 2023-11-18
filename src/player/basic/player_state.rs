@@ -19,7 +19,7 @@ pub struct PlayerState {
     pub cards: HandCards,
     //I think this currently is strictly just what follows explicitely from hints.
     //Maybe this information should live in the public information?
-    pub possible_cards: IndexMap<usize, PossibleCards>,
+    pub objectively_possible_cards_according_to_hints: IndexMap<usize, PossibleCards>,
     pub touched: IndexSet<usize>,
     interpretations: Vec<Interpretations>,
 }
@@ -28,7 +28,7 @@ impl PlayerState {
     pub fn new() -> Self {
         Self {
             cards: HandCards::new(),
-            possible_cards: IndexMap::new(),
+            objectively_possible_cards_according_to_hints: IndexMap::new(),
             touched: IndexSet::new(),
             interpretations: Vec::new(),
         }
@@ -36,13 +36,17 @@ impl PlayerState {
 
     pub fn add_card(&mut self, id: usize, rules: &Rules) {
         self.cards.add_card(id);
-        let previous = self.possible_cards.insert(id, PossibleCards::all(rules));
+        let previous = self
+            .objectively_possible_cards_according_to_hints
+            .insert(id, PossibleCards::all(rules));
         assert!(previous.is_none());
     }
 
     pub fn play_or_discard_card(&mut self, position: usize) {
         let id = self.cards.play_or_discard_card(position);
-        let removed = self.possible_cards.remove(&id);
+        let removed = self
+            .objectively_possible_cards_according_to_hints
+            .remove(&id);
         assert!(removed.is_some());
         self.touched.remove(&id);
     }
@@ -117,7 +121,7 @@ impl PlayerState {
         //Ugh. This influences hint interpretation, which I don't like at all. For now, we just do this after the interpretation thing.
         for pos in 1..=self.cards.current_hand_size {
             let card_id = self.cards.cards[pos].unwrap();
-            let possible = &mut self.possible_cards[&card_id];
+            let possible = &mut self.objectively_possible_cards_according_to_hints[&card_id];
             if positions.contains(pos) {
                 possible.apply(hinted_property);
                 self.touched.insert(card_id);
@@ -139,13 +143,13 @@ impl PlayerState {
         }
     }
 
-    fn known_possibilities(
+    fn possibilities_self_might_entertain(
         &self,
         position: usize,
         at_least_all_candidates_for_touched_known_by_self_player: &PossibleCards,
     ) -> PossibleCards {
         let card_id = self.cards.cards[position].unwrap();
-        let mut possible = self.possible_cards[&card_id].clone();
+        let mut possible = self.objectively_possible_cards_according_to_hints[&card_id].clone();
 
         for inter in &self.interpretations {
             if let Some(inter) = inter.unique_interpretation() {
@@ -168,7 +172,7 @@ impl PlayerState {
         firework: &Firework,
         at_least_all_candidates_for_touched_known_by_self_player: &PossibleCards,
     ) -> ActionAssessment {
-        let possibilities = self.known_possibilities(
+        let possibilities = self.possibilities_self_might_entertain(
             position,
             at_least_all_candidates_for_touched_known_by_self_player,
         );
