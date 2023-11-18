@@ -221,12 +221,16 @@ impl PlayerState {
     pub fn suggest_plays(
         &self,
         firework: &Firework,
-        at_least_all_candidates_for_touched: &PossibleCards,
+        at_least_all_candidates_for_touched_known_by_self_player: &PossibleCards,
     ) -> Vec<(ActionAssessment, Action)> {
         let options: Vec<_> = (1..=self.cards.current_hand_size)
             .map(|position| {
                 (
-                    self.assess_play(position, firework, at_least_all_candidates_for_touched),
+                    self.assess_play(
+                        position,
+                        firework,
+                        at_least_all_candidates_for_touched_known_by_self_player,
+                    ),
                     Action::Play {
                         card: None,
                         position,

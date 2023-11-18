@@ -49,31 +49,22 @@ impl BasicPlayer {
     //     result
     // }
 
-    fn possible_touches_in_own_hand_or_more(&self) -> PossibleCards {
+    fn possible_touches_in_own_hand_or_more(&self, player_id: usize) -> PossibleCards {
         let mut result = PossibleCards::all(self.rules());
 
         let played = self.public_state.firework.already_played();
         result.exclude(&played);
 
-        let touched_in_other_hands = self.touched_in_other_hands();
+        let touched_in_other_hands = self.touched_in_other_hands_or_less(player_id);
         result.exclude(&touched_in_other_hands);
 
         result
     }
 
-    fn good_touchable_or_more(&self) -> PossibleCards {
-        let mut result = PossibleCards::all(self.rules());
+    fn possible_touches_in_hand(&self, player: usize) -> PossibleCards {
+        //Didn't think about anything else so far.
+        assert_eq!(player, self.player_id);
 
-        let definite_trash = self.public_state.definite_trash();
-        result.exclude(&definite_trash);
-
-        let touched_in_other_hands = self.touched_in_other_hands();
-        result.exclude(&touched_in_other_hands);
-
-        result
-    }
-
-    fn possible_touches_in_own_hand(&self) -> PossibleCards {
         let mut result = PossibleCards::none();
 
         let self_state = &self.player_states[self.player_id];
@@ -87,9 +78,19 @@ impl BasicPlayer {
         result
     }
 
-    fn good_touchable_or_less(&self) -> PossibleCards {
-        let mut result = self.good_touchable_or_more();
-        result.exclude(&self.possible_touches_in_own_hand());
+    fn definitely_good_touchable_cards_definitely_known_by_this_player(
+        &self,
+        player: usize,
+    ) -> PossibleCards {
+        let mut result = PossibleCards::all(self.rules());
+
+        let definite_trash = self.public_state.definite_trash();
+        result.exclude(&definite_trash);
+
+        let touched_in_other_hands = self.touched_in_other_hands_or_less(player);
+        result.exclude(&touched_in_other_hands);
+
+        result.exclude(&self.possible_touches_in_hand(player));
         result
     }
 
@@ -145,6 +146,7 @@ impl BasicPlayer {
 
     fn assess_hint(
         &self,
+        giver: usize,
         receiver: usize,
         hinted_property: Property,
         positions: PositionSet,
@@ -156,6 +158,9 @@ impl BasicPlayer {
             positions.hand_size,
             self.player_states[receiver].cards.current_hand_size
         );
+
+        //Didn't think about anything else so far.
+        assert_eq!(giver, self.player_id);
 
         let interpretations = self.player_states[receiver].get_hint_interpretations(
             hinted_property,
@@ -170,7 +175,8 @@ impl BasicPlayer {
         }
 
         let new_cards = self.new_cards(positions, receiver);
-        let mut touchable = self.good_touchable_or_less();
+        let mut touchable =
+            self.definitely_good_touchable_cards_definitely_known_by_this_player(giver);
         for &new_card in &new_cards {
             let succ = touchable.remove(&self.witnessed_cards[new_card].unwrap());
             if !succ {
@@ -192,7 +198,9 @@ impl BasicPlayer {
         }
     }
 
-    fn assess_hints(&self) -> Vec<(ActionAssessment, Action)> {
+    fn assess_hints(&self, giver: usize) -> Vec<(ActionAssessment, Action)> {
+        assert_eq!(giver, self.player_id);
+
         let mut options = Vec::new();
 
         for receiver in 0..self.public_state.rules.number_of_players {
@@ -206,7 +214,7 @@ impl BasicPlayer {
                     continue;
                 }
 
-                let assessment = self.assess_hint(receiver, hinted_property, positions);
+                let assessment = self.assess_hint(giver, receiver, hinted_property, positions);
 
                 options.push((
                     assessment,
@@ -223,6 +231,7 @@ impl BasicPlayer {
     }
 
     fn touched_in_other_hand(&self, player_id: usize) -> PossibleCards {
+        assert_ne!(player_id, self.player_id);
         let mut result = PossibleCards::none();
 
         for &card_id in &self.player_states[player_id].touched {
@@ -232,14 +241,14 @@ impl BasicPlayer {
         result
     }
 
-    fn touched_in_other_hands(&self) -> PossibleCards {
+    fn touched_in_other_hands_or_less(&self, player_id: usize) -> PossibleCards {
         let mut result = PossibleCards::none();
         {
-            for player_id in 0..self.rules().number_of_players {
-                if player_id == self.player_id {
+            for p_id in 0..self.rules().number_of_players {
+                if p_id == self.player_id || p_id == player_id {
                     continue;
                 }
-                result.extend(self.touched_in_other_hand(player_id));
+                result.extend(self.touched_in_other_hand(p_id));
             }
 
             result
@@ -306,15 +315,16 @@ impl Player for BasicPlayer {
     }
 
     fn request_action(&self) -> Action {
+        //This assumes that self.player_id is active.
         let mut options = Vec::new();
 
         options.extend(self.player_states[self.player_id].suggest_plays(
             &self.public_state.firework,
-            &self.possible_touches_in_own_hand_or_more(),
+            &self.possible_touches_in_own_hand_or_more(self.player_id),
         ));
 
         if self.public_state.clues != 0 {
-            options.extend(self.assess_hints());
+            options.extend(self.assess_hints(self.player_id));
         }
 
         if self.public_state.clues != self.public_state.rules.max_clues {
