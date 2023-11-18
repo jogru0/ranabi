@@ -21,7 +21,7 @@ pub struct PlayerState {
     //Maybe this information should live in the public information?
     pub objectively_possible_cards_according_to_hints: IndexMap<usize, PossibleCards>,
     pub touched: IndexSet<usize>,
-    interpretations: Vec<Interpretations>,
+    interpretations_some_of_which_self_should_entertain: Vec<Interpretations>,
 }
 
 impl PlayerState {
@@ -30,7 +30,7 @@ impl PlayerState {
             cards: HandCards::new(),
             objectively_possible_cards_according_to_hints: IndexMap::new(),
             touched: IndexSet::new(),
-            interpretations: Vec::new(),
+            interpretations_some_of_which_self_should_entertain: Vec::new(),
         }
     }
 
@@ -68,8 +68,7 @@ impl PlayerState {
         state: &PublicState,
     ) -> Option<Interpretations> {
         let touched_positions = self.touched_positions();
-        let focus_position =
-            positions.focus_position(touched_positions, self.cards.current_hand_size);
+        let focus_position = positions.focus_position(touched_positions);
         let touches_no_new_cards = touched_positions.contains(focus_position);
 
         if touches_no_new_cards {
@@ -113,10 +112,11 @@ impl PlayerState {
         positions: PositionSet,
         state: &PublicState,
     ) {
-        self.interpretations.push(
-            self.get_hint_interpretations(hinted_property, positions, state)
-                .unwrap(),
-        );
+        self.interpretations_some_of_which_self_should_entertain
+            .push(
+                self.get_hint_interpretations(hinted_property, positions, state)
+                    .unwrap(),
+            );
 
         //Ugh. This influences hint interpretation, which I don't like at all. For now, we just do this after the interpretation thing.
         for pos in 1..=self.cards.current_hand_size {
@@ -151,7 +151,7 @@ impl PlayerState {
         let card_id = self.cards.cards[position].unwrap();
         let mut possible = self.objectively_possible_cards_according_to_hints[&card_id].clone();
 
-        for inter in &self.interpretations {
+        for inter in &self.interpretations_some_of_which_self_should_entertain {
             if let Some(inter) = inter.unique_interpretation() {
                 if let Some(ps) = inter.card_id_to_possibilities.get(&card_id) {
                     possible.intersect(ps);
@@ -164,6 +164,45 @@ impl PlayerState {
         }
 
         possible
+    }
+
+    fn is_definitely_aware_that_this_position_is_playable(
+        &self,
+        position: usize,
+        firework: &Firework,
+        at_least_all_candidates_for_touched_known_by_self_player: &PossibleCards,
+    ) -> bool {
+        let possibilities = self.possibilities_self_might_entertain(
+            position,
+            at_least_all_candidates_for_touched_known_by_self_player,
+        );
+        firework.are_all_playable(&possibilities)
+    }
+
+    fn is_definitely_aware_about_a_playable_card(
+        &self,
+        firework: &Firework,
+        at_least_all_candidates_for_touched_known_by_self_player: &PossibleCards,
+    ) -> bool {
+        (1..=self.cards.current_hand_size).any(|position| {
+            self.is_definitely_aware_that_this_position_is_playable(
+                position,
+                firework,
+                at_least_all_candidates_for_touched_known_by_self_player,
+            )
+        })
+    }
+
+    fn potentially_is_locked_with_no_known_playable_card(
+        &self,
+        firework: &Firework,
+        at_least_all_candidates_for_touched_known_by_self_player: &PossibleCards,
+    ) -> bool {
+        self.touched_positions().is_full()
+            && !self.is_definitely_aware_about_a_playable_card(
+                firework,
+                at_least_all_candidates_for_touched_known_by_self_player,
+            )
     }
 
     fn assess_play(

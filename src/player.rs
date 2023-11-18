@@ -1,4 +1,4 @@
-use std::fmt::Display;
+use std::{fmt::Display, ops::RangeInclusive};
 
 use crate::{
     card::{Card, Color, Number},
@@ -107,7 +107,7 @@ impl Display for PositionSet {
             }
         }
 
-        for &b in &self.positions[1..=self.hand_size] {
+        for &b in &self.positions[self.all_possible_positions()] {
             write!(f, "{}", to_char(b))?;
         }
         Ok(())
@@ -120,50 +120,61 @@ impl PositionSet {
     }
 
     fn biggest(&self) -> Option<usize> {
-        self.positions[1..=self.hand_size]
+        self.positions[self.all_possible_positions()]
             .iter()
             .rev()
             .position(|&b| b)
             .map(|backwards_index| self.hand_size - backwards_index)
     }
 
-    fn inverse(mut self, hand_size: usize) -> Self {
-        for b in &mut self.positions[1..=hand_size] {
+    fn all_possible_positions(&self) -> RangeInclusive<usize> {
+        1..=self.hand_size
+    }
+
+    fn inverse(mut self) -> Self {
+        let all_possible_positions = self.all_possible_positions();
+        for b in &mut self.positions[all_possible_positions] {
             *b = !*b;
         }
 
         self
     }
 
-    fn focus_position(&self, touched: PositionSet, hand_size: usize) -> usize {
-        if self.is_subset_of(touched, hand_size) {
+    fn focus_position(&self, touched: PositionSet) -> usize {
+        if self.is_subset_of(touched) {
             return self.smallest().unwrap();
         }
 
-        let chop = touched.inverse(hand_size).biggest().unwrap();
+        let chop = touched.inverse().biggest().unwrap();
         if self.contains(chop) {
             chop
         } else {
-            self.without(touched, hand_size).smallest().unwrap()
+            self.without(touched).smallest().unwrap()
         }
     }
 
-    fn is_subset_of(&self, touched: PositionSet, hand_size: usize) -> bool {
-        (1..=hand_size).all(|id| touched.contains(id) || !self.contains(id))
+    fn is_subset_of(&self, touched: PositionSet) -> bool {
+        assert_eq!(self.hand_size, touched.hand_size);
+        (self.all_possible_positions()).all(|id| touched.contains(id) || !self.contains(id))
     }
 
     pub fn contains(&self, id: usize) -> bool {
         self.positions[id]
     }
 
-    fn without(mut self, touched: PositionSet, hand_size: usize) -> Self {
-        for id in 1..=hand_size {
-            self.positions[id] &= !touched.positions[id];
+    fn without(mut self, other: PositionSet) -> Self {
+        assert_eq!(self.hand_size, other.hand_size);
+        for id in self.all_possible_positions() {
+            self.positions[id] &= !other.positions[id];
         }
         self
     }
 
     pub(crate) fn is_empty(&self) -> bool {
         !self.positions.iter().any(|&b| b)
+    }
+
+    fn is_full(&self) -> bool {
+        self.inverse().is_empty()
     }
 }
