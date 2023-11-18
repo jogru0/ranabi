@@ -10,6 +10,7 @@ use crate::{
     player::{action::Action, basic::BasicPlayer, Player, Property},
 };
 
+#[derive(Clone)]
 pub struct DiscardPile {
     card_to_multiplicity: IndexMap<Card, usize>,
 }
@@ -94,6 +95,7 @@ impl DiscardPile {
     }
 }
 
+#[derive(Clone)]
 pub struct PublicState {
     pub firework: Firework,
     pub discard_pile: DiscardPile,
@@ -579,6 +581,7 @@ impl Default for Rules {
     }
 }
 
+#[derive(Clone)]
 pub struct Firework {
     piles: IndexMap<Color, Option<Number>>,
 }

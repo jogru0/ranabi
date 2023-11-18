@@ -141,6 +141,8 @@ impl PositionSet {
     }
 
     fn focus_position(&self, touched: PositionSet) -> usize {
+        assert_eq!(self.hand_size, touched.hand_size);
+
         if self.is_subset_of(touched) {
             return self.smallest().unwrap();
         }

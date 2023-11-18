@@ -15,6 +15,7 @@ use super::{
     HandCards,
 };
 
+#[derive(Clone)]
 pub struct PlayerState {
     pub cards: HandCards,
     //I think this currently is strictly just what follows explicitely from hints.
@@ -67,6 +68,8 @@ impl PlayerState {
         positions: PositionSet,
         state: &PublicState,
     ) -> Option<Interpretations> {
+        assert_eq!(self.cards.current_hand_size, positions.hand_size);
+
         let touched_positions = self.touched_positions();
         let focus_position = positions.focus_position(touched_positions);
         let touches_no_new_cards = touched_positions.contains(focus_position);
@@ -112,6 +115,8 @@ impl PlayerState {
         positions: PositionSet,
         state: &PublicState,
     ) {
+        assert_eq!(self.cards.current_hand_size, positions.hand_size);
+
         self.interpretations_some_of_which_self_should_entertain
             .push(
                 self.get_hint_interpretations(hinted_property, positions, state)
@@ -146,7 +151,7 @@ impl PlayerState {
     fn possibilities_self_might_entertain(
         &self,
         position: usize,
-        at_least_all_candidates_for_touched_known_by_self_player: &PossibleCards,
+        potentially_entertained_candidates_for_touched_in_own_hand: &PossibleCards,
     ) -> PossibleCards {
         let card_id = self.cards.cards[position].unwrap();
         let mut possible = self.objectively_possible_cards_according_to_hints[&card_id].clone();
@@ -160,7 +165,7 @@ impl PlayerState {
         }
 
         if self.touched.contains(&card_id) {
-            possible.intersect(at_least_all_candidates_for_touched_known_by_self_player);
+            possible.intersect(potentially_entertained_candidates_for_touched_in_own_hand);
         }
 
         possible
@@ -170,11 +175,11 @@ impl PlayerState {
         &self,
         position: usize,
         firework: &Firework,
-        at_least_all_candidates_for_touched_known_by_self_player: &PossibleCards,
+        potentially_entertained_candidates_for_touched_in_own_hand: &PossibleCards,
     ) -> bool {
         let possibilities = self.possibilities_self_might_entertain(
             position,
-            at_least_all_candidates_for_touched_known_by_self_player,
+            potentially_entertained_candidates_for_touched_in_own_hand,
         );
         firework.are_all_playable(&possibilities)
     }
@@ -182,26 +187,26 @@ impl PlayerState {
     fn is_definitely_aware_about_a_playable_card(
         &self,
         firework: &Firework,
-        at_least_all_candidates_for_touched_known_by_self_player: &PossibleCards,
+        potentially_entertained_candidates_for_touched_in_own_hand: &PossibleCards,
     ) -> bool {
         (1..=self.cards.current_hand_size).any(|position| {
             self.is_definitely_aware_that_this_position_is_playable(
                 position,
                 firework,
-                at_least_all_candidates_for_touched_known_by_self_player,
+                potentially_entertained_candidates_for_touched_in_own_hand,
             )
         })
     }
 
-    fn potentially_is_locked_with_no_known_playable_card(
+    pub fn potentially_is_locked_with_no_known_playable_card(
         &self,
         firework: &Firework,
-        at_least_all_candidates_for_touched_known_by_self_player: &PossibleCards,
+        potentially_entertained_candidates_for_touched_in_own_hand: &PossibleCards,
     ) -> bool {
         self.touched_positions().is_full()
             && !self.is_definitely_aware_about_a_playable_card(
                 firework,
-                at_least_all_candidates_for_touched_known_by_self_player,
+                potentially_entertained_candidates_for_touched_in_own_hand,
             )
     }
 
@@ -209,12 +214,16 @@ impl PlayerState {
         &self,
         position: usize,
         firework: &Firework,
-        at_least_all_candidates_for_touched_known_by_self_player: &PossibleCards,
+        remaining_clues: usize,
+        potentially_entertained_candidates_for_touched_in_own_hand: &PossibleCards,
     ) -> ActionAssessment {
         let possibilities = self.possibilities_self_might_entertain(
             position,
-            at_least_all_candidates_for_touched_known_by_self_player,
+            potentially_entertained_candidates_for_touched_in_own_hand,
         );
+
+        //TODO: Obviously, this should look at what is going on hypothetically.
+        let next_player_might_be_locked_with_no_clue = remaining_clues == 0;
 
         if firework.are_all_playable(&possibilities) {
             let sure_influence_on_clue_count = if possibilities
@@ -234,6 +243,7 @@ impl PlayerState {
                 action_type: ActionType::Play,
                 sure_influence_on_clue_count,
                 last_resort: false,
+                next_player_might_be_locked_with_no_clue,
             };
         }
 
@@ -244,6 +254,7 @@ impl PlayerState {
             action_type: ActionType::Play,
             sure_influence_on_clue_count: 0,
             last_resort: true,
+            next_player_might_be_locked_with_no_clue,
         }
     }
 
@@ -265,6 +276,7 @@ impl PlayerState {
         &self,
         firework: &Firework,
         at_least_all_candidates_for_touched_known_by_self_player: &PossibleCards,
+        remaining_clues: usize,
     ) -> Vec<(ActionAssessment, Action)> {
         let options: Vec<_> = (1..=self.cards.current_hand_size)
             .map(|position| {
@@ -272,6 +284,7 @@ impl PlayerState {
                     self.assess_play(
                         position,
                         firework,
+                        remaining_clues,
                         at_least_all_candidates_for_touched_known_by_self_player,
                     ),
                     Action::Play {
@@ -301,6 +314,7 @@ impl PlayerState {
             action_type: ActionType::Discard,
             sure_influence_on_clue_count: 1,
             last_resort,
+            next_player_might_be_locked_with_no_clue: false,
         }
     }
 }

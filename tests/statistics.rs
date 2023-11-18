@@ -26,5 +26,5 @@ fn stats() {
 
     let average = sum as f64 / iterations as f64;
 
-    assert_eq!(average, 18.85687514640431);
+    assert_eq!(average, 18.82970250644179);
 }

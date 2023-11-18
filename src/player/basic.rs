@@ -49,7 +49,11 @@ impl BasicPlayer {
     //     result
     // }
 
-    fn possible_touches_in_own_hand_or_more(&self, player_id: usize) -> PossibleCards {
+    //In reality, less candidates might be entertained. Definitely not more!
+    fn potentially_entertained_candidates_for_touched_in_that_players_own_hand(
+        &self,
+        player_id: usize,
+    ) -> PossibleCards {
         let mut result = PossibleCards::all(self.rules());
 
         let played = self.public_state.firework.already_played();
@@ -79,6 +83,7 @@ impl BasicPlayer {
         result
     }
 
+    //TODO!!!!! Needs to be in the (hypthetical) state!
     fn definitely_good_touchable_cards_definitely_known_by_this_player(
         &self,
         player: usize,
@@ -159,6 +164,11 @@ impl BasicPlayer {
             positions.hand_size,
             self.player_states[receiver].cards.current_hand_size
         );
+        assert_ne!(self.public_state.clues, 0);
+        assert_eq!(
+            self.player_states[receiver].cards.current_hand_size,
+            positions.hand_size
+        );
 
         //Didn't think about anything else so far.
         assert_eq!(giver, self.player_id);
@@ -185,6 +195,23 @@ impl BasicPlayer {
             }
         }
 
+        let next_player_might_be_locked_with_no_clue = if self.public_state.clues == 1 {
+            let mut hypothetical_next = self.player_states[self.next_player_id()].clone();
+            let mut hypothetical_state = self.public_state.clone();
+            hypothetical_state.hint();
+            if receiver == self.next_player_id() {
+                hypothetical_next.fr_apply_hint(hinted_property, positions, &hypothetical_state);
+            }
+            hypothetical_next.potentially_is_locked_with_no_known_playable_card(
+                &hypothetical_state.firework,
+                &self.potentially_entertained_candidates_for_touched_in_that_players_own_hand(
+                    self.next_player_id(),
+                ),
+            )
+        } else {
+            false
+        };
+
         //We probably need to add cards gotten by the correct interpretation here.
         //And delay might also be faster due to prompts/finesses, or slower due to delayed play cues.
         ActionAssessment {
@@ -196,6 +223,7 @@ impl BasicPlayer {
             action_type: ActionType::Hint,
             sure_influence_on_clue_count: -1,
             last_resort: false,
+            next_player_might_be_locked_with_no_clue,
         }
     }
 
@@ -274,6 +302,10 @@ impl BasicPlayer {
 
         result
     }
+
+    fn next_player_id(&self) -> usize {
+        (self.player_id + 1) % self.rules().number_of_players
+    }
 }
 
 impl Player for BasicPlayer {
@@ -321,7 +353,10 @@ impl Player for BasicPlayer {
 
         options.extend(self.player_states[self.player_id].suggest_plays(
             &self.public_state.firework,
-            &self.possible_touches_in_own_hand_or_more(self.player_id),
+            &self.potentially_entertained_candidates_for_touched_in_that_players_own_hand(
+                self.player_id,
+            ),
+            self.public_state.clues,
         ));
 
         if self.public_state.clues != 0 {
@@ -342,6 +377,8 @@ impl Player for BasicPlayer {
 }
 
 mod player_state;
+
+#[derive(Clone)]
 struct HandCards {
     cards: [Option<usize>; 6],
     current_hand_size: usize,
@@ -389,7 +426,7 @@ mod inter {
 
     use crate::card::{Card, PossibleCards};
 
-    #[derive(Debug)]
+    #[derive(Debug, Clone)]
     pub struct Interpretations {
         ors: Vec<Interpretation>,
     }

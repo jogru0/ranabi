@@ -6,6 +6,7 @@ pub struct ActionAssessment {
     pub action_type: ActionType,
     pub sure_influence_on_clue_count: i8,
     pub last_resort: bool,
+    pub next_player_might_be_locked_with_no_clue: bool,
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -24,6 +25,7 @@ impl ActionAssessment {
             action_type: ActionType::Hint,
             sure_influence_on_clue_count: 9,
             last_resort: false,
+            next_player_might_be_locked_with_no_clue: false,
         }
     }
 }
@@ -43,6 +45,14 @@ impl Ord for ActionAssessment {
         }
 
         match other.last_resort.cmp(&self.last_resort) {
+            core::cmp::Ordering::Equal => {}
+            ord => return ord,
+        }
+
+        match other
+            .next_player_might_be_locked_with_no_clue
+            .cmp(&self.next_player_might_be_locked_with_no_clue)
+        {
             core::cmp::Ordering::Equal => {}
             ord => return ord,
         }
