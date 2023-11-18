@@ -4,6 +4,15 @@ pub struct ActionAssessment {
     pub delay_until_relevant: usize,
     pub is_unconventional: bool,
 }
+impl ActionAssessment {
+    pub(crate) fn unconvectional() -> Self {
+        Self {
+            is_unconventional: true,
+            new_touches: 100,
+            delay_until_relevant: 0,
+        }
+    }
+}
 
 impl PartialOrd for ActionAssessment {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {

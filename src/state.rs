@@ -6,7 +6,7 @@ use rand_chacha::ChaCha20Rng;
 
 use crate::{
     card::{Card, Color, Number, PossibleCards},
-    player::{basic::BasicPlayer, Action, Player},
+    player::{action::Action, basic::BasicPlayer, Player},
 };
 
 pub struct DiscardPile {
@@ -380,6 +380,10 @@ pub struct Rules {
 }
 
 impl Rules {
+    pub fn allow_null_hints(&self) -> bool {
+        false
+    }
+
     pub fn get_shuffled_deck(&self, rng: &mut ChaCha20Rng) -> Deck {
         let mut deck = self.all_cards();
         deck.shuffle(rng);

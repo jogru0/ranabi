@@ -5,6 +5,8 @@ use crate::{
     state::Rules,
 };
 
+use self::action::Action;
+
 pub trait Player {
     fn witness_action(&mut self, action: Action, player: usize);
     fn witness_draw(&mut self, player: usize, card: Option<Card>);
@@ -55,37 +57,7 @@ fn player_name(player_id: usize) -> &'static str {
     }
 }
 
-#[derive(Debug, Clone, Copy)]
-pub enum Action {
-    Play {
-        card: Option<Card>,
-        position: usize,
-    },
-    Discard {
-        card: Option<Card>,
-        position: usize,
-    },
-    Hint {
-        receiver: usize,
-        hinted_property: Property,
-        positions: PositionSet,
-    },
-}
-impl Action {
-    pub(crate) fn add_card_information(&mut self, old: Card) {
-        match self {
-            Action::Play { card, .. } => {
-                assert!(card.is_none());
-                *card = Some(old);
-            }
-            Action::Discard { card, .. } => {
-                assert!(card.is_none());
-                *card = Some(old);
-            }
-            Action::Hint { .. } => unreachable!(),
-        }
-    }
-}
+pub mod action;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Property {
@@ -119,7 +91,7 @@ impl Property {
 
 pub mod basic;
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct PositionSet {
     positions: [bool; 6],
     hand_size: usize,

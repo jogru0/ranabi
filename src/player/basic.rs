@@ -12,7 +12,7 @@ use self::{
     inter::{Interpretation, Interpretations},
 };
 
-use super::{Action, Player, PositionSet, Property};
+use super::{action::Action, Player, PositionSet, Property};
 
 pub struct BasicPlayer {
     player_states: Vec<PlayerState>,
@@ -147,7 +147,52 @@ impl BasicPlayer {
         }
     }
 
-    fn suggest_hint(&self) -> Option<(usize, Property, PositionSet)> {
+    fn assess_hint(
+        &self,
+        receiver: usize,
+        hinted_property: Property,
+        positions: PositionSet,
+    ) -> ActionAssessment {
+        assert_eq!(positions, self.get_positions(hinted_property, receiver));
+        assert!(!positions.is_empty() || self.rules().allow_null_hints());
+        assert_ne!(receiver, self.player_id);
+        assert_eq!(
+            positions.hand_size,
+            self.player_states[receiver].cards.current_hand_size
+        );
+
+        let interpretations = self.player_states[receiver].get_hint_interpretations(
+            hinted_property,
+            positions,
+            &self.public_state,
+        );
+
+        let correct_interpretation = interpretations.unwrap().get_truth(&self.witnessed_cards);
+
+        if correct_interpretation.is_none() {
+            return ActionAssessment::unconvectional();
+        }
+
+        let new_cards = self.new_cards(positions, receiver);
+        let mut touchable = self.good_touchable_or_less();
+        for &new_card in &new_cards {
+            let succ = touchable.remove(&self.witnessed_cards[new_card].unwrap());
+            if !succ {
+                return ActionAssessment::unconvectional();
+            }
+        }
+
+        //We probably need to add cards gotten by the correct interpretation here.
+        //And delay might also be faster due to prompts/finesses, or slower due to delayed play cues.
+        ActionAssessment {
+            is_unconventional: false,
+            new_touches: new_cards.len(),
+            delay_until_relevant: (self.rules().number_of_players + receiver - self.player_id)
+                % self.rules().number_of_players,
+        }
+    }
+
+    fn assess_hints(&self) -> Option<(usize, Property, PositionSet)> {
         let mut options = Vec::new();
 
         for receiver in 0..self.public_state.rules.number_of_players {
@@ -155,50 +200,24 @@ impl BasicPlayer {
                 continue;
             }
 
-            'property: for hinted_property in Property::all(&self.public_state.rules) {
+            for hinted_property in Property::all(&self.public_state.rules) {
                 let positions = self.get_positions(hinted_property, receiver);
                 if positions.is_empty() {
                     continue;
                 }
 
-                let interpretations = self.player_states[receiver].get_hint_interpretations(
-                    hinted_property,
-                    positions,
-                    &self.public_state,
-                );
+                let assessment = self.assess_hint(receiver, hinted_property, positions);
 
-                let correct_interpretation =
-                    interpretations.unwrap().get_truth(&self.witnessed_cards);
-
-                if correct_interpretation.is_none() {
-                    continue;
-                }
-
-                let new_cards = self.new_cards(positions, receiver);
-                let mut touchable = self.good_touchable_or_less();
-                for &new_card in &new_cards {
-                    let succ = touchable.remove(&self.witnessed_cards[new_card].unwrap());
-                    if !succ {
-                        continue 'property;
-                    }
-                }
-
-                //We probably need to add cards gotten by the correct interpretation here.
-                //And delay might also be faster due to prompts/finesses, or slower due to delayed play queue.
-                let hint_value = ActionAssessment {
-                    is_unconventional: false,
-                    new_touches: new_cards.len(),
-                    delay_until_relevant: (self.rules().number_of_players + receiver
-                        - self.player_id)
-                        % self.rules().number_of_players,
-                };
-
-                options.push((hint_value, (receiver, hinted_property, positions)));
+                options.push((assessment, (receiver, hinted_property, positions)));
             }
         }
 
         options.sort_by_key(|(hint_value, _)| *hint_value);
-        options.last().map(|(_, v)| v).copied()
+        options
+            .last()
+            .filter(|(a, _)| !a.is_unconventional)
+            .map(|(_, v)| v)
+            .copied()
     }
 
     fn touched_in_other_hand(&self, player_id: usize) -> PossibleCards {
@@ -296,7 +315,7 @@ impl Player for BasicPlayer {
         }
 
         if self.public_state.clues != 0 {
-            if let Some((receiver, hinted_property, positions)) = self.suggest_hint() {
+            if let Some((receiver, hinted_property, positions)) = self.assess_hints() {
                 return Action::Hint {
                     receiver,
                     hinted_property,
