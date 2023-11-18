@@ -148,7 +148,7 @@ impl PlayerState {
         }
     }
 
-    fn possibilities_self_might_entertain(
+    pub fn possibilities_self_might_entertain(
         &self,
         position: usize,
         potentially_entertained_candidates_for_touched_in_own_hand: &PossibleCards,
@@ -210,54 +210,6 @@ impl PlayerState {
             )
     }
 
-    fn assess_play(
-        &self,
-        position: usize,
-        firework: &Firework,
-        remaining_clues: usize,
-        potentially_entertained_candidates_for_touched_in_own_hand: &PossibleCards,
-    ) -> ActionAssessment {
-        let possibilities = self.possibilities_self_might_entertain(
-            position,
-            potentially_entertained_candidates_for_touched_in_own_hand,
-        );
-
-        //TODO: Obviously, this should look at what is going on hypothetically.
-        let next_player_might_be_locked_with_no_clue = remaining_clues == 0;
-
-        if firework.are_all_playable(&possibilities) {
-            let sure_influence_on_clue_count = if possibilities
-                .hashed
-                .iter()
-                .all(|card| card.number == Number::Five)
-            {
-                1
-            } else {
-                0
-            };
-
-            return ActionAssessment {
-                new_touches: 0,
-                delay_until_relevant: 0,
-                is_unconventional: false,
-                action_type: ActionType::Play,
-                sure_influence_on_clue_count,
-                last_resort: false,
-                next_player_might_be_locked_with_no_clue,
-            };
-        }
-
-        ActionAssessment {
-            new_touches: 0,
-            delay_until_relevant: 0,
-            is_unconventional: false,
-            action_type: ActionType::Play,
-            sure_influence_on_clue_count: 0,
-            last_resort: true,
-            next_player_might_be_locked_with_no_clue,
-        }
-    }
-
     pub fn suggest_discards(&self) -> Vec<(ActionAssessment, Action)> {
         (1..=self.cards.current_hand_size)
             .map(|position| {
@@ -270,32 +222,6 @@ impl PlayerState {
                 )
             })
             .collect()
-    }
-
-    pub fn suggest_plays(
-        &self,
-        firework: &Firework,
-        at_least_all_candidates_for_touched_known_by_self_player: &PossibleCards,
-        remaining_clues: usize,
-    ) -> Vec<(ActionAssessment, Action)> {
-        let options: Vec<_> = (1..=self.cards.current_hand_size)
-            .map(|position| {
-                (
-                    self.assess_play(
-                        position,
-                        firework,
-                        remaining_clues,
-                        at_least_all_candidates_for_touched_known_by_self_player,
-                    ),
-                    Action::Play {
-                        card: None,
-                        position,
-                    },
-                )
-            })
-            .collect();
-
-        options
     }
 
     pub fn assess_discard(&self, position: usize) -> ActionAssessment {

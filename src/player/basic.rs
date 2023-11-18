@@ -1,7 +1,7 @@
 use std::mem::swap;
 
 use crate::{
-    card::{Card, PossibleCards},
+    card::{Card, Number, PossibleCards},
     player::basic::action_assessment::ActionType,
     state::{PublicState, Rules},
 };
@@ -150,9 +150,8 @@ impl BasicPlayer {
         }
     }
 
-    fn assess_hint(
+    fn assess_hint_this_player(
         &self,
-        giver: usize,
         receiver: usize,
         hinted_property: Property,
         positions: PositionSet,
@@ -170,9 +169,6 @@ impl BasicPlayer {
             positions.hand_size
         );
 
-        //Didn't think about anything else so far.
-        assert_eq!(giver, self.player_id);
-
         let interpretations = self.player_states[receiver].get_hint_interpretations(
             hinted_property,
             positions,
@@ -187,7 +183,7 @@ impl BasicPlayer {
 
         let new_cards = self.new_cards(positions, receiver);
         let mut touchable =
-            self.definitely_good_touchable_cards_definitely_known_by_this_player(giver);
+            self.definitely_good_touchable_cards_definitely_known_by_this_player(self.player_id);
         for &new_card in &new_cards {
             let succ = touchable.remove(&self.witnessed_cards[new_card].unwrap());
             if !succ {
@@ -227,9 +223,23 @@ impl BasicPlayer {
         }
     }
 
-    fn assess_hints(&self, giver: usize) -> Vec<(ActionAssessment, Action)> {
-        assert_eq!(giver, self.player_id);
+    fn assess_plays_this_player(&self) -> Vec<(ActionAssessment, Action)> {
+        let options: Vec<_> = (1..=self.this_player().cards.current_hand_size)
+            .map(|position| {
+                (
+                    self.assess_play_this_player(position),
+                    Action::Play {
+                        card: None,
+                        position,
+                    },
+                )
+            })
+            .collect();
 
+        options
+    }
+
+    fn assess_hints_this_player(&self) -> Vec<(ActionAssessment, Action)> {
         let mut options = Vec::new();
 
         for receiver in 0..self.public_state.rules.number_of_players {
@@ -243,7 +253,7 @@ impl BasicPlayer {
                     continue;
                 }
 
-                let assessment = self.assess_hint(giver, receiver, hinted_property, positions);
+                let assessment = self.assess_hint_this_player(receiver, hinted_property, positions);
 
                 options.push((
                     assessment,
@@ -306,6 +316,54 @@ impl BasicPlayer {
     fn next_player_id(&self) -> usize {
         (self.player_id + 1) % self.rules().number_of_players
     }
+
+    fn assess_play_this_player(&self, position: usize) -> ActionAssessment {
+        let possibilities = self.this_player().possibilities_self_might_entertain(
+            position,
+            &self.potentially_entertained_candidates_for_touched_in_that_players_own_hand(
+                self.player_id,
+            ),
+        );
+
+        //TODO: Obviously, this should look at what is going on hypothetically.
+        let next_player_might_be_locked_with_no_clue = self.public_state.clues == 0;
+
+        if self.public_state.firework.are_all_playable(&possibilities) {
+            let sure_influence_on_clue_count = if possibilities
+                .hashed
+                .iter()
+                .all(|card| card.number == Number::Five)
+            {
+                1
+            } else {
+                0
+            };
+
+            return ActionAssessment {
+                new_touches: 0,
+                delay_until_relevant: 0,
+                is_unconventional: false,
+                action_type: ActionType::Play,
+                sure_influence_on_clue_count,
+                last_resort: false,
+                next_player_might_be_locked_with_no_clue,
+            };
+        }
+
+        ActionAssessment {
+            new_touches: 0,
+            delay_until_relevant: 0,
+            is_unconventional: false,
+            action_type: ActionType::Play,
+            sure_influence_on_clue_count: 0,
+            last_resort: true,
+            next_player_might_be_locked_with_no_clue,
+        }
+    }
+
+    fn this_player(&self) -> &PlayerState {
+        &self.player_states[self.player_id]
+    }
 }
 
 impl Player for BasicPlayer {
@@ -351,16 +409,10 @@ impl Player for BasicPlayer {
         //This assumes that self.player_id is active.
         let mut options = Vec::new();
 
-        options.extend(self.player_states[self.player_id].suggest_plays(
-            &self.public_state.firework,
-            &self.potentially_entertained_candidates_for_touched_in_that_players_own_hand(
-                self.player_id,
-            ),
-            self.public_state.clues,
-        ));
+        options.extend(self.assess_plays_this_player());
 
         if self.public_state.clues != 0 {
-            options.extend(self.assess_hints(self.player_id));
+            options.extend(self.assess_hints_this_player());
         }
 
         if self.public_state.clues != self.public_state.rules.max_clues {
