@@ -38,12 +38,12 @@ impl Ord for ActionAssessment {
             ord => return ord,
         }
 
-        match (self.action_type == ActionType::Play).cmp(&(self.action_type == ActionType::Play)) {
+        match (self.action_type == ActionType::Play).cmp(&(other.action_type == ActionType::Play)) {
             core::cmp::Ordering::Equal => {}
             ord => return ord,
         }
 
-        match (self.action_type == ActionType::Hint).cmp(&(self.action_type == ActionType::Hint)) {
+        match (self.action_type == ActionType::Hint).cmp(&(other.action_type == ActionType::Hint)) {
             core::cmp::Ordering::Equal => {}
             ord => return ord,
         }

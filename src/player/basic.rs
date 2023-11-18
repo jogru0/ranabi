@@ -195,7 +195,7 @@ impl BasicPlayer {
         }
     }
 
-    fn assess_hints(&self) -> Option<(usize, Property, PositionSet)> {
+    fn assess_hints(&self) -> Vec<(ActionAssessment, Action)> {
         let mut options = Vec::new();
 
         for receiver in 0..self.public_state.rules.number_of_players {
@@ -211,16 +211,18 @@ impl BasicPlayer {
 
                 let assessment = self.assess_hint(receiver, hinted_property, positions);
 
-                options.push((assessment, (receiver, hinted_property, positions)));
+                options.push((
+                    assessment,
+                    Action::Hint {
+                        receiver,
+                        hinted_property,
+                        positions,
+                    },
+                ));
             }
         }
 
-        options.sort_by_key(|(hint_value, _)| *hint_value);
         options
-            .last()
-            .filter(|(a, _)| !a.is_unconventional)
-            .map(|(_, v)| v)
-            .copied()
     }
 
     fn touched_in_other_hand(&self, player_id: usize) -> PossibleCards {
@@ -307,36 +309,27 @@ impl Player for BasicPlayer {
     }
 
     fn request_action(&self) -> Action {
-        if let Some(position) = self.player_states[self.player_id].suggest_play(
+        let mut options = Vec::new();
+
+        options.extend(self.player_states[self.player_id].suggest_plays(
             &self.public_state,
             &self.possible_touches_in_own_hand_or_more(),
-        ) {
-            return Action::Play {
-                card: None,
-                position,
-            };
-        }
+        ));
 
         if self.public_state.clues != 0 {
-            if let Some((receiver, hinted_property, positions)) = self.assess_hints() {
-                return Action::Hint {
-                    receiver,
-                    hinted_property,
-                    positions,
-                };
-            }
+            options.extend(self.assess_hints());
         }
 
         if self.public_state.clues != self.public_state.rules.max_clues {
-            if let Some(position) = self.player_states[self.player_id].suggest_discard() {
-                return Action::Discard {
-                    card: None,
-                    position,
-                };
-            }
+            options.extend(self.player_states[self.player_id].suggest_discards());
         }
 
-        todo!()
+        options.sort_by_key(|(hint_value, _)| *hint_value);
+        *options
+            .last()
+            .filter(|(a, _)| !a.is_unconventional)
+            .map(|(_, v)| v)
+            .unwrap()
     }
 }
 
@@ -500,39 +493,38 @@ impl PlayerState {
         ActionAssessment::unconvectional()
     }
 
-    fn suggest_discard(&self) -> Option<usize> {
-        let mut options: Vec<_> = (1..=self.cards.current_hand_size)
-            .map(|position| (self.assess_discard(position), position))
-            .collect();
-
-        options.sort_by_key(|(hint_value, _)| *hint_value);
-        options
-            .last()
-            .filter(|(a, _)| !a.is_unconventional)
-            .map(|(_, v)| v)
-            .copied()
+    fn suggest_discards(&self) -> Vec<(ActionAssessment, Action)> {
+        (1..=self.cards.current_hand_size)
+            .map(|position| {
+                (
+                    self.assess_discard(position),
+                    Action::Discard {
+                        card: None,
+                        position,
+                    },
+                )
+            })
+            .collect()
     }
 
-    fn suggest_play(
+    fn suggest_plays(
         &self,
         state: &PublicState,
         at_least_all_candidates_for_touched: &PossibleCards,
-    ) -> Option<usize> {
-        let mut options: Vec<_> = (1..=self.cards.current_hand_size)
+    ) -> Vec<(ActionAssessment, Action)> {
+        let options: Vec<_> = (1..=self.cards.current_hand_size)
             .map(|position| {
                 (
                     self.assess_play(position, state, at_least_all_candidates_for_touched),
-                    position,
+                    Action::Play {
+                        card: None,
+                        position,
+                    },
                 )
             })
             .collect();
 
-        options.sort_by_key(|(hint_value, _)| *hint_value);
         options
-            .last()
-            .filter(|(a, _)| !a.is_unconventional)
-            .map(|(_, v)| v)
-            .copied()
     }
 
     fn assess_discard(&self, position: usize) -> ActionAssessment {
