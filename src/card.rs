@@ -227,4 +227,8 @@ impl PossibleCards {
     pub(crate) fn merge(&mut self, possibilities: &PossibleCards) {
         self.hashed.extend(&possibilities.hashed)
     }
+
+    pub(crate) fn intersects(&self, other: &PossibleCards) -> bool {
+        self.hashed.iter().any(|card| other.contains(card))
+    }
 }

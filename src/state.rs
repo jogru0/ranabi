@@ -732,6 +732,7 @@ impl Display for Record {
 pub struct Deck {
     cards: Vec<Card>,
 }
+
 impl Deck {
     fn draw(&mut self) -> Option<Card> {
         self.cards.pop()
@@ -741,7 +742,7 @@ impl Deck {
         self.cards.is_empty()
     }
 
-    fn new(cards: Vec<Card>) -> Self {
+    pub fn new(cards: Vec<Card>) -> Self {
         Self { cards }
     }
 }

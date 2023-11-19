@@ -132,7 +132,7 @@ impl PlayerState {
         }
     }
 
-    fn touched_positions(&self) -> PositionSet {
+    pub fn touched_positions(&self) -> PositionSet {
         let positions = self
             .cards
             .cards
@@ -167,29 +167,58 @@ impl PlayerState {
         possible
     }
 
+    pub fn is_definitely_aware_that_these_are_all_playable_right_now(
+        &self,
+        possibilities: &PossibleCards,
+        is_already_touched_card: bool,
+        firework: &Firework,
+        touched_in_other_hands_or_more: &PossibleCards,
+    ) -> bool {
+        // Maybe for locked, we want to violate good touch here?
+        // if !self.touched_positions().contains(position) {
+        //     if possibilities.
+        // }
+
+        if !is_already_touched_card && possibilities.intersects(touched_in_other_hands_or_more) {
+            false
+        } else {
+            firework.are_all_playable(possibilities)
+        }
+    }
+
     fn is_definitely_aware_that_this_position_is_playable(
         &self,
         position: usize,
         firework: &Firework,
         potentially_entertained_candidates_for_touched_in_own_hand: &PossibleCards,
+        touched_in_other_hands_or_more: &PossibleCards,
     ) -> bool {
         let possibilities = self.possibilities_self_might_entertain(
             position,
             potentially_entertained_candidates_for_touched_in_own_hand,
         );
-        firework.are_all_playable(&possibilities)
+        let is_already_touched = self.touched_positions().contains(position);
+
+        self.is_definitely_aware_that_these_are_all_playable_right_now(
+            &possibilities,
+            is_already_touched,
+            firework,
+            touched_in_other_hands_or_more,
+        )
     }
 
     fn is_definitely_aware_about_a_playable_card(
         &self,
         firework: &Firework,
         potentially_entertained_candidates_for_touched_in_own_hand: &PossibleCards,
+        touched_in_other_hands_or_more: &PossibleCards,
     ) -> bool {
         (1..=self.cards.current_hand_size).any(|position| {
             self.is_definitely_aware_that_this_position_is_playable(
                 position,
                 firework,
                 potentially_entertained_candidates_for_touched_in_own_hand,
+                touched_in_other_hands_or_more,
             )
         })
     }
@@ -198,11 +227,13 @@ impl PlayerState {
         &self,
         firework: &Firework,
         potentially_entertained_candidates_for_touched_in_own_hand: &PossibleCards,
+        touched_in_other_hands_or_more: &PossibleCards,
     ) -> bool {
         self.touched_positions().is_full()
             && !self.is_definitely_aware_about_a_playable_card(
                 firework,
                 potentially_entertained_candidates_for_touched_in_own_hand,
+                touched_in_other_hands_or_more,
             )
     }
 }

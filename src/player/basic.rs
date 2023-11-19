@@ -22,33 +22,6 @@ impl BasicPlayer {
         &self.public_state.rules
     }
 
-    // fn hand_as_set(&self, other_player_id: usize) -> PossibleCards {
-    //     let mut result = PossibleCards::none();
-
-    //     let cards = &self.player_states[other_player_id].cards;
-
-    //     for pos in 1..=cards.current_hand_size {
-    //         let card_id = cards.cards[pos].unwrap();
-    //         let card = self.witnessed_cards[card_id].unwrap();
-    //         result.add(card);
-    //     }
-
-    //     result
-    // }
-
-    // fn visible_in_hands(&self) -> PossibleCards {
-    //     let mut result = PossibleCards::none();
-    //     for other_player_id in 0..self.rules().number_of_players {
-    //         if other_player_id == self.player_id {
-    //             continue;
-    //         }
-
-    //         result.extend(self.hand_as_set(other_player_id));
-    //     }
-
-    //     result
-    // }
-
     //In reality, less candidates might be entertained. Definitely not more!
     fn potentially_entertained_candidates_for_touched_in_that_players_own_hand(
         &self,
@@ -226,6 +199,7 @@ impl BasicPlayer {
                 &self.potentially_entertained_candidates_for_touched_in_that_players_own_hand(
                     self.next_player_id(),
                 ),
+                &self.touched_in_other_hands_or_more(self.next_player_id()),
             );
 
         assessment.next_player_might_be_locked_with_no_clue =
@@ -290,6 +264,28 @@ impl BasicPlayer {
     }
 
     fn touched_in_other_hands_or_less(&self, player_id: usize) -> PossibleCards {
+        self.touched_visible_by_me_and(player_id)
+    }
+
+    fn touched_not_by_me(&self) -> PossibleCards {
+        let mut result = PossibleCards::none();
+        for p_id in 0..self.rules().number_of_players {
+            if p_id == self.player_id {
+                continue;
+            }
+            result.extend(self.touched_in_other_hand(p_id));
+        }
+        result
+    }
+
+    fn touched_in_other_hands_or_more(&self, player_id: usize) -> PossibleCards {
+        assert_ne!(player_id, self.player_id);
+        let mut result = self.touched_visible_by_me_and(player_id);
+        result.merge(&self.possible_touches_in_hand(self.player_id));
+        result
+    }
+
+    fn touched_visible_by_me_and(&self, player_id: usize) -> PossibleCards {
         let mut result = PossibleCards::none();
         {
             for p_id in 0..self.rules().number_of_players {
@@ -334,7 +330,17 @@ impl BasicPlayer {
             ),
         );
 
-        if self.public_state.firework.are_all_playable(&possibilities) {
+        let is_touched = self.this_player().touched_positions().contains(position);
+
+        if self
+            .this_player()
+            .is_definitely_aware_that_these_are_all_playable_right_now(
+                &possibilities,
+                is_touched,
+                &self.public_state.firework,
+                &self.touched_not_by_me(),
+            )
+        {
             let sure_influence_on_clue_count = if possibilities
                 .hashed
                 .iter()
