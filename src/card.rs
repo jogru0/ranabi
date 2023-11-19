@@ -56,7 +56,7 @@ impl Card {
         }
     }
 }
-#[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
+#[derive(Clone, Copy, PartialEq, Eq, Hash, Debug, PartialOrd, Ord)]
 pub enum Number {
     One,
     Two,
@@ -212,8 +212,8 @@ impl PossibleCards {
         self.hashed.extend(currently_playable.hashed)
     }
 
-    pub(crate) fn add(&mut self, card: Card) {
-        self.hashed.insert(card);
+    pub(crate) fn add(&mut self, card: Card) -> bool {
+        self.hashed.insert(card)
     }
 
     pub(crate) fn with_property(rules: &Rules, hinted_property: Property) -> Self {
@@ -252,5 +252,21 @@ impl PossibleCards {
 
     pub(crate) fn retain(&mut self, keep: impl FnMut(&Card) -> bool) {
         self.hashed.retain(keep);
+    }
+
+    pub(crate) fn in_play_order(&self) -> Vec<Card> {
+        let mut result: Vec<Card> = self.hashed.iter().copied().collect();
+
+        result.sort_unstable_by_key(|card| card.number);
+
+        result
+    }
+
+    pub(crate) fn unique(&self) -> Option<Card> {
+        if self.hashed.len() == 1 {
+            Some(self.hashed[0])
+        } else {
+            None
+        }
     }
 }

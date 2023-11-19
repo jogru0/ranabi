@@ -154,6 +154,7 @@ impl BasicPlayer {
             positions,
             &self.public_state,
             self.stall_severity(self.player_id),
+            &self.all_surely_known_touched_cards_in_hands(),
         );
 
         let correct_interpretation = interpretations.unwrap().get_truth(&self.witnessed_cards);
@@ -203,6 +204,7 @@ impl BasicPlayer {
                     positions,
                     &hypothetical_state,
                     self.stall_severity(self.player_id),
+                    &self.all_surely_known_touched_cards_in_hands(), //TODO: Should be in the hypothetical!
                 );
             }
         }
@@ -272,7 +274,7 @@ impl BasicPlayer {
         let mut result = PossibleCards::none();
 
         for &card_id in &self.player_states[player_id].touched {
-            result.add(self.witnessed_cards[card_id].unwrap())
+            result.add(self.witnessed_cards[card_id].unwrap());
         }
 
         result
@@ -431,6 +433,29 @@ impl BasicPlayer {
             &self.cards_that_player_definitely_sees_all_copies_of(player_id),
         )
     }
+
+    fn all_surely_known_touched_cards_in_hands(&self) -> PossibleCards {
+        let mut result = PossibleCards::empty();
+        for player in 0..self.rules().number_of_players {
+            let player_state = &self.player_states[player];
+            for position in 1..player_state.cards.current_hand_size {
+                if let Some(unique) = player_state.possibilities_self_might_entertain(
+                    position,
+                    &self.potentially_entertained_candidates_for_touched_in_that_players_own_hand(
+                        player,
+                    ),
+                    &self.cards_that_player_definitely_sees_all_copies_of(player),
+                ).unique() {
+                    //TODO!!!!!!!!!!!!!!!
+                    //let succ = 
+                    result.add(unique);
+                    //assert!(succ)
+                }
+            }
+        }
+
+        result
+    }
 }
 
 impl Player for BasicPlayer {
@@ -456,11 +481,14 @@ impl Player for BasicPlayer {
                 positions,
             } => {
                 let giver_stall_severity = self.stall_severity(action_player);
+                let all_surely_known_touched_cards_in_hands =
+                    self.all_surely_known_touched_cards_in_hands();
                 self.player_states[receiver].fr_apply_hint(
                     hinted_property,
                     positions,
                     &self.public_state,
                     giver_stall_severity,
+                    &all_surely_known_touched_cards_in_hands,
                 );
                 self.public_state.hint();
             }

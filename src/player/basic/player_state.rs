@@ -64,6 +64,7 @@ impl PlayerState {
         positions: PositionSet,
         state: &PublicState,
         giver_stall_severity: usize,
+        all_surely_known_touched_cards_in_hands: &PossibleCards,
     ) -> Option<Interpretations> {
         assert_eq!(self.cards.current_hand_size, positions.hand_size);
 
@@ -85,8 +86,10 @@ impl PlayerState {
 
         let mut direct_interpretation_focus_possibilities = PossibleCards::empty();
 
-        let currently_playable = state.firework.currently_playable();
-        direct_interpretation_focus_possibilities.extend(currently_playable);
+        let delayed_playable = state
+            .firework
+            .delayed_playable(all_surely_known_touched_cards_in_hands);
+        direct_interpretation_focus_possibilities.extend(delayed_playable);
 
         if is_chop_focused {
             let critical_saves = state.critical_saves();
@@ -114,6 +117,7 @@ impl PlayerState {
         positions: PositionSet,
         state: &PublicState,
         giver_stall_severity: usize,
+        all_surely_known_touched_cards_in_hands: &PossibleCards,
     ) {
         assert_eq!(self.cards.current_hand_size, positions.hand_size);
 
@@ -124,6 +128,7 @@ impl PlayerState {
                     positions,
                     state,
                     giver_stall_severity,
+                    all_surely_known_touched_cards_in_hands,
                 )
                 .unwrap(),
             );

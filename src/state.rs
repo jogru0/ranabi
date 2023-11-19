@@ -686,6 +686,17 @@ impl Firework {
             .iter()
             .all(|card| self.is_playable(card))
     }
+
+    pub(crate) fn delayed_playable(
+        &self,
+        all_surely_known_touched_cards_in_hands: &PossibleCards,
+    ) -> PossibleCards {
+        let mut future = self.clone();
+        for card in all_surely_known_touched_cards_in_hands.in_play_order() {
+            future.add(card);
+        }
+        future.currently_playable()
+    }
 }
 
 pub struct Record {
