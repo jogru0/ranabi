@@ -1,7 +1,7 @@
 use indexmap::{IndexMap, IndexSet};
 
 use crate::{
-    card::{Number, PossibleCards},
+    card::{card_set::CardSet, Number},
     player::{
         basic::inter::{Interpretation, Interpretations},
         PositionSet, Property,
@@ -16,7 +16,7 @@ pub struct PlayerState {
     pub cards: HandCards,
     //I think this currently is strictly just what follows explicitely from hints.
     //Maybe this information should live in the public information?
-    pub objectively_possible_cards_according_to_hints3: IndexMap<usize, PossibleCards>,
+    pub objectively_possible_cards_according_to_hints3: IndexMap<usize, CardSet>,
     pub touched: IndexSet<usize>,
     interpretations_some_of_which_self_should_entertain: Vec<Interpretations>,
 }
@@ -35,7 +35,7 @@ impl PlayerState {
         self.cards.add_card(id);
         let previous = self
             .objectively_possible_cards_according_to_hints3
-            .insert(id, PossibleCards::all(rules));
+            .insert(id, CardSet::all(rules));
         assert!(previous.is_none());
     }
 
@@ -64,7 +64,7 @@ impl PlayerState {
         positions: PositionSet,
         state: &PublicState,
         giver_stall_severity: usize,
-        all_surely_known_touched_cards_in_hands: &PossibleCards,
+        all_surely_known_touched_cards_in_hands: &CardSet,
     ) -> Option<Interpretations> {
         assert_eq!(self.cards.current_hand_size, positions.hand_size);
 
@@ -84,7 +84,7 @@ impl PlayerState {
 
         assert!(!(is_chop_focused && touches_no_new_cards));
 
-        let mut direct_interpretation_focus_possibilities = PossibleCards::empty();
+        let mut direct_interpretation_focus_possibilities = CardSet::empty();
 
         let delayed_playable = state
             .firework
@@ -98,7 +98,7 @@ impl PlayerState {
             if hinted_property == Property::Number(Number::Two)
                 || hinted_property == Property::Number(Number::Five)
             {
-                let special_saves = PossibleCards::with_property(&state.rules, hinted_property);
+                let special_saves = CardSet::with_property(&state.rules, hinted_property);
                 direct_interpretation_focus_possibilities.extend(special_saves)
             }
         }
@@ -117,7 +117,7 @@ impl PlayerState {
         positions: PositionSet,
         state: &PublicState,
         giver_stall_severity: usize,
-        all_surely_known_touched_cards_in_hands: &PossibleCards,
+        all_surely_known_touched_cards_in_hands: &CardSet,
     ) {
         assert_eq!(self.cards.current_hand_size, positions.hand_size);
 
@@ -161,9 +161,9 @@ impl PlayerState {
     pub fn possibilities_self_might_entertain(
         &self,
         position: usize,
-        potentially_entertained_candidates_for_touched_in_own_hand: &PossibleCards,
-        cards_self_definitely_sees_all_copies_of: &PossibleCards,
-    ) -> PossibleCards {
+        potentially_entertained_candidates_for_touched_in_own_hand: &CardSet,
+        cards_self_definitely_sees_all_copies_of: &CardSet,
+    ) -> CardSet {
         let card_id = self.cards.cards[position].unwrap();
 
         //TODO: Access maybe only combined with the sees all copies of thing?
@@ -190,10 +190,10 @@ impl PlayerState {
 
     pub fn is_definitely_aware_that_these_are_all_playable_right_now(
         &self,
-        possibilities: &PossibleCards,
+        possibilities: &CardSet,
         is_already_touched_card: bool,
         firework: &Firework,
-        touched_in_other_hands_or_more: &PossibleCards,
+        touched_in_other_hands_or_more: &CardSet,
     ) -> bool {
         // Maybe for locked, we want to violate good touch here?
         // if !self.touched_positions().contains(position) {
@@ -211,9 +211,9 @@ impl PlayerState {
         &self,
         position: usize,
         firework: &Firework,
-        potentially_entertained_candidates_for_touched_in_own_hand: &PossibleCards,
-        touched_in_other_hands_or_more: &PossibleCards,
-        cards_self_definitely_sees_all_copies_of: &PossibleCards,
+        potentially_entertained_candidates_for_touched_in_own_hand: &CardSet,
+        touched_in_other_hands_or_more: &CardSet,
+        cards_self_definitely_sees_all_copies_of: &CardSet,
     ) -> bool {
         let possibilities = self.possibilities_self_might_entertain(
             position,
@@ -233,9 +233,9 @@ impl PlayerState {
     fn is_definitely_aware_about_a_playable_card(
         &self,
         firework: &Firework,
-        potentially_entertained_candidates_for_touched_in_own_hand: &PossibleCards,
-        touched_in_other_hands_or_more: &PossibleCards,
-        cards_self_definitely_sees_all_copies_of: &PossibleCards,
+        potentially_entertained_candidates_for_touched_in_own_hand: &CardSet,
+        touched_in_other_hands_or_more: &CardSet,
+        cards_self_definitely_sees_all_copies_of: &CardSet,
     ) -> bool {
         (1..=self.cards.current_hand_size).any(|position| {
             self.is_definitely_aware_that_this_position_is_playable(
@@ -251,9 +251,9 @@ impl PlayerState {
     pub fn potentially_is_locked_with_no_known_playable_card(
         &self,
         firework: &Firework,
-        potentially_entertained_candidates_for_touched_in_own_hand: &PossibleCards,
-        touched_in_other_hands_or_more: &PossibleCards,
-        cards_self_definitely_sees_all_copies_of: &PossibleCards,
+        potentially_entertained_candidates_for_touched_in_own_hand: &CardSet,
+        touched_in_other_hands_or_more: &CardSet,
+        cards_self_definitely_sees_all_copies_of: &CardSet,
     ) -> bool {
         self.touched_positions().is_full()
             && !self.is_definitely_aware_about_a_playable_card(
@@ -267,8 +267,8 @@ impl PlayerState {
     pub(crate) fn objectively_possible_cards_according_to_hints_minus_visible_full_sets(
         &self,
         card_id: usize,
-        visible_full_sets: &PossibleCards,
-    ) -> PossibleCards {
+        visible_full_sets: &CardSet,
+    ) -> CardSet {
         let mut result = self.objectively_possible_cards_according_to_hints3[&card_id].clone();
         result.exclude(visible_full_sets);
         result
@@ -277,9 +277,9 @@ impl PlayerState {
     pub(crate) fn stall_severity(
         &self,
         state: &PublicState,
-        potentially_entertained_candidates_for_touched_in_own_hand: &PossibleCards,
-        touched_in_other_hands_or_more: &PossibleCards,
-        cards_self_definitely_sees_all_copies_of: &PossibleCards,
+        potentially_entertained_candidates_for_touched_in_own_hand: &CardSet,
+        touched_in_other_hands_or_more: &CardSet,
+        cards_self_definitely_sees_all_copies_of: &CardSet,
     ) -> usize {
         if state.clues == 8 {
             4

@@ -1,7 +1,7 @@
 use std::mem::swap;
 
 use crate::{
-    card::{Card, Number, PossibleCards},
+    card::{card_set::CardSet, Card, Number},
     player::basic::action_assessment::ActionType,
     state::{PublicState, Rules},
 };
@@ -27,8 +27,8 @@ impl BasicPlayer {
     fn potentially_entertained_candidates_for_touched_in_that_players_own_hand(
         &self,
         player_id: usize,
-    ) -> PossibleCards {
-        let mut result = PossibleCards::all(self.rules());
+    ) -> CardSet {
+        let mut result = CardSet::all(self.rules());
 
         let played = self.public_state.firework.already_played();
         result.exclude(&played);
@@ -39,11 +39,11 @@ impl BasicPlayer {
         result
     }
 
-    fn possible_touches_in_hand(&self, player: usize) -> PossibleCards {
+    fn possible_touches_in_hand(&self, player: usize) -> CardSet {
         //Didn't think about anything else so far.
         assert_eq!(player, self.player_id);
 
-        let mut result = PossibleCards::none();
+        let mut result = CardSet::none();
 
         let self_state = &self.player_states[self.player_id];
         for &card_id in &self_state.touched {
@@ -67,8 +67,8 @@ impl BasicPlayer {
     fn definitely_good_touchable_cards_definitely_known_by_this_player(
         &self,
         player: usize,
-    ) -> PossibleCards {
-        let mut result = PossibleCards::all(self.rules());
+    ) -> CardSet {
+        let mut result = CardSet::all(self.rules());
 
         let definite_trash = self.public_state.definite_trash();
         result.exclude(&definite_trash);
@@ -269,9 +269,9 @@ impl BasicPlayer {
         options
     }
 
-    fn touched_in_other_hand(&self, player_id: usize) -> PossibleCards {
+    fn touched_in_other_hand(&self, player_id: usize) -> CardSet {
         assert_ne!(player_id, self.player_id);
-        let mut result = PossibleCards::none();
+        let mut result = CardSet::none();
 
         for &card_id in &self.player_states[player_id].touched {
             result.add(self.witnessed_cards[card_id].unwrap());
@@ -280,11 +280,11 @@ impl BasicPlayer {
         result
     }
 
-    fn touched_in_other_hands_or_less(&self, player_id: usize) -> PossibleCards {
+    fn touched_in_other_hands_or_less(&self, player_id: usize) -> CardSet {
         self.touched_visible_by_me_and(player_id)
     }
 
-    fn touched_in_other_hands_or_more(&self, player_id: usize) -> PossibleCards {
+    fn touched_in_other_hands_or_more(&self, player_id: usize) -> CardSet {
         let mut result = self.touched_visible_by_me_and(player_id);
         if player_id != self.player_id {
             result.merge(&self.possible_touches_in_hand(self.player_id));
@@ -292,8 +292,8 @@ impl BasicPlayer {
         result
     }
 
-    fn touched_visible_by_me_and(&self, player_id: usize) -> PossibleCards {
-        let mut result = PossibleCards::none();
+    fn touched_visible_by_me_and(&self, player_id: usize) -> CardSet {
+        let mut result = CardSet::none();
         {
             for p_id in 0..self.rules().number_of_players {
                 if p_id == self.player_id || p_id == player_id {
@@ -349,15 +349,12 @@ impl BasicPlayer {
                 &self.touched_in_other_hands_or_more(self.player_id),
             )
         {
-            let sure_influence_on_clue_count = if possibilities
-                .hashed
-                .iter()
-                .all(|card| card.number == Number::Five)
-            {
-                1
-            } else {
-                0
-            };
+            let sure_influence_on_clue_count =
+                if possibilities.iter().all(|card| card.number == Number::Five) {
+                    1
+                } else {
+                    0
+                };
 
             return ActionAssessment::new(
                 0,
@@ -402,9 +399,9 @@ impl BasicPlayer {
         ActionAssessment::new(0, 0, ActionType::Discard, 1, last_resort, 0)
     }
 
-    fn cards_that_player_definitely_sees_all_copies_of(&self, player_id: usize) -> PossibleCards {
+    fn cards_that_player_definitely_sees_all_copies_of(&self, player_id: usize) -> CardSet {
         let mut pile = self.public_state.discard_pile.clone();
-        for card in self.public_state.firework.already_played().hashed {
+        for card in &self.public_state.firework.already_played() {
             pile.add(&card);
         }
 
@@ -434,8 +431,8 @@ impl BasicPlayer {
         )
     }
 
-    fn all_surely_known_touched_cards_in_hands(&self) -> PossibleCards {
-        let mut result = PossibleCards::empty();
+    fn all_surely_known_touched_cards_in_hands(&self) -> CardSet {
+        let mut result = CardSet::empty();
         for player in 0..self.rules().number_of_players {
             let player_state = &self.player_states[player];
             for position in 1..player_state.cards.current_hand_size {
@@ -575,7 +572,7 @@ impl HandCards {
 mod inter {
     use indexmap::IndexMap;
 
-    use crate::card::{Card, PossibleCards};
+    use crate::card::{card_set::CardSet, Card};
 
     #[derive(Debug, Clone)]
     pub struct Interpretations {
@@ -615,7 +612,7 @@ mod inter {
     //Currently, interpretations might contain restrictions about cards that are not on the hand anymore.
     #[derive(Debug, Clone)]
     pub struct Interpretation {
-        pub card_id_to_possibilities: IndexMap<usize, PossibleCards>,
+        pub card_id_to_possibilities: IndexMap<usize, CardSet>,
     }
 
     impl Interpretation {

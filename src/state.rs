@@ -1,12 +1,12 @@
 use std::fmt::Display;
 
 use colored::Colorize;
-use indexmap::{IndexMap, IndexSet};
+use indexmap::IndexMap;
 use rand::seq::SliceRandom;
 use rand_chacha::ChaCha20Rng;
 
 use crate::{
-    card::{Card, Color, Number, PossibleCards},
+    card::{card_set::CardSet, Card, Color, Number},
     player::{action::Action, basic::BasicPlayer, Player, Property},
 };
 
@@ -40,8 +40,8 @@ impl DiscardPile {
         }
     }
 
-    fn unreachable(&self, rules: &Rules) -> PossibleCards {
-        let mut result = PossibleCards::all(rules);
+    fn unreachable(&self, rules: &Rules) -> CardSet {
+        let mut result = CardSet::all(rules);
         for color in rules.used_colors() {
             let one = Card {
                 color,
@@ -96,8 +96,8 @@ impl DiscardPile {
         self.card_to_multiplicity[card] += 1;
     }
 
-    pub(crate) fn full_sets(&self, rules: &Rules) -> PossibleCards {
-        let mut result = PossibleCards::all(rules);
+    pub(crate) fn full_sets(&self, rules: &Rules) -> CardSet {
+        let mut result = CardSet::all(rules);
         result.retain(|card| self.card_to_multiplicity[card] == rules.multiplicity_of(card.number));
         result
     }
@@ -128,8 +128,8 @@ impl PublicState {
         }
     }
 
-    pub(crate) fn critical_saves(&self) -> PossibleCards {
-        let mut result = PossibleCards::none();
+    pub(crate) fn critical_saves(&self) -> CardSet {
+        let mut result = CardSet::none();
         for (&color, &maybe_number) in &self.firework.piles {
             let two = Card {
                 color,
@@ -205,7 +205,7 @@ impl PublicState {
         }
     }
 
-    pub(crate) fn definite_trash(&self) -> PossibleCards {
+    pub(crate) fn definite_trash(&self) -> CardSet {
         let mut result = self.firework.already_played();
         result.merge(&self.discard_pile.unreachable(&self.rules));
         result
@@ -653,24 +653,24 @@ impl Firework {
         }
     }
 
-    pub(crate) fn currently_playable(&self) -> PossibleCards {
-        let mut hashed = IndexSet::with_capacity(self.piles.len());
+    pub(crate) fn currently_playable(&self) -> CardSet {
+        let mut result = CardSet::empty();
 
         for (&color, &number) in &self.piles {
             if let Some(card) = Card::next(color, number) {
-                hashed.insert(card);
+                result.add(card);
             }
         }
 
-        PossibleCards { hashed }
+        result
     }
 
     pub fn is_playable(&self, card: &Card) -> bool {
         self.currently_playable().contains(card)
     }
 
-    pub fn already_played(&self) -> PossibleCards {
-        let mut result = PossibleCards::none();
+    pub fn already_played(&self) -> CardSet {
+        let mut result = CardSet::none();
 
         for (&color, &(mut maybe_number)) in &self.piles {
             while let Some(number) = maybe_number {
@@ -682,17 +682,14 @@ impl Firework {
         result
     }
 
-    pub(crate) fn are_all_playable(&self, possibilities: &PossibleCards) -> bool {
-        possibilities
-            .hashed
-            .iter()
-            .all(|card| self.is_playable(card))
+    pub(crate) fn are_all_playable(&self, possibilities: &CardSet) -> bool {
+        possibilities.iter().all(|card| self.is_playable(&card))
     }
 
     pub(crate) fn delayed_playable(
         &self,
-        all_surely_known_touched_cards_in_hands: &PossibleCards,
-    ) -> PossibleCards {
+        all_surely_known_touched_cards_in_hands: &CardSet,
+    ) -> CardSet {
         let mut future = self.clone();
         for card in all_surely_known_touched_cards_in_hands.in_play_order() {
             future.add(card);
