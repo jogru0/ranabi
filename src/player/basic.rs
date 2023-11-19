@@ -153,6 +153,7 @@ impl BasicPlayer {
             hinted_property,
             positions,
             &self.public_state,
+            self.stall_severity(self.player_id),
         );
 
         let correct_interpretation = interpretations.unwrap().get_truth(&self.witnessed_cards);
@@ -197,7 +198,12 @@ impl BasicPlayer {
         } = action
         {
             if receiver == self.next_player_id() {
-                hypothetical_next.fr_apply_hint(hinted_property, positions, &hypothetical_state);
+                hypothetical_next.fr_apply_hint(
+                    hinted_property,
+                    positions,
+                    &hypothetical_state,
+                    self.stall_severity(self.player_id),
+                );
             }
         }
 
@@ -276,21 +282,11 @@ impl BasicPlayer {
         self.touched_visible_by_me_and(player_id)
     }
 
-    fn touched_not_by_me(&self) -> PossibleCards {
-        let mut result = PossibleCards::none();
-        for p_id in 0..self.rules().number_of_players {
-            if p_id == self.player_id {
-                continue;
-            }
-            result.extend(self.touched_in_other_hand(p_id));
-        }
-        result
-    }
-
     fn touched_in_other_hands_or_more(&self, player_id: usize) -> PossibleCards {
-        assert_ne!(player_id, self.player_id);
         let mut result = self.touched_visible_by_me_and(player_id);
-        result.merge(&self.possible_touches_in_hand(self.player_id));
+        if player_id != self.player_id {
+            result.merge(&self.possible_touches_in_hand(self.player_id));
+        }
         result
     }
 
@@ -348,7 +344,7 @@ impl BasicPlayer {
                 &possibilities,
                 is_touched,
                 &self.public_state.firework,
-                &self.touched_not_by_me(),
+                &self.touched_in_other_hands_or_more(self.player_id),
             )
         {
             let sure_influence_on_clue_count = if possibilities
@@ -425,23 +421,33 @@ impl BasicPlayer {
 
         pile.full_sets(self.rules())
     }
+
+    fn stall_severity(&self, player_id: usize) -> usize {
+        self.player_states[player_id].stall_severity(
+            &self.public_state,
+            &self
+                .potentially_entertained_candidates_for_touched_in_that_players_own_hand(player_id),
+            &self.touched_in_other_hands_or_more(player_id),
+            &self.cards_that_player_definitely_sees_all_copies_of(player_id),
+        )
+    }
 }
 
 impl Player for BasicPlayer {
-    fn witness_action(&mut self, action: Action, player: usize) {
+    fn witness_action(&mut self, action: Action, action_player: usize) {
         match action {
             Action::Play {
                 card: Some(card),
                 position,
             } => {
-                self.play_or_discard_card(card, player, position);
+                self.play_or_discard_card(card, action_player, position);
                 self.public_state.play(card);
             }
             Action::Discard {
                 card: Some(card),
                 position,
             } => {
-                self.play_or_discard_card(card, player, position);
+                self.play_or_discard_card(card, action_player, position);
                 self.public_state.discard(card);
             }
             Action::Hint {
@@ -449,10 +455,12 @@ impl Player for BasicPlayer {
                 hinted_property,
                 positions,
             } => {
+                let giver_stall_severity = self.stall_severity(action_player);
                 self.player_states[receiver].fr_apply_hint(
                     hinted_property,
                     positions,
                     &self.public_state,
+                    giver_stall_severity,
                 );
                 self.public_state.hint();
             }
@@ -581,7 +589,14 @@ mod inter {
     pub struct Interpretation {
         pub card_id_to_possibilities: IndexMap<usize, PossibleCards>,
     }
+
     impl Interpretation {
+        pub fn no_additional_info() -> Self {
+            Self {
+                card_id_to_possibilities: IndexMap::new(),
+            }
+        }
+
         fn is_true(&self, witnessed_cards: &[Option<Card>]) -> bool {
             self.card_id_to_possibilities
                 .iter()

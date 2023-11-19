@@ -231,5 +231,212 @@ fn failed_0() {
             color: Color::Yellow,
         },
     ]);
-    regression_test(Rules::new(), deck, None, "failed_0");
+    regression_test(Rules::new(), deck, Some(15), "failed_0");
+}
+
+#[test]
+fn failed_1() {
+    let deck = Deck::new(vec![
+        Card {
+            number: Number::Three,
+            color: Color::Blue,
+        },
+        Card {
+            number: Number::Two,
+            color: Color::Red,
+        },
+        Card {
+            number: Number::Two,
+            color: Color::Yellow,
+        },
+        Card {
+            number: Number::Five,
+            color: Color::Green,
+        },
+        Card {
+            number: Number::Three,
+            color: Color::White,
+        },
+        Card {
+            number: Number::Five,
+            color: Color::Blue,
+        },
+        Card {
+            number: Number::One,
+            color: Color::White,
+        },
+        Card {
+            number: Number::Four,
+            color: Color::Red,
+        },
+        Card {
+            number: Number::One,
+            color: Color::White,
+        },
+        Card {
+            number: Number::Five,
+            color: Color::Yellow,
+        },
+        Card {
+            number: Number::Four,
+            color: Color::Yellow,
+        },
+        Card {
+            number: Number::Four,
+            color: Color::Red,
+        },
+        Card {
+            number: Number::Three,
+            color: Color::Red,
+        },
+        Card {
+            number: Number::One,
+            color: Color::Red,
+        },
+        Card {
+            number: Number::Three,
+            color: Color::Yellow,
+        },
+        Card {
+            number: Number::One,
+            color: Color::Yellow,
+        },
+        Card {
+            number: Number::Three,
+            color: Color::Red,
+        },
+        Card {
+            number: Number::Three,
+            color: Color::Green,
+        },
+        Card {
+            number: Number::Two,
+            color: Color::Green,
+        },
+        Card {
+            number: Number::One,
+            color: Color::Red,
+        },
+        Card {
+            number: Number::Two,
+            color: Color::White,
+        },
+        Card {
+            number: Number::Four,
+            color: Color::White,
+        },
+        Card {
+            number: Number::Four,
+            color: Color::Blue,
+        },
+        Card {
+            number: Number::Two,
+            color: Color::Blue,
+        },
+        Card {
+            number: Number::Three,
+            color: Color::Blue,
+        },
+        Card {
+            number: Number::Two,
+            color: Color::Blue,
+        },
+        Card {
+            number: Number::Three,
+            color: Color::Yellow,
+        },
+        Card {
+            number: Number::Four,
+            color: Color::Green,
+        },
+        Card {
+            number: Number::Three,
+            color: Color::Green,
+        },
+        Card {
+            number: Number::One,
+            color: Color::Blue,
+        },
+        Card {
+            number: Number::One,
+            color: Color::Red,
+        },
+        Card {
+            number: Number::Four,
+            color: Color::Green,
+        },
+        Card {
+            number: Number::One,
+            color: Color::White,
+        },
+        Card {
+            number: Number::One,
+            color: Color::Green,
+        },
+        Card {
+            number: Number::Four,
+            color: Color::Blue,
+        },
+        Card {
+            number: Number::One,
+            color: Color::Blue,
+        },
+        Card {
+            number: Number::Two,
+            color: Color::Green,
+        },
+        Card {
+            number: Number::Four,
+            color: Color::Yellow,
+        },
+        Card {
+            number: Number::Five,
+            color: Color::White,
+        },
+        Card {
+            number: Number::Five,
+            color: Color::Red,
+        },
+        Card {
+            number: Number::Two,
+            color: Color::White,
+        },
+        Card {
+            number: Number::One,
+            color: Color::Yellow,
+        },
+        Card {
+            number: Number::Two,
+            color: Color::Red,
+        },
+        Card {
+            number: Number::Four,
+            color: Color::White,
+        },
+        Card {
+            number: Number::One,
+            color: Color::Green,
+        },
+        Card {
+            number: Number::One,
+            color: Color::Blue,
+        },
+        Card {
+            number: Number::One,
+            color: Color::Green,
+        },
+        Card {
+            number: Number::Two,
+            color: Color::Yellow,
+        },
+        Card {
+            number: Number::One,
+            color: Color::Yellow,
+        },
+        Card {
+            number: Number::Three,
+            color: Color::White,
+        },
+    ]);
+    regression_test(Rules::new(), deck, None, "failed_1");
 }

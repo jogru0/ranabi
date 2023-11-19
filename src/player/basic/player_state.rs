@@ -63,6 +63,7 @@ impl PlayerState {
         hinted_property: Property,
         positions: PositionSet,
         state: &PublicState,
+        giver_stall_severity: usize,
     ) -> Option<Interpretations> {
         assert_eq!(self.cards.current_hand_size, positions.hand_size);
 
@@ -70,8 +71,10 @@ impl PlayerState {
         let focus_position = positions.focus_position(touched_positions);
         let touches_no_new_cards = touched_positions.contains(focus_position);
 
-        if touches_no_new_cards {
-            //TODO: This implies more.
+        let potential_burned_clue = 2 <= giver_stall_severity && touches_no_new_cards;
+
+        if potential_burned_clue {
+            return Interpretations::new(vec![Interpretation::no_additional_info()]);
         }
 
         let focus_card_id = self.cards.cards[focus_position].unwrap();
@@ -110,13 +113,19 @@ impl PlayerState {
         hinted_property: Property,
         positions: PositionSet,
         state: &PublicState,
+        giver_stall_severity: usize,
     ) {
         assert_eq!(self.cards.current_hand_size, positions.hand_size);
 
         self.interpretations_some_of_which_self_should_entertain
             .push(
-                self.get_hint_interpretations(hinted_property, positions, state)
-                    .unwrap(),
+                self.get_hint_interpretations(
+                    hinted_property,
+                    positions,
+                    state,
+                    giver_stall_severity,
+                )
+                .unwrap(),
             );
 
         //Ugh. This influences hint interpretation, which I don't like at all. For now, we just do this after the interpretation thing.
@@ -258,5 +267,26 @@ impl PlayerState {
         let mut result = self.objectively_possible_cards_according_to_hints3[&card_id].clone();
         result.exclude(visible_full_sets);
         result
+    }
+
+    pub(crate) fn stall_severity(
+        &self,
+        state: &PublicState,
+        potentially_entertained_candidates_for_touched_in_own_hand: &PossibleCards,
+        touched_in_other_hands_or_more: &PossibleCards,
+        cards_self_definitely_sees_all_copies_of: &PossibleCards,
+    ) -> usize {
+        if state.clues == 8 {
+            4
+        } else if self.potentially_is_locked_with_no_known_playable_card(
+            &state.firework,
+            potentially_entertained_candidates_for_touched_in_own_hand,
+            touched_in_other_hands_or_more,
+            cards_self_definitely_sees_all_copies_of,
+        ) {
+            3
+        } else {
+            0
+        }
     }
 }
