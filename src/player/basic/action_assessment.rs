@@ -83,20 +83,20 @@ impl Ord for ActionAssessment {
             ord => return ord,
         }
 
-        // match (self.action_type == ActionType::Play).cmp(&(other.action_type == ActionType::Play)) {
-        //     core::cmp::Ordering::Equal => {}
-        //     ord => return ord,
-        // }
+        match (self.action_type == ActionType::Play).cmp(&(other.action_type == ActionType::Play)) {
+            core::cmp::Ordering::Equal => {}
+            ord => return ord,
+        }
 
         match self.new_touches.cmp(&other.new_touches) {
             core::cmp::Ordering::Equal => {}
             ord => return ord,
         }
 
-        match self.tempo.cmp(&other.tempo) {
-            core::cmp::Ordering::Equal => {}
-            ord => return ord,
-        }
+        // match self.tempo.cmp(&other.tempo) {
+        //     core::cmp::Ordering::Equal => {}
+        //     ord => return ord,
+        // }
 
         match self
             .sure_influence_on_clue_count
