@@ -504,3 +504,4 @@ Turn 55 action: Discard from position 3
 Turn 56 action: Play from position 2
 Won with 23 points.
 
+b3r2y2g5w3b5w1r4w1y5y4r4r3r1y3y1r3g3g2r1w2w4b4b2b3b2y3g4g3b1r1g4w1g1b4b1g2y4w5r5w2y1r2w4g1b1g1y2y1w3

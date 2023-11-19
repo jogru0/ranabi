@@ -540,3 +540,4 @@ Turn 59 action: Play from position 1
 Turn 60 action: Play from position 4
 Won with 22 points.
 
+y3y3r3b2b1w2r2w4b4y1b2r4g3w5b1y4w1w3b3y4g3w3r1r3y1g2b5b4g4w1y2g1g1g5b1g4b3r5y2w4r4g1w1r1y5r1w2y1r2g2

@@ -10,6 +10,8 @@ use crate::{
     player::{action::Action, basic::BasicPlayer, Player, Property},
 };
 
+use self::deck::Deck;
+
 #[derive(Clone)]
 pub struct DiscardPile {
     card_to_multiplicity: IndexMap<Card, usize>,
@@ -744,22 +746,67 @@ impl Display for Record {
     }
 }
 
-#[derive(Debug, Clone)]
-pub struct Deck {
-    cards: Vec<Card>,
-}
+pub mod deck {
+    use itertools::Itertools;
 
-impl Deck {
-    fn draw(&mut self) -> Option<Card> {
-        self.cards.pop()
+    use crate::card::{Card, Color, Number};
+
+    #[derive(Debug, Clone)]
+    pub struct Deck {
+        cards: Vec<Card>,
     }
 
-    fn is_empty(&self) -> bool {
-        self.cards.is_empty()
-    }
+    impl Deck {
+        pub fn draw(&mut self) -> Option<Card> {
+            self.cards.pop()
+        }
 
-    pub fn new(cards: Vec<Card>) -> Self {
-        Self { cards }
+        pub fn is_empty(&self) -> bool {
+            self.cards.is_empty()
+        }
+
+        pub fn new(cards: Vec<Card>) -> Self {
+            Self { cards }
+        }
+
+        pub fn to_line(&self) -> String {
+            let mut result = String::with_capacity(2 * self.cards.len());
+            for card in &self.cards {
+                result.push_str(&card.color.to_string());
+                result.push_str(&card.number.to_string());
+            }
+            result
+        }
+
+        pub fn from_line(line: &str) -> Self {
+            let cards = line
+                .chars()
+                .tuples()
+                .map(|(c, n)| {
+                    let color = match c {
+                        'r' => Color::Red,
+                        'g' => Color::Green,
+                        'b' => Color::Blue,
+                        'y' => Color::Yellow,
+                        'w' => Color::White,
+                        _ => panic!(),
+                    };
+
+                    let number = match n {
+                        '1' => Number::One,
+                        '2' => Number::Two,
+                        '3' => Number::Three,
+                        '4' => Number::Four,
+                        '5' => Number::Five,
+                        _ => panic!(),
+                    };
+
+                    Card { number, color }
+                })
+                .collect();
+
+            Self { cards }
+        }
     }
 }
 

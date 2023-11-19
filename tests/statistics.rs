@@ -64,6 +64,6 @@ fn stats() {
     )
     .unwrap();
     if let Some(deck) = failed_deck {
-        writeln!(&mut file, "\n{deck:?}").unwrap();
+        writeln!(&mut file, "\n{}", deck.to_line()).unwrap();
     }
 }
