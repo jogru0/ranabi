@@ -28,7 +28,7 @@ impl BasicPlayer {
         &self,
         player_id: usize,
     ) -> CardSet {
-        let mut result = CardSet::all(self.rules());
+        let mut result = CardSet::all();
 
         let played = self.public_state.firework.already_played();
         result.exclude(&played);
@@ -68,7 +68,7 @@ impl BasicPlayer {
         &self,
         player: usize,
     ) -> CardSet {
-        let mut result = CardSet::all(self.rules());
+        let mut result = CardSet::all();
 
         let definite_trash = self.public_state.definite_trash();
         result.exclude(&definite_trash);
@@ -401,7 +401,7 @@ impl BasicPlayer {
 
     fn cards_that_player_definitely_sees_all_copies_of(&self, player_id: usize) -> CardSet {
         let mut pile = self.public_state.discard_pile.clone();
-        for card in &self.public_state.firework.already_played() {
+        for card in self.public_state.firework.already_played().iter() {
             pile.add(&card);
         }
 
@@ -432,7 +432,7 @@ impl BasicPlayer {
     }
 
     fn all_surely_known_touched_cards_in_hands(&self) -> CardSet {
-        let mut result = CardSet::empty();
+        let mut result = CardSet::none();
         for player in 0..self.rules().number_of_players {
             let player_state = &self.player_states[player];
             for position in 1..player_state.cards.current_hand_size {
@@ -496,7 +496,7 @@ impl Player for BasicPlayer {
     fn witness_draw(&mut self, player: usize, card: Option<Card>) {
         let id = self.witnessed_cards.len();
         self.witnessed_cards.push(card);
-        self.player_states[player].add_card(id, &self.public_state.rules)
+        self.player_states[player].add_card(id)
     }
 
     fn request_action(&self) -> Action {

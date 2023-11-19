@@ -41,7 +41,7 @@ impl DiscardPile {
     }
 
     fn unreachable(&self, rules: &Rules) -> CardSet {
-        let mut result = CardSet::all(rules);
+        let mut result = CardSet::all();
         for color in rules.used_colors() {
             let one = Card {
                 color,
@@ -97,7 +97,7 @@ impl DiscardPile {
     }
 
     pub(crate) fn full_sets(&self, rules: &Rules) -> CardSet {
-        let mut result = CardSet::all(rules);
+        let mut result = CardSet::all();
         result.retain(|card| self.card_to_multiplicity[card] == rules.multiplicity_of(card.number));
         result
     }
@@ -654,7 +654,7 @@ impl Firework {
     }
 
     pub(crate) fn currently_playable(&self) -> CardSet {
-        let mut result = CardSet::empty();
+        let mut result = CardSet::none();
 
         for (&color, &number) in &self.piles {
             if let Some(card) = Card::next(color, number) {

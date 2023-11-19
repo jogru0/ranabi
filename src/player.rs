@@ -75,7 +75,7 @@ impl Display for Property {
 }
 
 impl Property {
-    fn all(rules: &Rules) -> Vec<Self> {
+    pub fn all(rules: &Rules) -> Vec<Self> {
         let mut result = Vec::with_capacity(5 + rules.used_colors().len());
         result.push(Property::Number(Number::One));
         result.push(Property::Number(Number::Two));

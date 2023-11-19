@@ -6,7 +6,7 @@ use crate::{
         basic::inter::{Interpretation, Interpretations},
         PositionSet, Property,
     },
-    state::{Firework, PublicState, Rules},
+    state::{Firework, PublicState},
 };
 
 use super::HandCards;
@@ -31,11 +31,11 @@ impl PlayerState {
         }
     }
 
-    pub fn add_card(&mut self, id: usize, rules: &Rules) {
+    pub fn add_card(&mut self, id: usize) {
         self.cards.add_card(id);
         let previous = self
             .objectively_possible_cards_according_to_hints3
-            .insert(id, CardSet::all(rules));
+            .insert(id, CardSet::all());
         assert!(previous.is_none());
     }
 
@@ -84,7 +84,7 @@ impl PlayerState {
 
         assert!(!(is_chop_focused && touches_no_new_cards));
 
-        let mut direct_interpretation_focus_possibilities = CardSet::empty();
+        let mut direct_interpretation_focus_possibilities = CardSet::none();
 
         let delayed_playable = state
             .firework
@@ -98,7 +98,7 @@ impl PlayerState {
             if hinted_property == Property::Number(Number::Two)
                 || hinted_property == Property::Number(Number::Five)
             {
-                let special_saves = CardSet::with_property(&state.rules, hinted_property);
+                let special_saves = CardSet::with_property(hinted_property);
                 direct_interpretation_focus_possibilities.extend(special_saves)
             }
         }
