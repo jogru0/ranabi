@@ -223,6 +223,35 @@ impl BasicPlayer {
         }
     }
 
+    fn apply_hypothetical(&self, action: Action, assessment: &mut ActionAssessment) {
+        let mut hypothetical_next = self.player_states[self.next_player_id()].clone();
+        let mut hypothetical_state = self.public_state.clone();
+
+        hypothetical_state.apply_action(action);
+
+        if let Action::Hint {
+            receiver,
+            hinted_property,
+            positions,
+        } = action
+        {
+            if receiver == self.next_player_id() {
+                hypothetical_next.fr_apply_hint(hinted_property, positions, &hypothetical_state);
+            }
+        }
+
+        let next_player_might_be_locked_with_no_clue = hypothetical_state.clues == 0
+            && hypothetical_next.potentially_is_locked_with_no_known_playable_card(
+                &hypothetical_state.firework,
+                &self.potentially_entertained_candidates_for_touched_in_that_players_own_hand(
+                    self.next_player_id(),
+                ),
+            );
+
+        assessment.next_player_might_be_locked_with_no_clue =
+            next_player_might_be_locked_with_no_clue;
+    }
+
     fn assess_plays_this_player(&self) -> Vec<(ActionAssessment, Action)> {
         let options: Vec<_> = (1..=self.this_player().cards.current_hand_size)
             .map(|position| {
@@ -453,12 +482,14 @@ impl Player for BasicPlayer {
             options.extend(self.assedd_discards_this_player());
         }
 
+        options.retain(|(a, _)| !a.is_unconventional);
+
+        // for &mut (ref mut assessment, action) in &mut options {
+        //     self.apply_hypothetical(action, assessment);
+        // }
+
         options.sort_by_key(|(hint_value, _)| *hint_value);
-        *options
-            .last()
-            .filter(|(a, _)| !a.is_unconventional)
-            .map(|(_, v)| v)
-            .unwrap()
+        *options.last().map(|(_, v)| v).unwrap()
     }
 }
 

@@ -104,6 +104,14 @@ pub struct PublicState {
     pub strikes: usize,
 }
 impl PublicState {
+    pub fn apply_action(&mut self, action: Action) {
+        match action {
+            Action::Play { card, .. } => self.play(card.unwrap()),
+            Action::Discard { card, .. } => self.discard(card.unwrap()),
+            Action::Hint { .. } => self.hint(),
+        }
+    }
+
     pub(crate) fn critical_saves(&self) -> PossibleCards {
         let mut result = PossibleCards::none();
         for (&color, &maybe_number) in &self.firework.piles {
