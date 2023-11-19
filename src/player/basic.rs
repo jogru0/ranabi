@@ -22,6 +22,7 @@ impl BasicPlayer {
         &self.public_state.rules
     }
 
+    //For now, ignoring cards that can be excluded as all copies are seen elsewhere.
     //In reality, less candidates might be entertained. Definitely not more!
     fn potentially_entertained_candidates_for_touched_in_that_players_own_hand(
         &self,
@@ -200,6 +201,7 @@ impl BasicPlayer {
                     self.next_player_id(),
                 ),
                 &self.touched_in_other_hands_or_more(self.next_player_id()),
+                &self.cards_that_player_definitely_sees_all_copies_of(self.next_player_id()),
             );
 
         assessment.next_player_might_be_locked_with_no_clue =
@@ -328,6 +330,7 @@ impl BasicPlayer {
             &self.potentially_entertained_candidates_for_touched_in_that_players_own_hand(
                 self.player_id,
             ),
+            &self.cards_that_player_definitely_sees_all_copies_of(self.player_id),
         );
 
         let is_touched = self.this_player().touched_positions().contains(position);
@@ -391,6 +394,28 @@ impl BasicPlayer {
             true
         };
         ActionAssessment::new(0, 0, ActionType::Discard, 1, last_resort)
+    }
+
+    fn cards_that_player_definitely_sees_all_copies_of(&self, player_id: usize) -> PossibleCards {
+        let mut pile = self.public_state.discard_pile.clone();
+        for card in self.public_state.firework.already_played().hashed {
+            pile.add(&card);
+        }
+
+        for p_id in 0..self.rules().number_of_players {
+            if p_id == self.player_id || p_id == player_id {
+                continue;
+            }
+
+            let cards = &self.player_states[p_id].cards;
+
+            for pos in 1..=cards.current_hand_size {
+                let card_id = cards.cards[pos].unwrap();
+                pile.add(&self.witnessed_cards[card_id].unwrap())
+            }
+        }
+
+        pile.full_sets(self.rules())
     }
 }
 

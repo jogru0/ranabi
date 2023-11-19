@@ -148,9 +148,13 @@ impl PlayerState {
         &self,
         position: usize,
         potentially_entertained_candidates_for_touched_in_own_hand: &PossibleCards,
+        cards_self_definitely_sees_all_copies_of: &PossibleCards,
     ) -> PossibleCards {
         let card_id = self.cards.cards[position].unwrap();
+
+        //TODO: Access maybe only combined with the sees all copies of thing?
         let mut possible = self.objectively_possible_cards_according_to_hints[&card_id].clone();
+        possible.exclude(cards_self_definitely_sees_all_copies_of);
 
         for inter in &self.interpretations_some_of_which_self_should_entertain {
             if let Some(inter) = inter.unique_interpretation() {
@@ -192,10 +196,12 @@ impl PlayerState {
         firework: &Firework,
         potentially_entertained_candidates_for_touched_in_own_hand: &PossibleCards,
         touched_in_other_hands_or_more: &PossibleCards,
+        cards_self_definitely_sees_all_copies_of: &PossibleCards,
     ) -> bool {
         let possibilities = self.possibilities_self_might_entertain(
             position,
             potentially_entertained_candidates_for_touched_in_own_hand,
+            cards_self_definitely_sees_all_copies_of,
         );
         let is_already_touched = self.touched_positions().contains(position);
 
@@ -212,6 +218,7 @@ impl PlayerState {
         firework: &Firework,
         potentially_entertained_candidates_for_touched_in_own_hand: &PossibleCards,
         touched_in_other_hands_or_more: &PossibleCards,
+        cards_self_definitely_sees_all_copies_of: &PossibleCards,
     ) -> bool {
         (1..=self.cards.current_hand_size).any(|position| {
             self.is_definitely_aware_that_this_position_is_playable(
@@ -219,6 +226,7 @@ impl PlayerState {
                 firework,
                 potentially_entertained_candidates_for_touched_in_own_hand,
                 touched_in_other_hands_or_more,
+                cards_self_definitely_sees_all_copies_of,
             )
         })
     }
@@ -228,12 +236,14 @@ impl PlayerState {
         firework: &Firework,
         potentially_entertained_candidates_for_touched_in_own_hand: &PossibleCards,
         touched_in_other_hands_or_more: &PossibleCards,
+        cards_self_definitely_sees_all_copies_of: &PossibleCards,
     ) -> bool {
         self.touched_positions().is_full()
             && !self.is_definitely_aware_about_a_playable_card(
                 firework,
                 potentially_entertained_candidates_for_touched_in_own_hand,
                 touched_in_other_hands_or_more,
+                cards_self_definitely_sees_all_copies_of,
             )
     }
 }

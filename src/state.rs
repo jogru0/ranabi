@@ -93,6 +93,12 @@ impl DiscardPile {
     pub fn add(&mut self, card: &Card) {
         self.card_to_multiplicity[card] += 1;
     }
+
+    pub(crate) fn full_sets(&self, rules: &Rules) -> PossibleCards {
+        let mut result = PossibleCards::all(rules);
+        result.retain(|card| self.card_to_multiplicity[card] == rules.multiplicity_of(card.number));
+        result
+    }
 }
 
 #[derive(Clone)]
@@ -495,6 +501,16 @@ impl Rules {
         }
 
         result
+    }
+
+    fn multiplicity_of(&self, number: Number) -> usize {
+        match number {
+            Number::One => 3,
+            Number::Two => 2,
+            Number::Three => 2,
+            Number::Four => 2,
+            Number::Five => 1,
+        }
     }
 }
 

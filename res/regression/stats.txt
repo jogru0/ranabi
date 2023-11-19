@@ -1,6 +1,6 @@
-Average: 18.969079409697823
-Failed: 141 / 4269
-Full wins: 74
-Average time: 3.639096 ms
+Average: 19.70016397282736
+Failed: 175 / 4269
+Full wins: 111
+Average time: 4.233098 ms
 
 Deck { cards: [Card { number: Three, color: Blue }, Card { number: Three, color: Blue }, Card { number: One, color: Blue }, Card { number: Five, color: Yellow }, Card { number: Two, color: Green }, Card { number: Four, color: Red }, Card { number: Five, color: Green }, Card { number: Two, color: White }, Card { number: Two, color: Yellow }, Card { number: Three, color: White }, Card { number: One, color: Yellow }, Card { number: Two, color: White }, Card { number: One, color: Red }, Card { number: Four, color: Yellow }, Card { number: One, color: Green }, Card { number: Two, color: Red }, Card { number: One, color: Blue }, Card { number: One, color: White }, Card { number: One, color: Yellow }, Card { number: Five, color: White }, Card { number: Three, color: Green }, Card { number: Two, color: Blue }, Card { number: Four, color: Blue }, Card { number: One, color: Blue }, Card { number: Two, color: Yellow }, Card { number: Two, color: Green }, Card { number: Four, color: Blue }, Card { number: One, color: Red }, Card { number: Four, color: White }, Card { number: Three, color: Red }, Card { number: Four, color: White }, Card { number: Two, color: Red }, Card { number: Three, color: Yellow }, Card { number: Three, color: White }, Card { number: Four, color: Red }, Card { number: One, color: White }, Card { number: One, color: Green }, Card { number: Five, color: Red }, Card { number: Three, color: Green }, Card { number: Three, color: Red }, Card { number: Five, color: Blue }, Card { number: Two, color: Blue }, Card { number: Three, color: Yellow }, Card { number: One, color: Green }, Card { number: Four, color: Green }, Card { number: One, color: White }, Card { number: Four, color: Yellow }, Card { number: Four, color: Green }, Card { number: One, color: Red }, Card { number: One, color: Yellow }] }

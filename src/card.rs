@@ -249,4 +249,8 @@ impl PossibleCards {
     pub(crate) fn intersects(&self, other: &PossibleCards) -> bool {
         self.hashed.iter().any(|card| other.contains(card))
     }
+
+    pub(crate) fn retain(&mut self, keep: impl FnMut(&Card) -> bool) {
+        self.hashed.retain(keep);
+    }
 }
