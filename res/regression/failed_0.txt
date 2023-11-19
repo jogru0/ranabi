@@ -1,460 +1,460 @@
-[32m
+
 ==============
-[0m
-> y4 g4 r1 y1                    
-  y3 g1 g4 w1     8     0
-  g3 r3 b5 b2     
-  r4 w1 g1 r5 
+
+> [33my4[0m [32mg4[0m [31mr1[0m [33my1[0m                    
+  [33my3[0m [32mg1[0m [32mg4[0m [37mw1[0m     8     0
+  [32mg3[0m [31mr3[0m [34mb5[0m [34mb2[0m     
+  [31mr4[0m [37mw1[0m [32mg1[0m [31mr5[0m 
 
 Turn 1 action: Hint g at Bob: -XX-
-[32m
+
 ==============
-[0m
-  y4 g4 r1 y1                    
-> y3 [1mg1[0m [1mg4[0m w1     7     0
-  g3 r3 b5 b2     
-  r4 w1 g1 r5 
+
+  [33my4[0m [32mg4[0m [31mr1[0m [33my1[0m                    
+> [33my3[0m [4m[32mg1[0m[4m[0m [4m[32mg4[0m[4m[0m [37mw1[0m     7     0
+  [32mg3[0m [31mr3[0m [34mb5[0m [34mb2[0m     
+  [31mr4[0m [37mw1[0m [32mg1[0m [31mr5[0m 
 
 Turn 2 action: Play from position 2
-[32m
+
 ==============
-[0m
-  y4 g4 r1 y1           g1       
-  w3 y3 [1mg4[0m w1     7     0
-> g3 r3 b5 b2     
-  r4 w1 g1 r5 
+
+  [33my4[0m [32mg4[0m [31mr1[0m [33my1[0m           [32mg1[0m       
+  [37mw3[0m [33my3[0m [4m[32mg4[0m[4m[0m [37mw1[0m     7     0
+> [32mg3[0m [31mr3[0m [34mb5[0m [34mb2[0m     
+  [31mr4[0m [37mw1[0m [32mg1[0m [31mr5[0m 
 
 Turn 3 action: Hint y at Alice: X--X
-[32m
+
 ==============
-[0m
-  [1my4[0m g4 r1 [1my1[0m           g1       
-  w3 y3 [1mg4[0m w1     6     0
-  g3 r3 b5 b2     
-> r4 w1 g1 r5 
+
+  [4m[33my4[0m[4m[0m [32mg4[0m [31mr1[0m [4m[33my1[0m[4m[0m           [32mg1[0m       
+  [37mw3[0m [33my3[0m [4m[32mg4[0m[4m[0m [37mw1[0m     6     0
+  [32mg3[0m [31mr3[0m [34mb5[0m [34mb2[0m     
+> [31mr4[0m [37mw1[0m [32mg1[0m [31mr5[0m 
 
 Turn 4 action: Hint w at Bob: X--X
-[32m
+
 ==============
-[0m
-> [1my4[0m g4 r1 [1my1[0m           g1       
-  [1mw3[0m y3 [1mg4[0m [1mw1[0m     5     0
-  g3 r3 b5 b2     
-  r4 w1 g1 r5 
+
+> [4m[33my4[0m[4m[0m [32mg4[0m [31mr1[0m [4m[33my1[0m[4m[0m           [32mg1[0m       
+  [4m[37mw3[0m[4m[0m [33my3[0m [4m[32mg4[0m[4m[0m [4m[37mw1[0m[4m[0m     5     0
+  [32mg3[0m [31mr3[0m [34mb5[0m [34mb2[0m     
+  [31mr4[0m [37mw1[0m [32mg1[0m [31mr5[0m 
 
 Turn 5 action: Play from position 4
-[32m
+
 ==============
-[0m
-  y3 [1my4[0m g4 r1           g1 y1    
-> [1mw3[0m y3 [1mg4[0m [1mw1[0m     5     0
-  g3 r3 b5 b2     
-  r4 w1 g1 r5 
+
+  [33my3[0m [4m[33my4[0m[4m[0m [32mg4[0m [31mr1[0m           [32mg1[0m [33my1[0m    
+> [4m[37mw3[0m[4m[0m [33my3[0m [4m[32mg4[0m[4m[0m [4m[37mw1[0m[4m[0m     5     0
+  [32mg3[0m [31mr3[0m [34mb5[0m [34mb2[0m     
+  [31mr4[0m [37mw1[0m [32mg1[0m [31mr5[0m 
 
 Turn 6 action: Play from position 4
-[32m
+
 ==============
-[0m
-  y3 [1my4[0m g4 r1           g1 y1 w1 
-  r2 [1mw3[0m y3 [1mg4[0m     5     0
-> g3 r3 b5 b2     
-  r4 w1 g1 r5 
+
+  [33my3[0m [4m[33my4[0m[4m[0m [32mg4[0m [31mr1[0m           [32mg1[0m [33my1[0m [37mw1[0m 
+  [31mr2[0m [4m[37mw3[0m[4m[0m [33my3[0m [4m[32mg4[0m[4m[0m     5     0
+> [32mg3[0m [31mr3[0m [34mb5[0m [34mb2[0m     
+  [31mr4[0m [37mw1[0m [32mg1[0m [31mr5[0m 
 
 Turn 7 action: Hint 5 at Donald: ---X
-[32m
+
 ==============
-[0m
-  y3 [1my4[0m g4 r1           g1 y1 w1 
-  r2 [1mw3[0m y3 [1mg4[0m     4     0
-  g3 r3 b5 b2     
-> r4 w1 g1 [1mr5[0m 
+
+  [33my3[0m [4m[33my4[0m[4m[0m [32mg4[0m [31mr1[0m           [32mg1[0m [33my1[0m [37mw1[0m 
+  [31mr2[0m [4m[37mw3[0m[4m[0m [33my3[0m [4m[32mg4[0m[4m[0m     4     0
+  [32mg3[0m [31mr3[0m [34mb5[0m [34mb2[0m     
+> [31mr4[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 8 action: Hint r at Alice: ---X
-[32m
+
 ==============
-[0m
-> y3 [1my4[0m g4 [1mr1[0m           g1 y1 w1 
-  r2 [1mw3[0m y3 [1mg4[0m     3     0
-  g3 r3 b5 b2     
-  r4 w1 g1 [1mr5[0m 
+
+> [33my3[0m [4m[33my4[0m[4m[0m [32mg4[0m [4m[31mr1[0m[4m[0m           [32mg1[0m [33my1[0m [37mw1[0m 
+  [31mr2[0m [4m[37mw3[0m[4m[0m [33my3[0m [4m[32mg4[0m[4m[0m     3     0
+  [32mg3[0m [31mr3[0m [34mb5[0m [34mb2[0m     
+  [31mr4[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 9 action: Play from position 4
-[32m
+
 ==============
-[0m
-  w4 y3 [1my4[0m g4     r1    g1 y1 w1 
-> r2 [1mw3[0m y3 [1mg4[0m     3     0
-  g3 r3 b5 b2     
-  r4 w1 g1 [1mr5[0m 
+
+  [37mw4[0m [33my3[0m [4m[33my4[0m[4m[0m [32mg4[0m     [31mr1[0m    [32mg1[0m [33my1[0m [37mw1[0m 
+> [31mr2[0m [4m[37mw3[0m[4m[0m [33my3[0m [4m[32mg4[0m[4m[0m     3     0
+  [32mg3[0m [31mr3[0m [34mb5[0m [34mb2[0m     
+  [31mr4[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 10 action: Hint 2 at Cathy: ---X
-[32m
+
 ==============
-[0m
-  w4 y3 [1my4[0m g4     r1    g1 y1 w1 
-  r2 [1mw3[0m y3 [1mg4[0m     2     0
-> g3 r3 b5 [1mb2[0m     
-  r4 w1 g1 [1mr5[0m 
+
+  [37mw4[0m [33my3[0m [4m[33my4[0m[4m[0m [32mg4[0m     [31mr1[0m    [32mg1[0m [33my1[0m [37mw1[0m 
+  [31mr2[0m [4m[37mw3[0m[4m[0m [33my3[0m [4m[32mg4[0m[4m[0m     2     0
+> [32mg3[0m [31mr3[0m [34mb5[0m [4m[34mb2[0m[4m[0m     
+  [31mr4[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 11 action: Discard from position 3
-[32m
+
 ==============
-[0m
-  w4 y3 [1my4[0m g4     r1    g1 y1 w1 
-  r2 [1mw3[0m y3 [1mg4[0m     3     0
-  r3 g3 r3 [1mb2[0m     b5 
-> r4 w1 g1 [1mr5[0m 
+
+  [37mw4[0m [33my3[0m [4m[33my4[0m[4m[0m [32mg4[0m     [31mr1[0m    [32mg1[0m [33my1[0m [37mw1[0m 
+  [31mr2[0m [4m[37mw3[0m[4m[0m [33my3[0m [4m[32mg4[0m[4m[0m     3     0
+  [31mr3[0m [32mg3[0m [31mr3[0m [4m[34mb2[0m[4m[0m     [34mb5[0m 
+> [31mr4[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 12 action: Hint r at Bob: X---
-[32m
+
 ==============
-[0m
-> w4 y3 [1my4[0m g4     r1    g1 y1 w1 
-  [1mr2[0m [1mw3[0m y3 [1mg4[0m     2     0
-  r3 g3 r3 [1mb2[0m     b5 
-  r4 w1 g1 [1mr5[0m 
+
+> [37mw4[0m [33my3[0m [4m[33my4[0m[4m[0m [32mg4[0m     [31mr1[0m    [32mg1[0m [33my1[0m [37mw1[0m 
+  [4m[31mr2[0m[4m[0m [4m[37mw3[0m[4m[0m [33my3[0m [4m[32mg4[0m[4m[0m     2     0
+  [31mr3[0m [32mg3[0m [31mr3[0m [4m[34mb2[0m[4m[0m     [34mb5[0m 
+  [31mr4[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 13 action: Discard from position 4
-[32m
+
 ==============
-[0m
-  w4 w4 y3 [1my4[0m     r1    g1 y1 w1 
-> [1mr2[0m [1mw3[0m y3 [1mg4[0m     3     0
-  r3 g3 r3 [1mb2[0m     b5 g4 
-  r4 w1 g1 [1mr5[0m 
+
+  [37mw4[0m [37mw4[0m [33my3[0m [4m[33my4[0m[4m[0m     [31mr1[0m    [32mg1[0m [33my1[0m [37mw1[0m 
+> [4m[31mr2[0m[4m[0m [4m[37mw3[0m[4m[0m [33my3[0m [4m[32mg4[0m[4m[0m     3     0
+  [31mr3[0m [32mg3[0m [31mr3[0m [4m[34mb2[0m[4m[0m     [34mb5[0m [32mg4[0m 
+  [31mr4[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 14 action: Play from position 1
-[32m
+
 ==============
-[0m
-  w4 w4 y3 [1my4[0m     r2    g1 y1 w1 
-  r1 [1mw3[0m y3 [1mg4[0m     3     0
-> r3 g3 r3 [1mb2[0m     b5 g4 
-  r4 w1 g1 [1mr5[0m 
+
+  [37mw4[0m [37mw4[0m [33my3[0m [4m[33my4[0m[4m[0m     [31mr2[0m    [32mg1[0m [33my1[0m [37mw1[0m 
+  [31mr1[0m [4m[37mw3[0m[4m[0m [33my3[0m [4m[32mg4[0m[4m[0m     3     0
+> [31mr3[0m [32mg3[0m [31mr3[0m [4m[34mb2[0m[4m[0m     [34mb5[0m [32mg4[0m 
+  [31mr4[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 15 action: Discard from position 3
-[32m
+
 ==============
-[0m
-  w4 w4 y3 [1my4[0m     r2    g1 y1 w1 
-  r1 [1mw3[0m y3 [1mg4[0m     4     0
-  b4 r3 g3 [1mb2[0m     r3 b5 g4 
-> r4 w1 g1 [1mr5[0m 
+
+  [37mw4[0m [37mw4[0m [33my3[0m [4m[33my4[0m[4m[0m     [31mr2[0m    [32mg1[0m [33my1[0m [37mw1[0m 
+  [31mr1[0m [4m[37mw3[0m[4m[0m [33my3[0m [4m[32mg4[0m[4m[0m     4     0
+  [34mb4[0m [31mr3[0m [32mg3[0m [4m[34mb2[0m[4m[0m     [31mr3[0m [34mb5[0m [32mg4[0m 
+> [31mr4[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 16 action: Hint r at Cathy: -X--
-[32m
+
 ==============
-[0m
-> w4 w4 y3 [1my4[0m     r2    g1 y1 w1 
-  r1 [1mw3[0m y3 [1mg4[0m     3     0
-  b4 [1mr3[0m g3 [1mb2[0m     r3 b5 g4 
-  r4 w1 g1 [1mr5[0m 
+
+> [37mw4[0m [37mw4[0m [33my3[0m [4m[33my4[0m[4m[0m     [31mr2[0m    [32mg1[0m [33my1[0m [37mw1[0m 
+  [31mr1[0m [4m[37mw3[0m[4m[0m [33my3[0m [4m[32mg4[0m[4m[0m     3     0
+  [34mb4[0m [4m[31mr3[0m[4m[0m [32mg3[0m [4m[34mb2[0m[4m[0m     [31mr3[0m [34mb5[0m [32mg4[0m 
+  [31mr4[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 17 action: Discard from position 3
-[32m
+
 ==============
-[0m
-  g2 w4 w4 [1my4[0m     r2    g1 y1 w1 
-> r1 [1mw3[0m y3 [1mg4[0m     4     0
-  b4 [1mr3[0m g3 [1mb2[0m     r3 b5 g4 y3 
-  r4 w1 g1 [1mr5[0m 
+
+  [32mg2[0m [37mw4[0m [37mw4[0m [4m[33my4[0m[4m[0m     [31mr2[0m    [32mg1[0m [33my1[0m [37mw1[0m 
+> [31mr1[0m [4m[37mw3[0m[4m[0m [33my3[0m [4m[32mg4[0m[4m[0m     4     0
+  [34mb4[0m [4m[31mr3[0m[4m[0m [32mg3[0m [4m[34mb2[0m[4m[0m     [31mr3[0m [34mb5[0m [32mg4[0m [33my3[0m 
+  [31mr4[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 18 action: Discard from position 3
-[32m
+
 ==============
-[0m
-  g2 w4 w4 [1my4[0m     r2    g1 y1 w1 
-  y2 r1 [1mw3[0m [1mg4[0m     5     0
-> b4 [1mr3[0m g3 [1mb2[0m     r3 b5 g4 y3 y3 
-  r4 w1 g1 [1mr5[0m 
+
+  [32mg2[0m [37mw4[0m [37mw4[0m [4m[33my4[0m[4m[0m     [31mr2[0m    [32mg1[0m [33my1[0m [37mw1[0m 
+  [33my2[0m [31mr1[0m [4m[37mw3[0m[4m[0m [4m[32mg4[0m[4m[0m     5     0
+> [34mb4[0m [4m[31mr3[0m[4m[0m [32mg3[0m [4m[34mb2[0m[4m[0m     [31mr3[0m [34mb5[0m [32mg4[0m [33my3[0m [33my3[0m 
+  [31mr4[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 19 action: Play from position 2
-[32m
+
 ==============
-[0m
-  g2 w4 w4 [1my4[0m     r3    g1 y1 w1 
-  y2 r1 [1mw3[0m [1mg4[0m     5     0
-  b1 b4 g3 [1mb2[0m     r3 b5 g4 y3 y3 
-> r4 w1 g1 [1mr5[0m 
+
+  [32mg2[0m [37mw4[0m [37mw4[0m [4m[33my4[0m[4m[0m     [31mr3[0m    [32mg1[0m [33my1[0m [37mw1[0m 
+  [33my2[0m [31mr1[0m [4m[37mw3[0m[4m[0m [4m[32mg4[0m[4m[0m     5     0
+  [34mb1[0m [34mb4[0m [32mg3[0m [4m[34mb2[0m[4m[0m     [31mr3[0m [34mb5[0m [32mg4[0m [33my3[0m [33my3[0m 
+> [31mr4[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 20 action: Hint b at Cathy: XX-X
-[32m
+
 ==============
-[0m
-> g2 w4 w4 [1my4[0m     r3    g1 y1 w1 
-  y2 r1 [1mw3[0m [1mg4[0m     4     0
-  [1mb1[0m [1mb4[0m g3 [1mb2[0m     r3 b5 g4 y3 y3 
-  r4 w1 g1 [1mr5[0m 
+
+> [32mg2[0m [37mw4[0m [37mw4[0m [4m[33my4[0m[4m[0m     [31mr3[0m    [32mg1[0m [33my1[0m [37mw1[0m 
+  [33my2[0m [31mr1[0m [4m[37mw3[0m[4m[0m [4m[32mg4[0m[4m[0m     4     0
+  [4m[34mb1[0m[4m[0m [4m[34mb4[0m[4m[0m [32mg3[0m [4m[34mb2[0m[4m[0m     [31mr3[0m [34mb5[0m [32mg4[0m [33my3[0m [33my3[0m 
+  [31mr4[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 21 action: Hint r at Donald: X--X
-[32m
+
 ==============
-[0m
-  g2 w4 w4 [1my4[0m     r3    g1 y1 w1 
-> y2 r1 [1mw3[0m [1mg4[0m     3     0
-  [1mb1[0m [1mb4[0m g3 [1mb2[0m     r3 b5 g4 y3 y3 
-  [1mr4[0m w1 g1 [1mr5[0m 
+
+  [32mg2[0m [37mw4[0m [37mw4[0m [4m[33my4[0m[4m[0m     [31mr3[0m    [32mg1[0m [33my1[0m [37mw1[0m 
+> [33my2[0m [31mr1[0m [4m[37mw3[0m[4m[0m [4m[32mg4[0m[4m[0m     3     0
+  [4m[34mb1[0m[4m[0m [4m[34mb4[0m[4m[0m [32mg3[0m [4m[34mb2[0m[4m[0m     [31mr3[0m [34mb5[0m [32mg4[0m [33my3[0m [33my3[0m 
+  [4m[31mr4[0m[4m[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 22 action: Discard from position 2
-[32m
+
 ==============
-[0m
-  g2 w4 w4 [1my4[0m     r3    g1 y1 w1 
-  b4 y2 [1mw3[0m [1mg4[0m     4     0
-> [1mb1[0m [1mb4[0m g3 [1mb2[0m     r1 r3 b5 g4 y3 y3 
-  [1mr4[0m w1 g1 [1mr5[0m 
+
+  [32mg2[0m [37mw4[0m [37mw4[0m [4m[33my4[0m[4m[0m     [31mr3[0m    [32mg1[0m [33my1[0m [37mw1[0m 
+  [34mb4[0m [33my2[0m [4m[37mw3[0m[4m[0m [4m[32mg4[0m[4m[0m     4     0
+> [4m[34mb1[0m[4m[0m [4m[34mb4[0m[4m[0m [32mg3[0m [4m[34mb2[0m[4m[0m     [31mr1[0m [31mr3[0m [34mb5[0m [32mg4[0m [33my3[0m [33my3[0m 
+  [4m[31mr4[0m[4m[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 23 action: Play from position 1
-[32m
+
 ==============
-[0m
-  g2 w4 w4 [1my4[0m     r3 b1 g1 y1 w1 
-  b4 y2 [1mw3[0m [1mg4[0m     4     0
-  b2 [1mb4[0m g3 [1mb2[0m     r1 r3 b5 g4 y3 y3 
-> [1mr4[0m w1 g1 [1mr5[0m 
+
+  [32mg2[0m [37mw4[0m [37mw4[0m [4m[33my4[0m[4m[0m     [31mr3[0m [34mb1[0m [32mg1[0m [33my1[0m [37mw1[0m 
+  [34mb4[0m [33my2[0m [4m[37mw3[0m[4m[0m [4m[32mg4[0m[4m[0m     4     0
+  [34mb2[0m [4m[34mb4[0m[4m[0m [32mg3[0m [4m[34mb2[0m[4m[0m     [31mr1[0m [31mr3[0m [34mb5[0m [32mg4[0m [33my3[0m [33my3[0m 
+> [4m[31mr4[0m[4m[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 24 action: Play from position 1
-[32m
+
 ==============
-[0m
-> g2 w4 w4 [1my4[0m     r4 b1 g1 y1 w1 
-  b4 y2 [1mw3[0m [1mg4[0m     4     0
-  b2 [1mb4[0m g3 [1mb2[0m     r1 r3 b5 g4 y3 y3 
-  g3 w1 g1 [1mr5[0m 
+
+> [32mg2[0m [37mw4[0m [37mw4[0m [4m[33my4[0m[4m[0m     [31mr4[0m [34mb1[0m [32mg1[0m [33my1[0m [37mw1[0m 
+  [34mb4[0m [33my2[0m [4m[37mw3[0m[4m[0m [4m[32mg4[0m[4m[0m     4     0
+  [34mb2[0m [4m[34mb4[0m[4m[0m [32mg3[0m [4m[34mb2[0m[4m[0m     [31mr1[0m [31mr3[0m [34mb5[0m [32mg4[0m [33my3[0m [33my3[0m 
+  [32mg3[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 25 action: Discard from position 3
-[32m
+
 ==============
-[0m
-  w5 g2 w4 [1my4[0m     r4 b1 g1 y1 w1 
-> b4 y2 [1mw3[0m [1mg4[0m     5     0
-  b2 [1mb4[0m g3 [1mb2[0m     r1 r3 b5 g4 y3 y3 w4 
-  g3 w1 g1 [1mr5[0m 
+
+  [37mw5[0m [32mg2[0m [37mw4[0m [4m[33my4[0m[4m[0m     [31mr4[0m [34mb1[0m [32mg1[0m [33my1[0m [37mw1[0m 
+> [34mb4[0m [33my2[0m [4m[37mw3[0m[4m[0m [4m[32mg4[0m[4m[0m     5     0
+  [34mb2[0m [4m[34mb4[0m[4m[0m [32mg3[0m [4m[34mb2[0m[4m[0m     [31mr1[0m [31mr3[0m [34mb5[0m [32mg4[0m [33my3[0m [33my3[0m [37mw4[0m 
+  [32mg3[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 26 action: Discard from position 2
-[32m
+
 ==============
-[0m
-  w5 g2 w4 [1my4[0m     r4 b1 g1 y1 w1 
-  y1 b4 [1mw3[0m [1mg4[0m     6     0
-> b2 [1mb4[0m g3 [1mb2[0m     r1 r3 b5 g4 y2 y3 y3 w4 
-  g3 w1 g1 [1mr5[0m 
+
+  [37mw5[0m [32mg2[0m [37mw4[0m [4m[33my4[0m[4m[0m     [31mr4[0m [34mb1[0m [32mg1[0m [33my1[0m [37mw1[0m 
+  [33my1[0m [34mb4[0m [4m[37mw3[0m[4m[0m [4m[32mg4[0m[4m[0m     6     0
+> [34mb2[0m [4m[34mb4[0m[4m[0m [32mg3[0m [4m[34mb2[0m[4m[0m     [31mr1[0m [31mr3[0m [34mb5[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [37mw4[0m 
+  [32mg3[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 27 action: Play from position 4
-[32m
+
 ==============
-[0m
-  w5 g2 w4 [1my4[0m     r4 b2 g1 y1 w1 
-  y1 b4 [1mw3[0m [1mg4[0m     6     0
-  w1 b2 [1mb4[0m g3     r1 r3 b5 g4 y2 y3 y3 w4 
-> g3 w1 g1 [1mr5[0m 
+
+  [37mw5[0m [32mg2[0m [37mw4[0m [4m[33my4[0m[4m[0m     [31mr4[0m [34mb2[0m [32mg1[0m [33my1[0m [37mw1[0m 
+  [33my1[0m [34mb4[0m [4m[37mw3[0m[4m[0m [4m[32mg4[0m[4m[0m     6     0
+  [37mw1[0m [34mb2[0m [4m[34mb4[0m[4m[0m [32mg3[0m     [31mr1[0m [31mr3[0m [34mb5[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [37mw4[0m 
+> [32mg3[0m [37mw1[0m [32mg1[0m [4m[31mr5[0m[4m[0m 
 
 Turn 28 action: Play from position 4
-[32m
+
 ==============
-[0m
-> w5 g2 w4 [1my4[0m     r5 b2 g1 y1 w1 
-  y1 b4 [1mw3[0m [1mg4[0m     7     0
-  w1 b2 [1mb4[0m g3     r1 r3 b5 g4 y2 y3 y3 w4 
-  b1 g3 w1 g1 
+
+> [37mw5[0m [32mg2[0m [37mw4[0m [4m[33my4[0m[4m[0m     [31mr5[0m [34mb2[0m [32mg1[0m [33my1[0m [37mw1[0m 
+  [33my1[0m [34mb4[0m [4m[37mw3[0m[4m[0m [4m[32mg4[0m[4m[0m     7     0
+  [37mw1[0m [34mb2[0m [4m[34mb4[0m[4m[0m [32mg3[0m     [31mr1[0m [31mr3[0m [34mb5[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [37mw4[0m 
+  [34mb1[0m [32mg3[0m [37mw1[0m [32mg1[0m 
 
 Turn 29 action: Discard from position 3
-[32m
+
 ==============
-[0m
-  r2 w5 g2 [1my4[0m     r5 b2 g1 y1 w1 
-> y1 b4 [1mw3[0m [1mg4[0m     8     0
-  w1 b2 [1mb4[0m g3     r1 r3 b5 g4 y2 y3 y3 w4 w4 
-  b1 g3 w1 g1 
+
+  [31mr2[0m [37mw5[0m [32mg2[0m [4m[33my4[0m[4m[0m     [31mr5[0m [34mb2[0m [32mg1[0m [33my1[0m [37mw1[0m 
+> [33my1[0m [34mb4[0m [4m[37mw3[0m[4m[0m [4m[32mg4[0m[4m[0m     8     0
+  [37mw1[0m [34mb2[0m [4m[34mb4[0m[4m[0m [32mg3[0m     [31mr1[0m [31mr3[0m [34mb5[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [37mw4[0m [37mw4[0m 
+  [34mb1[0m [32mg3[0m [37mw1[0m [32mg1[0m 
 
 Turn 30 action: Play from position 4
-[32m
+
 ==============
-[0m
-  r2 w5 g2 [1my4[0m     r5 b2 g1 y1 w1 
-  g1 y1 b4 [1mw3[0m     8     1
-> w1 b2 [1mb4[0m g3     r1 r3 b5 g4 g4 y2 y3 y3 w4 w4 
-  b1 g3 w1 g1 
+
+  [31mr2[0m [37mw5[0m [32mg2[0m [4m[33my4[0m[4m[0m     [31mr5[0m [34mb2[0m [32mg1[0m [33my1[0m [37mw1[0m 
+  [32mg1[0m [33my1[0m [34mb4[0m [4m[37mw3[0m[4m[0m     8     1
+> [37mw1[0m [34mb2[0m [4m[34mb4[0m[4m[0m [32mg3[0m     [31mr1[0m [31mr3[0m [34mb5[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [37mw4[0m [37mw4[0m 
+  [34mb1[0m [32mg3[0m [37mw1[0m [32mg1[0m 
 
 Turn 31 action: Hint g at Alice: --X-
-[32m
+
 ==============
-[0m
-  r2 w5 [1mg2[0m [1my4[0m     r5 b2 g1 y1 w1 
-  g1 y1 b4 [1mw3[0m     7     1
-  w1 b2 [1mb4[0m g3     r1 r3 b5 g4 g4 y2 y3 y3 w4 w4 
-> b1 g3 w1 g1 
+
+  [31mr2[0m [37mw5[0m [4m[32mg2[0m[4m[0m [4m[33my4[0m[4m[0m     [31mr5[0m [34mb2[0m [32mg1[0m [33my1[0m [37mw1[0m 
+  [32mg1[0m [33my1[0m [34mb4[0m [4m[37mw3[0m[4m[0m     7     1
+  [37mw1[0m [34mb2[0m [4m[34mb4[0m[4m[0m [32mg3[0m     [31mr1[0m [31mr3[0m [34mb5[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [37mw4[0m [37mw4[0m 
+> [34mb1[0m [32mg3[0m [37mw1[0m [32mg1[0m 
 
 Turn 32 action: Discard from position 4
-[32m
+
 ==============
-[0m
-> r2 w5 [1mg2[0m [1my4[0m     r5 b2 g1 y1 w1 
-  g1 y1 b4 [1mw3[0m     8     1
-  w1 b2 [1mb4[0m g3     r1 r3 b5 g1 g4 g4 y2 y3 y3 w4 w4 
-  y4 b1 g3 w1 
+
+> [31mr2[0m [37mw5[0m [4m[32mg2[0m[4m[0m [4m[33my4[0m[4m[0m     [31mr5[0m [34mb2[0m [32mg1[0m [33my1[0m [37mw1[0m 
+  [32mg1[0m [33my1[0m [34mb4[0m [4m[37mw3[0m[4m[0m     8     1
+  [37mw1[0m [34mb2[0m [4m[34mb4[0m[4m[0m [32mg3[0m     [31mr1[0m [31mr3[0m [34mb5[0m [32mg1[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [37mw4[0m [37mw4[0m 
+  [33my4[0m [34mb1[0m [32mg3[0m [37mw1[0m 
 
 Turn 33 action: Play from position 4
-[32m
+
 ==============
-[0m
-  r1 r2 w5 [1mg2[0m     r5 b2 g1 y1 w1 
-> g1 y1 b4 [1mw3[0m     8     2
-  w1 b2 [1mb4[0m g3     r1 r3 b5 g1 g4 g4 y2 y3 y3 y4 w4 w4 
-  y4 b1 g3 w1 
+
+  [31mr1[0m [31mr2[0m [37mw5[0m [4m[32mg2[0m[4m[0m     [31mr5[0m [34mb2[0m [32mg1[0m [33my1[0m [37mw1[0m 
+> [32mg1[0m [33my1[0m [34mb4[0m [4m[37mw3[0m[4m[0m     8     2
+  [37mw1[0m [34mb2[0m [4m[34mb4[0m[4m[0m [32mg3[0m     [31mr1[0m [31mr3[0m [34mb5[0m [32mg1[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [33my4[0m [37mw4[0m [37mw4[0m 
+  [33my4[0m [34mb1[0m [32mg3[0m [37mw1[0m 
 
 Turn 34 action: Hint g at Alice: ---X
-[32m
+
 ==============
-[0m
-  r1 r2 w5 [1mg2[0m     r5 b2 g1 y1 w1 
-  g1 y1 b4 [1mw3[0m     7     2
-> w1 b2 [1mb4[0m g3     r1 r3 b5 g1 g4 g4 y2 y3 y3 y4 w4 w4 
-  y4 b1 g3 w1 
+
+  [31mr1[0m [31mr2[0m [37mw5[0m [4m[32mg2[0m[4m[0m     [31mr5[0m [34mb2[0m [32mg1[0m [33my1[0m [37mw1[0m 
+  [32mg1[0m [33my1[0m [34mb4[0m [4m[37mw3[0m[4m[0m     7     2
+> [37mw1[0m [34mb2[0m [4m[34mb4[0m[4m[0m [32mg3[0m     [31mr1[0m [31mr3[0m [34mb5[0m [32mg1[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [33my4[0m [37mw4[0m [37mw4[0m 
+  [33my4[0m [34mb1[0m [32mg3[0m [37mw1[0m 
 
 Turn 35 action: Discard from position 4
-[32m
+
 ==============
-[0m
-  r1 r2 w5 [1mg2[0m     r5 b2 g1 y1 w1 
-  g1 y1 b4 [1mw3[0m     8     2
-  w2 w1 b2 [1mb4[0m     r1 r3 b5 g1 g3 g4 g4 y2 y3 y3 y4 w4 w4 
-> y4 b1 g3 w1 
+
+  [31mr1[0m [31mr2[0m [37mw5[0m [4m[32mg2[0m[4m[0m     [31mr5[0m [34mb2[0m [32mg1[0m [33my1[0m [37mw1[0m 
+  [32mg1[0m [33my1[0m [34mb4[0m [4m[37mw3[0m[4m[0m     8     2
+  [37mw2[0m [37mw1[0m [34mb2[0m [4m[34mb4[0m[4m[0m     [31mr1[0m [31mr3[0m [34mb5[0m [32mg1[0m [32mg3[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [33my4[0m [37mw4[0m [37mw4[0m 
+> [33my4[0m [34mb1[0m [32mg3[0m [37mw1[0m 
 
 Turn 36 action: Hint g at Alice: ---X
-[32m
+
 ==============
-[0m
-> r1 r2 w5 [1mg2[0m     r5 b2 g1 y1 w1 
-  g1 y1 b4 [1mw3[0m     7     2
-  w2 w1 b2 [1mb4[0m     r1 r3 b5 g1 g3 g4 g4 y2 y3 y3 y4 w4 w4 
-  y4 b1 g3 w1 
+
+> [31mr1[0m [31mr2[0m [37mw5[0m [4m[32mg2[0m[4m[0m     [31mr5[0m [34mb2[0m [32mg1[0m [33my1[0m [37mw1[0m 
+  [32mg1[0m [33my1[0m [34mb4[0m [4m[37mw3[0m[4m[0m     7     2
+  [37mw2[0m [37mw1[0m [34mb2[0m [4m[34mb4[0m[4m[0m     [31mr1[0m [31mr3[0m [34mb5[0m [32mg1[0m [32mg3[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [33my4[0m [37mw4[0m [37mw4[0m 
+  [33my4[0m [34mb1[0m [32mg3[0m [37mw1[0m 
 
 Turn 37 action: Play from position 4
-[32m
+
 ==============
-[0m
-  y1 r1 r2 w5     r5 b2 g2 y1 w1 
-> g1 y1 b4 [1mw3[0m     7     2
-  w2 w1 b2 [1mb4[0m     r1 r3 b5 g1 g3 g4 g4 y2 y3 y3 y4 w4 w4 
-  y4 b1 g3 w1 
+
+  [33my1[0m [31mr1[0m [31mr2[0m [37mw5[0m     [31mr5[0m [34mb2[0m [32mg2[0m [33my1[0m [37mw1[0m 
+> [32mg1[0m [33my1[0m [34mb4[0m [4m[37mw3[0m[4m[0m     7     2
+  [37mw2[0m [37mw1[0m [34mb2[0m [4m[34mb4[0m[4m[0m     [31mr1[0m [31mr3[0m [34mb5[0m [32mg1[0m [32mg3[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [33my4[0m [37mw4[0m [37mw4[0m 
+  [33my4[0m [34mb1[0m [32mg3[0m [37mw1[0m 
 
 Turn 38 action: Hint g at Donald: --X-
-[32m
+
 ==============
-[0m
-  y1 r1 r2 w5     r5 b2 g2 y1 w1 
-  g1 y1 b4 [1mw3[0m     6     2
-> w2 w1 b2 [1mb4[0m     r1 r3 b5 g1 g3 g4 g4 y2 y3 y3 y4 w4 w4 
-  y4 b1 [1mg3[0m w1 
+
+  [33my1[0m [31mr1[0m [31mr2[0m [37mw5[0m     [31mr5[0m [34mb2[0m [32mg2[0m [33my1[0m [37mw1[0m 
+  [32mg1[0m [33my1[0m [34mb4[0m [4m[37mw3[0m[4m[0m     6     2
+> [37mw2[0m [37mw1[0m [34mb2[0m [4m[34mb4[0m[4m[0m     [31mr1[0m [31mr3[0m [34mb5[0m [32mg1[0m [32mg3[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [33my4[0m [37mw4[0m [37mw4[0m 
+  [33my4[0m [34mb1[0m [4m[32mg3[0m[4m[0m [37mw1[0m 
 
 Turn 39 action: Discard from position 3
-[32m
+
 ==============
-[0m
-  y1 r1 r2 w5     r5 b2 g2 y1 w1 
-  g1 y1 b4 [1mw3[0m     7     2
-  w3 w2 w1 [1mb4[0m     r1 r3 b2 b5 g1 g3 g4 g4 y2 y3 y3 y4 w4 w4 
-> y4 b1 [1mg3[0m w1 
+
+  [33my1[0m [31mr1[0m [31mr2[0m [37mw5[0m     [31mr5[0m [34mb2[0m [32mg2[0m [33my1[0m [37mw1[0m 
+  [32mg1[0m [33my1[0m [34mb4[0m [4m[37mw3[0m[4m[0m     7     2
+  [37mw3[0m [37mw2[0m [37mw1[0m [4m[34mb4[0m[4m[0m     [31mr1[0m [31mr3[0m [34mb2[0m [34mb5[0m [32mg1[0m [32mg3[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [33my4[0m [37mw4[0m [37mw4[0m 
+> [33my4[0m [34mb1[0m [4m[32mg3[0m[4m[0m [37mw1[0m 
 
 Turn 40 action: Play from position 3
-[32m
+
 ==============
-[0m
-> y1 r1 r2 w5     r5 b2 g3 y1 w1 
-  g1 y1 b4 [1mw3[0m     7     2
-  w3 w2 w1 [1mb4[0m     r1 r3 b2 b5 g1 g3 g4 g4 y2 y3 y3 y4 w4 w4 
-  y2 y4 b1 w1 
+
+> [33my1[0m [31mr1[0m [31mr2[0m [37mw5[0m     [31mr5[0m [34mb2[0m [32mg3[0m [33my1[0m [37mw1[0m 
+  [32mg1[0m [33my1[0m [34mb4[0m [4m[37mw3[0m[4m[0m     7     2
+  [37mw3[0m [37mw2[0m [37mw1[0m [4m[34mb4[0m[4m[0m     [31mr1[0m [31mr3[0m [34mb2[0m [34mb5[0m [32mg1[0m [32mg3[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [33my4[0m [37mw4[0m [37mw4[0m 
+  [33my2[0m [33my4[0m [34mb1[0m [37mw1[0m 
 
 Turn 41 action: Hint 2 at Cathy: -X--
-[32m
+
 ==============
-[0m
-  y1 r1 r2 w5     r5 b2 g3 y1 w1 
-> g1 y1 b4 [1mw3[0m     6     2
-  w3 [1mw2[0m w1 [1mb4[0m     r1 r3 b2 b5 g1 g3 g4 g4 y2 y3 y3 y4 w4 w4 
-  y2 y4 b1 w1 
+
+  [33my1[0m [31mr1[0m [31mr2[0m [37mw5[0m     [31mr5[0m [34mb2[0m [32mg3[0m [33my1[0m [37mw1[0m 
+> [32mg1[0m [33my1[0m [34mb4[0m [4m[37mw3[0m[4m[0m     6     2
+  [37mw3[0m [4m[37mw2[0m[4m[0m [37mw1[0m [4m[34mb4[0m[4m[0m     [31mr1[0m [31mr3[0m [34mb2[0m [34mb5[0m [32mg1[0m [32mg3[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [33my4[0m [37mw4[0m [37mw4[0m 
+  [33my2[0m [33my4[0m [34mb1[0m [37mw1[0m 
 
 Turn 42 action: Hint 2 at Donald: X---
-[32m
+
 ==============
-[0m
-  y1 r1 r2 w5     r5 b2 g3 y1 w1 
-  g1 y1 b4 [1mw3[0m     5     2
-> w3 [1mw2[0m w1 [1mb4[0m     r1 r3 b2 b5 g1 g3 g4 g4 y2 y3 y3 y4 w4 w4 
-  [1my2[0m y4 b1 w1 
+
+  [33my1[0m [31mr1[0m [31mr2[0m [37mw5[0m     [31mr5[0m [34mb2[0m [32mg3[0m [33my1[0m [37mw1[0m 
+  [32mg1[0m [33my1[0m [34mb4[0m [4m[37mw3[0m[4m[0m     5     2
+> [37mw3[0m [4m[37mw2[0m[4m[0m [37mw1[0m [4m[34mb4[0m[4m[0m     [31mr1[0m [31mr3[0m [34mb2[0m [34mb5[0m [32mg1[0m [32mg3[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [33my4[0m [37mw4[0m [37mw4[0m 
+  [4m[33my2[0m[4m[0m [33my4[0m [34mb1[0m [37mw1[0m 
 
 Turn 43 action: Play from position 2
-[32m
+
 ==============
-[0m
-  y1 r1 r2 w5     r5 b2 g3 y1 w2 
-  g1 y1 b4 [1mw3[0m     5     2
-  w2 w3 w1 [1mb4[0m     r1 r3 b2 b5 g1 g3 g4 g4 y2 y3 y3 y4 w4 w4 
-> [1my2[0m y4 b1 w1 
+
+  [33my1[0m [31mr1[0m [31mr2[0m [37mw5[0m     [31mr5[0m [34mb2[0m [32mg3[0m [33my1[0m [37mw2[0m 
+  [32mg1[0m [33my1[0m [34mb4[0m [4m[37mw3[0m[4m[0m     5     2
+  [37mw2[0m [37mw3[0m [37mw1[0m [4m[34mb4[0m[4m[0m     [31mr1[0m [31mr3[0m [34mb2[0m [34mb5[0m [32mg1[0m [32mg3[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [33my4[0m [37mw4[0m [37mw4[0m 
+> [4m[33my2[0m[4m[0m [33my4[0m [34mb1[0m [37mw1[0m 
 
 Turn 44 action: Play from position 1
-[32m
+
 ==============
-[0m
-> y1 r1 r2 w5     r5 b2 g3 y2 w2 
-  g1 y1 b4 [1mw3[0m     5     2
-  w2 w3 w1 [1mb4[0m     r1 r3 b2 b5 g1 g3 g4 g4 y2 y3 y3 y4 w4 w4 
-  g5 y4 b1 w1 
+
+> [33my1[0m [31mr1[0m [31mr2[0m [37mw5[0m     [31mr5[0m [34mb2[0m [32mg3[0m [33my2[0m [37mw2[0m 
+  [32mg1[0m [33my1[0m [34mb4[0m [4m[37mw3[0m[4m[0m     5     2
+  [37mw2[0m [37mw3[0m [37mw1[0m [4m[34mb4[0m[4m[0m     [31mr1[0m [31mr3[0m [34mb2[0m [34mb5[0m [32mg1[0m [32mg3[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [33my4[0m [37mw4[0m [37mw4[0m 
+  [32mg5[0m [33my4[0m [34mb1[0m [37mw1[0m 
 
 Turn 45 action: Discard from position 4
-[32m
+
 ==============
-[0m
-  r4 y1 r1 r2     r5 b2 g3 y2 w2 
-> g1 y1 b4 [1mw3[0m     6     2
-  w2 w3 w1 [1mb4[0m     r1 r3 b2 b5 g1 g3 g4 g4 y2 y3 y3 y4 w4 w4 w5 
-  g5 y4 b1 w1 
+
+  [31mr4[0m [33my1[0m [31mr1[0m [31mr2[0m     [31mr5[0m [34mb2[0m [32mg3[0m [33my2[0m [37mw2[0m 
+> [32mg1[0m [33my1[0m [34mb4[0m [4m[37mw3[0m[4m[0m     6     2
+  [37mw2[0m [37mw3[0m [37mw1[0m [4m[34mb4[0m[4m[0m     [31mr1[0m [31mr3[0m [34mb2[0m [34mb5[0m [32mg1[0m [32mg3[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [33my4[0m [37mw4[0m [37mw4[0m [37mw5[0m 
+  [32mg5[0m [33my4[0m [34mb1[0m [37mw1[0m 
 
 Turn 46 action: Discard from position 3
-[32m
+
 ==============
-[0m
-  r4 y1 r1 r2     r5 b2 g3 y2 w2 
-  g2 g1 y1 [1mw3[0m     7     2
-> w2 w3 w1 [1mb4[0m     r1 r3 b2 b4 b5 g1 g3 g4 g4 y2 y3 y3 y4 w4 w4 w5 
-  g5 y4 b1 w1 
+
+  [31mr4[0m [33my1[0m [31mr1[0m [31mr2[0m     [31mr5[0m [34mb2[0m [32mg3[0m [33my2[0m [37mw2[0m 
+  [32mg2[0m [32mg1[0m [33my1[0m [4m[37mw3[0m[4m[0m     7     2
+> [37mw2[0m [37mw3[0m [37mw1[0m [4m[34mb4[0m[4m[0m     [31mr1[0m [31mr3[0m [34mb2[0m [34mb4[0m [34mb5[0m [32mg1[0m [32mg3[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [33my4[0m [37mw4[0m [37mw4[0m [37mw5[0m 
+  [32mg5[0m [33my4[0m [34mb1[0m [37mw1[0m 
 
 Turn 47 action: Discard from position 3
-[32m
+
 ==============
-[0m
-  r4 y1 r1 r2     r5 b2 g3 y2 w2 
-  g2 g1 y1 [1mw3[0m     8     2
-  y5 w2 w3 [1mb4[0m     r1 r3 b2 b4 b5 g1 g3 g4 g4 y2 y3 y3 y4 w1 w4 w4 w5 
-> g5 y4 b1 w1 
+
+  [31mr4[0m [33my1[0m [31mr1[0m [31mr2[0m     [31mr5[0m [34mb2[0m [32mg3[0m [33my2[0m [37mw2[0m 
+  [32mg2[0m [32mg1[0m [33my1[0m [4m[37mw3[0m[4m[0m     8     2
+  [33my5[0m [37mw2[0m [37mw3[0m [4m[34mb4[0m[4m[0m     [31mr1[0m [31mr3[0m [34mb2[0m [34mb4[0m [34mb5[0m [32mg1[0m [32mg3[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [33my4[0m [37mw1[0m [37mw4[0m [37mw4[0m [37mw5[0m 
+> [32mg5[0m [33my4[0m [34mb1[0m [37mw1[0m 
 
 Turn 48 action: Hint w at Bob: ---X
-[32m
+
 ==============
-[0m
-> r4 y1 r1 r2     r5 b2 g3 y2 w2 
-  g2 g1 y1 [1mw3[0m     7     2
-  y5 w2 w3 [1mb4[0m     r1 r3 b2 b4 b5 g1 g3 g4 g4 y2 y3 y3 y4 w1 w4 w4 w5 
-  g5 y4 b1 w1 
+
+> [31mr4[0m [33my1[0m [31mr1[0m [31mr2[0m     [31mr5[0m [34mb2[0m [32mg3[0m [33my2[0m [37mw2[0m 
+  [32mg2[0m [32mg1[0m [33my1[0m [4m[37mw3[0m[4m[0m     7     2
+  [33my5[0m [37mw2[0m [37mw3[0m [4m[34mb4[0m[4m[0m     [31mr1[0m [31mr3[0m [34mb2[0m [34mb4[0m [34mb5[0m [32mg1[0m [32mg3[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [33my4[0m [37mw1[0m [37mw4[0m [37mw4[0m [37mw5[0m 
+  [32mg5[0m [33my4[0m [34mb1[0m [37mw1[0m 
 
 Turn 49 action: Discard from position 4
-[32m
+
 ==============
-[0m
-  b1 r4 y1 r1     r5 b2 g3 y2 w2 
-> g2 g1 y1 [1mw3[0m     8     2
-  y5 w2 w3 [1mb4[0m     r1 r2 r3 b2 b4 b5 g1 g3 g4 g4 y2 y3 y3 y4 w1 w4 w4 w5 
-  g5 y4 b1 w1 
+
+  [34mb1[0m [31mr4[0m [33my1[0m [31mr1[0m     [31mr5[0m [34mb2[0m [32mg3[0m [33my2[0m [37mw2[0m 
+> [32mg2[0m [32mg1[0m [33my1[0m [4m[37mw3[0m[4m[0m     8     2
+  [33my5[0m [37mw2[0m [37mw3[0m [4m[34mb4[0m[4m[0m     [31mr1[0m [31mr2[0m [31mr3[0m [34mb2[0m [34mb4[0m [34mb5[0m [32mg1[0m [32mg3[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [33my4[0m [37mw1[0m [37mw4[0m [37mw4[0m [37mw5[0m 
+  [32mg5[0m [33my4[0m [34mb1[0m [37mw1[0m 
 
 Turn 50 action: Play from position 4
-[32m
+
 ==============
-[0m
-  b1 r4 y1 r1     r5 b2 g3 y2 w3 
-  b3 g2 g1 y1     8     2
-> y5 w2 w3 [1mb4[0m     r1 r2 r3 b2 b4 b5 g1 g3 g4 g4 y2 y3 y3 y4 w1 w4 w4 w5 
-  g5 y4 b1 w1 
+
+  [34mb1[0m [31mr4[0m [33my1[0m [31mr1[0m     [31mr5[0m [34mb2[0m [32mg3[0m [33my2[0m [37mw3[0m 
+  [34mb3[0m [32mg2[0m [32mg1[0m [33my1[0m     8     2
+> [33my5[0m [37mw2[0m [37mw3[0m [4m[34mb4[0m[4m[0m     [31mr1[0m [31mr2[0m [31mr3[0m [34mb2[0m [34mb4[0m [34mb5[0m [32mg1[0m [32mg3[0m [32mg4[0m [32mg4[0m [33my2[0m [33my3[0m [33my3[0m [33my4[0m [37mw1[0m [37mw4[0m [37mw4[0m [37mw5[0m 
+  [32mg5[0m [33my4[0m [34mb1[0m [37mw1[0m 
 
 Turn 51 action: Play from position 4
 Lost.

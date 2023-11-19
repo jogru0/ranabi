@@ -1,5 +1,6 @@
 use std::fmt::{Debug, Display};
 
+use colored::{ColoredString, Colorize};
 use indexmap::IndexSet;
 
 use crate::{player::Property, state::Rules};
@@ -12,7 +13,12 @@ pub struct Card {
 
 impl Display for Card {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}{}", self.color, self.number)
+        write!(
+            f,
+            "{}",
+            self.color
+                .tint_str(&format!("{}{}", self.color, self.number))
+        )
     }
 }
 
@@ -98,6 +104,18 @@ pub enum Color {
     Yellow,
     Red,
     Blue,
+}
+
+impl Color {
+    fn tint_str(&self, str: &str) -> ColoredString {
+        match self {
+            Color::White => str.white(),
+            Color::Green => str.green(),
+            Color::Yellow => str.yellow(),
+            Color::Red => str.red(),
+            Color::Blue => str.blue(),
+        }
+    }
 }
 
 impl Display for Color {

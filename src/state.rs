@@ -278,7 +278,7 @@ impl Display for Hand {
                 if pos.is_empty() {
                     write!(f, "{} ", card_string)?;
                 } else {
-                    write!(f, "{} ", card_string.bold())?;
+                    write!(f, "{} ", card_string.underline())?;
                 }
             } else {
                 write!(f, "   ")?;
@@ -301,18 +301,7 @@ impl Display for State {
             } else {
                 ' '
             };
-            write!(f, "{prefix} ")?;
-            for (card, pos, _) in &state.hands[id].clued_cards {
-                let card_string = format!("{card}");
-
-                if pos.is_empty() {
-                    write!(f, "{} ", card_string)?;
-                } else {
-                    write!(f, "{} ", card_string.bold())?;
-                }
-            }
-
-            Ok(())
+            write!(f, "{} {}", prefix, state.hands[id])
         }
 
         print_player(self, 0, f)?;
@@ -705,7 +694,7 @@ impl Display for Record {
         for &action in &self.actions {
             assert!(state.is_concluded().is_none());
 
-            writeln!(f, "{}", "\n==============\n".green())?;
+            writeln!(f, "\n==============\n")?;
             writeln!(f, "{state}")?;
 
             writeln!(f, "Turn {} action: {}", turn, action)?;
