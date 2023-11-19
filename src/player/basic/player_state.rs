@@ -16,7 +16,7 @@ pub struct PlayerState {
     pub cards: HandCards,
     //I think this currently is strictly just what follows explicitely from hints.
     //Maybe this information should live in the public information?
-    pub objectively_possible_cards_according_to_hints: IndexMap<usize, PossibleCards>,
+    pub objectively_possible_cards_according_to_hints3: IndexMap<usize, PossibleCards>,
     pub touched: IndexSet<usize>,
     interpretations_some_of_which_self_should_entertain: Vec<Interpretations>,
 }
@@ -25,7 +25,7 @@ impl PlayerState {
     pub fn new() -> Self {
         Self {
             cards: HandCards::new(),
-            objectively_possible_cards_according_to_hints: IndexMap::new(),
+            objectively_possible_cards_according_to_hints3: IndexMap::new(),
             touched: IndexSet::new(),
             interpretations_some_of_which_self_should_entertain: Vec::new(),
         }
@@ -34,7 +34,7 @@ impl PlayerState {
     pub fn add_card(&mut self, id: usize, rules: &Rules) {
         self.cards.add_card(id);
         let previous = self
-            .objectively_possible_cards_according_to_hints
+            .objectively_possible_cards_according_to_hints3
             .insert(id, PossibleCards::all(rules));
         assert!(previous.is_none());
     }
@@ -42,7 +42,7 @@ impl PlayerState {
     pub fn play_or_discard_card(&mut self, position: usize) {
         let id = self.cards.play_or_discard_card(position);
         let removed = self
-            .objectively_possible_cards_according_to_hints
+            .objectively_possible_cards_according_to_hints3
             .remove(&id);
         assert!(removed.is_some());
         self.touched.remove(&id);
@@ -122,7 +122,7 @@ impl PlayerState {
         //Ugh. This influences hint interpretation, which I don't like at all. For now, we just do this after the interpretation thing.
         for pos in 1..=self.cards.current_hand_size {
             let card_id = self.cards.cards[pos].unwrap();
-            let possible = &mut self.objectively_possible_cards_according_to_hints[&card_id];
+            let possible = &mut self.objectively_possible_cards_according_to_hints3[&card_id];
             if positions.contains(pos) {
                 possible.apply(hinted_property);
                 self.touched.insert(card_id);
@@ -153,8 +153,11 @@ impl PlayerState {
         let card_id = self.cards.cards[position].unwrap();
 
         //TODO: Access maybe only combined with the sees all copies of thing?
-        let mut possible = self.objectively_possible_cards_according_to_hints[&card_id].clone();
-        possible.exclude(cards_self_definitely_sees_all_copies_of);
+        let mut possible = self
+            .objectively_possible_cards_according_to_hints_minus_visible_full_sets(
+                card_id,
+                cards_self_definitely_sees_all_copies_of,
+            );
 
         for inter in &self.interpretations_some_of_which_self_should_entertain {
             if let Some(inter) = inter.unique_interpretation() {
@@ -245,5 +248,15 @@ impl PlayerState {
                 touched_in_other_hands_or_more,
                 cards_self_definitely_sees_all_copies_of,
             )
+    }
+
+    pub(crate) fn objectively_possible_cards_according_to_hints_minus_visible_full_sets(
+        &self,
+        card_id: usize,
+        visible_full_sets: &PossibleCards,
+    ) -> PossibleCards {
+        let mut result = self.objectively_possible_cards_according_to_hints3[&card_id].clone();
+        result.exclude(visible_full_sets);
+        result
     }
 }

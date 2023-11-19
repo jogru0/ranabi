@@ -7,6 +7,7 @@ pub struct ActionAssessment {
     pub sure_influence_on_clue_count: i8,
     pub last_resort: bool,
     pub next_player_might_be_locked_with_no_clue: bool,
+    tempo: usize,
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -26,6 +27,7 @@ impl ActionAssessment {
             sure_influence_on_clue_count: 9,
             last_resort: false,
             next_player_might_be_locked_with_no_clue: false,
+            tempo: 1000,
         }
     }
 
@@ -39,6 +41,7 @@ impl ActionAssessment {
         action_type: ActionType,
         sure_influence_on_clue_count: i8,
         last_resort: bool,
+        tempo: usize,
     ) -> Self {
         Self {
             new_touches,
@@ -48,6 +51,7 @@ impl ActionAssessment {
             sure_influence_on_clue_count,
             last_resort,
             next_player_might_be_locked_with_no_clue: false,
+            tempo,
         }
     }
 }
@@ -79,12 +83,17 @@ impl Ord for ActionAssessment {
             ord => return ord,
         }
 
-        match (self.action_type == ActionType::Play).cmp(&(other.action_type == ActionType::Play)) {
+        // match (self.action_type == ActionType::Play).cmp(&(other.action_type == ActionType::Play)) {
+        //     core::cmp::Ordering::Equal => {}
+        //     ord => return ord,
+        // }
+
+        match self.new_touches.cmp(&other.new_touches) {
             core::cmp::Ordering::Equal => {}
             ord => return ord,
         }
 
-        match self.new_touches.cmp(&other.new_touches) {
+        match self.tempo.cmp(&other.tempo) {
             core::cmp::Ordering::Equal => {}
             ord => return ord,
         }

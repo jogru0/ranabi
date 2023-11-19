@@ -46,12 +46,18 @@ impl BasicPlayer {
         let mut result = PossibleCards::none();
 
         let self_state = &self.player_states[self.player_id];
-        for card_id in &self_state.touched {
+        for &card_id in &self_state.touched {
             //We could apply additional information we have from interpretations to try to recuce the possible touches.
             //However, maybe we don't alyways want to do that? Not sure at the moment.
             //For now, it should suffice to just use the hint information directly.
-            result
-                .extend(self_state.objectively_possible_cards_according_to_hints[card_id].clone());
+            result.extend(
+                self_state
+                    .objectively_possible_cards_according_to_hints_minus_visible_full_sets(
+                        card_id,
+                        &self.cards_that_player_definitely_sees_all_copies_of(player),
+                    )
+                    .clone(),
+            );
         }
 
         result
@@ -174,6 +180,7 @@ impl BasicPlayer {
             ActionType::Hint,
             -1,
             false,
+            0,
         )
     }
 
@@ -360,10 +367,11 @@ impl BasicPlayer {
                 ActionType::Play,
                 sure_influence_on_clue_count,
                 false,
+                1,
             );
         }
 
-        ActionAssessment::new(0, 0, ActionType::Play, 0, true)
+        ActionAssessment::new(0, 0, ActionType::Play, 0, true, 0)
     }
 
     fn this_player(&self) -> &PlayerState {
@@ -393,7 +401,7 @@ impl BasicPlayer {
         } else {
             true
         };
-        ActionAssessment::new(0, 0, ActionType::Discard, 1, last_resort)
+        ActionAssessment::new(0, 0, ActionType::Discard, 1, last_resort, 0)
     }
 
     fn cards_that_player_definitely_sees_all_copies_of(&self, player_id: usize) -> PossibleCards {
