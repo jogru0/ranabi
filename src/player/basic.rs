@@ -51,12 +51,10 @@ impl BasicPlayer {
             //However, maybe we don't alyways want to do that? Not sure at the moment.
             //For now, it should suffice to just use the hint information directly.
             result.extend(
-                self_state
-                    .objectively_possible_cards_according_to_hints_minus_visible_full_sets(
-                        card_id,
-                        &self.cards_that_player_definitely_sees_all_copies_of(player),
-                    )
-                    .clone(),
+                self_state.objectively_possible_cards_according_to_hints_minus_visible_full_sets(
+                    card_id,
+                    &self.cards_that_player_definitely_sees_all_copies_of(player),
+                ),
             );
         }
 
@@ -418,7 +416,7 @@ impl BasicPlayer {
             }
         }
 
-        pile.full_sets(self.rules())
+        pile.full_sets()
     }
 
     fn stall_severity(&self, player_id: usize) -> usize {

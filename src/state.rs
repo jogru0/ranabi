@@ -10,103 +10,14 @@ use crate::{
     player::{action::Action, basic::BasicPlayer, Player, Property},
 };
 
-use self::deck::Deck;
+use self::{card_pile::CardPile, deck::Deck};
 
-#[derive(Clone)]
-pub struct DiscardPile {
-    card_to_multiplicity: IndexMap<Card, usize>,
-}
-
-impl Display for DiscardPile {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        for (card, &multiplicity) in &self.card_to_multiplicity {
-            for _ in 0..multiplicity {
-                write!(f, "{} ", card)?;
-            }
-        }
-
-        Ok(())
-    }
-}
-
-impl DiscardPile {
-    fn contains(&self, card: &Card) -> bool {
-        self.card_to_multiplicity[card] != 0
-    }
-
-    fn new(rules: &Rules) -> Self {
-        DiscardPile {
-            card_to_multiplicity: rules.possible_cards().into_iter().map(|c| (c, 0)).collect(),
-        }
-    }
-
-    fn unreachable(&self, rules: &Rules) -> CardSet {
-        let mut result = CardSet::all();
-        for color in rules.used_colors() {
-            let one = Card {
-                color,
-                number: Number::One,
-            };
-            if self.card_to_multiplicity[&one] == 3 {
-                continue;
-            }
-            result.remove(&one);
-
-            let two = Card {
-                color,
-                number: Number::Two,
-            };
-            if self.card_to_multiplicity[&two] == 2 {
-                continue;
-            }
-            result.remove(&two);
-
-            let three = Card {
-                color,
-                number: Number::Three,
-            };
-            if self.card_to_multiplicity[&three] == 2 {
-                continue;
-            }
-            result.remove(&three);
-
-            let four = Card {
-                color,
-                number: Number::Four,
-            };
-            if self.card_to_multiplicity[&four] == 2 {
-                continue;
-            }
-            result.remove(&four);
-
-            let five = Card {
-                color,
-                number: Number::Five,
-            };
-            if self.card_to_multiplicity[&five] == 1 {
-                continue;
-            }
-            result.remove(&five);
-        }
-
-        result
-    }
-
-    pub fn add(&mut self, card: &Card) {
-        self.card_to_multiplicity[card] += 1;
-    }
-
-    pub(crate) fn full_sets(&self, rules: &Rules) -> CardSet {
-        let mut result = CardSet::all();
-        result.retain(|card| self.card_to_multiplicity[card] == rules.multiplicity_of(card.number));
-        result
-    }
-}
+mod card_pile;
 
 #[derive(Clone)]
 pub struct PublicState {
     pub firework: Firework,
-    pub discard_pile: DiscardPile,
+    pub discard_pile: CardPile,
     pub rules: Rules,
     pub clues: usize,
     pub strikes: usize,
@@ -198,7 +109,7 @@ impl PublicState {
     pub(crate) fn new(rules: Rules) -> Self {
         Self {
             firework: Firework::new(&rules.used_colors()),
-            discard_pile: DiscardPile::new(&rules),
+            discard_pile: CardPile::new(),
             rules,
             clues: rules.max_clues,
             strikes: 0,
@@ -221,7 +132,7 @@ struct State {
     number_of_players: usize,
     number_of_actions_with_empty_deck: usize,
     hands: Vec<Hand>,
-    discard: DiscardPile,
+    discard: CardPile,
 }
 
 #[derive(Clone)]
@@ -341,7 +252,7 @@ impl State {
             number_of_players,
             number_of_actions_with_empty_deck: 0,
             hands: vec![Hand::new(rules.hand_size); number_of_players],
-            discard: DiscardPile::new(rules),
+            discard: CardPile::new(),
         }
     }
 
@@ -475,44 +386,6 @@ impl Rules {
 
     pub fn max_score(&self) -> usize {
         self.used_colors().len() * 5
-    }
-
-    fn possible_cards(&self) -> Vec<Card> {
-        let mut result = Vec::with_capacity(5 * self.used_colors().len());
-        for color in self.used_colors() {
-            result.push(Card {
-                number: Number::One,
-                color,
-            });
-            result.push(Card {
-                number: Number::Two,
-                color,
-            });
-            result.push(Card {
-                number: Number::Three,
-                color,
-            });
-            result.push(Card {
-                number: Number::Four,
-                color,
-            });
-            result.push(Card {
-                number: Number::Five,
-                color,
-            });
-        }
-
-        result
-    }
-
-    fn multiplicity_of(&self, number: Number) -> usize {
-        match number {
-            Number::One => 3,
-            Number::Two => 2,
-            Number::Three => 2,
-            Number::Four => 2,
-            Number::Five => 1,
-        }
     }
 }
 

@@ -10,7 +10,7 @@ const NUMBER_OF_COLORS: usize = 5;
 const NUMBER_OF_NUMBERS: usize = 5;
 const NUMBER_OF_CARDS: usize = NUMBER_OF_NUMBERS * NUMBER_OF_COLORS;
 
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub struct CardSet {
     bitset: BitArr!(for NUMBER_OF_CARDS, in u32),
 }
@@ -147,17 +147,6 @@ impl CardSet {
 
     pub(crate) fn intersects(&self, other: &CardSet) -> bool {
         (self.bitset & other.bitset).any()
-    }
-
-    pub(crate) fn retain(&mut self, mut keep: impl FnMut(&Card) -> bool) {
-        let mut update = self.bitset;
-        for i in self.bitset.iter_ones() {
-            if !keep(&index_to_card(i)) {
-                update.set(i, false);
-            }
-        }
-
-        self.bitset = update;
     }
 
     pub(crate) fn in_play_order(&self) -> Vec<Card> {

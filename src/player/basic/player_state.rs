@@ -269,7 +269,7 @@ impl PlayerState {
         card_id: usize,
         visible_full_sets: &CardSet,
     ) -> CardSet {
-        let mut result = self.objectively_possible_cards_according_to_hints3[&card_id].clone();
+        let mut result = self.objectively_possible_cards_according_to_hints3[&card_id];
         result.exclude(visible_full_sets);
         result
     }
