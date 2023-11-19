@@ -15,8 +15,7 @@ fn devil_game() {
     let (score, record) = record_game(rules, deck, players);
 
     let mut file = File::create("res/regression/devil.txt").unwrap();
+    writeln!(&mut file, "{record}").unwrap();
 
-    write!(&mut file, "{record}").unwrap();
-
-    assert_eq!(score, Some(20));
+    assert_eq!(score, Some(21));
 }

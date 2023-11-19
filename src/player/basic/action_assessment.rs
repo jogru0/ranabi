@@ -2,7 +2,7 @@
 pub struct ActionAssessment {
     pub new_touches: usize,
     pub delay_until_relevant: usize,
-    pub is_unconventional: bool,
+    is_unconventional: bool,
     pub action_type: ActionType,
     pub sure_influence_on_clue_count: i8,
     pub last_resort: bool,
@@ -28,6 +28,28 @@ impl ActionAssessment {
             next_player_might_be_locked_with_no_clue: false,
         }
     }
+
+    pub fn is_unconventional(&self) -> &bool {
+        &self.is_unconventional
+    }
+
+    pub fn new(
+        new_touches: usize,
+        delay_until_relevant: usize,
+        action_type: ActionType,
+        sure_influence_on_clue_count: i8,
+        last_resort: bool,
+    ) -> Self {
+        Self {
+            new_touches,
+            delay_until_relevant,
+            is_unconventional: false,
+            action_type,
+            sure_influence_on_clue_count,
+            last_resort,
+            next_player_might_be_locked_with_no_clue: false,
+        }
+    }
 }
 
 impl PartialOrd for ActionAssessment {
@@ -49,7 +71,6 @@ impl Ord for ActionAssessment {
             ord => return ord,
         }
 
-        // 18.85687514640431 instead of 18.82970250644179
         match other
             .next_player_might_be_locked_with_no_clue
             .cmp(&self.next_player_might_be_locked_with_no_clue)

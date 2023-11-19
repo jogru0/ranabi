@@ -191,36 +191,16 @@ impl BasicPlayer {
             }
         }
 
-        let next_player_might_be_locked_with_no_clue = if self.public_state.clues == 1 {
-            let mut hypothetical_next = self.player_states[self.next_player_id()].clone();
-            let mut hypothetical_state = self.public_state.clone();
-            hypothetical_state.hint();
-            if receiver == self.next_player_id() {
-                hypothetical_next.fr_apply_hint(hinted_property, positions, &hypothetical_state);
-            }
-            hypothetical_next.potentially_is_locked_with_no_known_playable_card(
-                &hypothetical_state.firework,
-                &self.potentially_entertained_candidates_for_touched_in_that_players_own_hand(
-                    self.next_player_id(),
-                ),
-            )
-        } else {
-            false
-        };
-
         //We probably need to add cards gotten by the correct interpretation here.
         //And delay might also be faster due to prompts/finesses, or slower due to delayed play cues.
-        ActionAssessment {
-            is_unconventional: false,
-
-            new_touches: new_cards.len(),
-            delay_until_relevant: (self.rules().number_of_players + receiver - self.player_id)
+        ActionAssessment::new(
+            new_cards.len(),
+            (self.rules().number_of_players + receiver - self.player_id)
                 % self.rules().number_of_players,
-            action_type: ActionType::Hint,
-            sure_influence_on_clue_count: -1,
-            last_resort: false,
-            next_player_might_be_locked_with_no_clue,
-        }
+            ActionType::Hint,
+            -1,
+            false,
+        )
     }
 
     fn apply_hypothetical(&self, action: Action, assessment: &mut ActionAssessment) {
@@ -354,9 +334,6 @@ impl BasicPlayer {
             ),
         );
 
-        //TODO: Obviously, this should look at what is going on hypothetically.
-        let next_player_might_be_locked_with_no_clue = self.public_state.clues == 0;
-
         if self.public_state.firework.are_all_playable(&possibilities) {
             let sure_influence_on_clue_count = if possibilities
                 .hashed
@@ -368,26 +345,16 @@ impl BasicPlayer {
                 0
             };
 
-            return ActionAssessment {
-                new_touches: 0,
-                delay_until_relevant: 0,
-                is_unconventional: false,
-                action_type: ActionType::Play,
+            return ActionAssessment::new(
+                0,
+                0,
+                ActionType::Play,
                 sure_influence_on_clue_count,
-                last_resort: false,
-                next_player_might_be_locked_with_no_clue,
-            };
+                false,
+            );
         }
 
-        ActionAssessment {
-            new_touches: 0,
-            delay_until_relevant: 0,
-            is_unconventional: false,
-            action_type: ActionType::Play,
-            sure_influence_on_clue_count: 0,
-            last_resort: true,
-            next_player_might_be_locked_with_no_clue,
-        }
+        ActionAssessment::new(0, 0, ActionType::Play, 0, true)
     }
 
     fn this_player(&self) -> &PlayerState {
@@ -417,15 +384,7 @@ impl BasicPlayer {
         } else {
             true
         };
-        ActionAssessment {
-            new_touches: 0,
-            delay_until_relevant: 0,
-            is_unconventional: false,
-            action_type: ActionType::Discard,
-            sure_influence_on_clue_count: 1,
-            last_resort,
-            next_player_might_be_locked_with_no_clue: false,
-        }
+        ActionAssessment::new(0, 0, ActionType::Discard, 1, last_resort)
     }
 }
 
@@ -482,11 +441,11 @@ impl Player for BasicPlayer {
             options.extend(self.assedd_discards_this_player());
         }
 
-        options.retain(|(a, _)| !a.is_unconventional);
+        options.retain(|(a, _)| !a.is_unconventional());
 
-        // for &mut (ref mut assessment, action) in &mut options {
-        //     self.apply_hypothetical(action, assessment);
-        // }
+        for &mut (ref mut assessment, action) in &mut options {
+            self.apply_hypothetical(action, assessment);
+        }
 
         options.sort_by_key(|(hint_value, _)| *hint_value);
         *options.last().map(|(_, v)| v).unwrap()

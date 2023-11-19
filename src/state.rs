@@ -106,9 +106,17 @@ pub struct PublicState {
 impl PublicState {
     pub fn apply_action(&mut self, action: Action) {
         match action {
-            Action::Play { card, .. } => self.play(card.unwrap()),
-            Action::Discard { card, .. } => self.discard(card.unwrap()),
+            Action::Play {
+                card: Some(card), ..
+            } => self.play(card),
+            Action::Discard {
+                card: Some(card), ..
+            } => self.discard(card),
             Action::Hint { .. } => self.hint(),
+            Action::Play { card: None, .. } => {}
+            Action::Discard { card: None, .. } => {
+                self.add_clue();
+            }
         }
     }
 
