@@ -133,6 +133,10 @@ impl BasicPlayer {
         receiver: usize,
         hinted_property: Property,
         positions: PositionSet,
+        //Optimization to not calculate that every time.
+        all_surely_known_touched_cards_in_hand: &CardSet,
+        mut definitely_good_touchable_cards_definitely_known_by_this_player: CardSet,
+        self_stall_severity: usize,
     ) -> ActionAssessment {
         assert_eq!(positions, self.get_positions(hinted_property, receiver));
         assert!(!positions.is_empty() || self.rules().allow_null_hints());
@@ -151,8 +155,8 @@ impl BasicPlayer {
             hinted_property,
             positions,
             &self.public_state,
-            self.stall_severity(self.player_id),
-            &self.all_surely_known_touched_cards_in_hands(),
+            self_stall_severity,
+            all_surely_known_touched_cards_in_hand,
         );
 
         let correct_interpretation = interpretations.unwrap().get_truth(&self.witnessed_cards);
@@ -162,10 +166,9 @@ impl BasicPlayer {
         }
 
         let new_cards = self.new_cards(positions, receiver);
-        let mut touchable =
-            self.definitely_good_touchable_cards_definitely_known_by_this_player(self.player_id);
         for &new_card in &new_cards {
-            let succ = touchable.remove(&self.witnessed_cards[new_card].unwrap());
+            let succ = definitely_good_touchable_cards_definitely_known_by_this_player
+                .remove(&self.witnessed_cards[new_card].unwrap());
             if !succ {
                 return ActionAssessment::unconvectional();
             }
@@ -240,6 +243,11 @@ impl BasicPlayer {
     fn assess_hints_this_player(&self) -> Vec<(ActionAssessment, Action)> {
         let mut options = Vec::new();
 
+        let all_surely_known_cards_in_hands = self.all_surely_known_touched_cards_in_hands();
+        let self_stall_severity = self.stall_severity(self.player_id);
+        let definitely_good_touchable_cards_definitely_known_by_this_player =
+            self.definitely_good_touchable_cards_definitely_known_by_this_player(self.player_id);
+
         for receiver in 0..self.public_state.rules.number_of_players {
             if receiver == self.player_id {
                 continue;
@@ -251,7 +259,14 @@ impl BasicPlayer {
                     continue;
                 }
 
-                let assessment = self.assess_hint_this_player(receiver, hinted_property, positions);
+                let assessment = self.assess_hint_this_player(
+                    receiver,
+                    hinted_property,
+                    positions,
+                    &all_surely_known_cards_in_hands,
+                    definitely_good_touchable_cards_definitely_known_by_this_player,
+                    self_stall_severity,
+                );
 
                 options.push((
                     assessment,
