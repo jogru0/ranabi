@@ -1,6 +1,32 @@
 Average: 20.046615132349498
-Failed: 24 / 4269
-Full wins: 137
-Average time: 35.38824 ms
+
+At least 0: 99.44%
+At least 1: 99.44%
+At least 2: 99.44%
+At least 3: 99.44%
+At least 4: 99.44%
+At least 5: 99.44%
+At least 6: 99.44%
+At least 7: 99.44%
+At least 8: 99.41%
+At least 9: 99.41%
+At least 10: 99.34%
+At least 11: 99.20%
+At least 12: 98.92%
+At least 13: 98.38%
+At least 14: 97.05%
+At least 15: 95.50%
+At least 16: 93.11%
+At least 17: 89.18%
+At least 18: 83.32%
+At least 19: 75.08%
+At least 20: 63.27%
+At least 21: 48.68%
+At least 22: 34.53%
+At least 23: 20.78%
+At least 24: 10.21%
+At least 25: 3.21%
+
+Average time: 35.715378 ms
 
 r4r1g1y2b4b1r3w5r1g2y2g1y3w4r3g5r1b2r5w2y1b1w3g3b5b2w3g3y1g2y5r2y1b1g4w1w1b3r4y4b3g1b4r2w4w1g4w2y3y4

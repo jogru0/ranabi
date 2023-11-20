@@ -18,7 +18,7 @@ fn stats() {
 
     let mut sum = 0;
     let mut failed = 0;
-    let mut full_wins = 0;
+    let mut specific_score = [0; 26];
 
     let mut time = Duration::ZERO;
 
@@ -37,15 +37,15 @@ fn stats() {
         let after = Instant::now();
 
         sum += score.unwrap_or_default();
-        if score.is_none() {
+        if let Some(score) = score {
+            specific_score[score] += 1;
+        } else {
             if failed_deck.is_none() {
                 failed_deck = Some(deck);
             }
             failed += 1;
         }
-        if score == Some(25) {
-            full_wins += 1;
-        }
+
         time += after - before;
     }
 
@@ -54,12 +54,29 @@ fn stats() {
     let average_time = time / iterations;
 
     let mut file = File::create("res/regression/stats.txt").unwrap();
-    writeln!(&mut file, "Average: {average}").unwrap();
-    writeln!(&mut file, "Failed: {failed} / {iterations}").unwrap();
-    writeln!(&mut file, "Full wins: {full_wins}").unwrap();
+    writeln!(&mut file, "Average: {average}\n").unwrap();
+
+    let mut acc = 0;
+    for number in specific_score.iter_mut().rev() {
+        acc += *number;
+        *number = acc;
+    }
+
+    assert_eq!(iterations, specific_score[0] + failed);
+
+    for (score, number) in specific_score.into_iter().enumerate() {
+        writeln!(
+            &mut file,
+            "At least {}: {:.2}%",
+            score,
+            100. / iterations as f64 * number as f64
+        )
+        .unwrap();
+    }
+
     writeln!(
         &mut file,
-        "Average time: {} ms",
+        "\nAverage time: {} ms",
         average_time.as_secs_f64() * 1000.
     )
     .unwrap();
