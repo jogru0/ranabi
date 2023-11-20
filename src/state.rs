@@ -1,4 +1,7 @@
-use std::fmt::Display;
+use std::{
+    fmt::Display,
+    time::{Duration, Instant},
+};
 
 use colored::Colorize;
 use indexmap::IndexMap;
@@ -684,7 +687,7 @@ pub fn record_game(
     rules: Rules,
     deck: Deck,
     mut players: Vec<Box<dyn Player>>,
-) -> (Option<usize>, Record) {
+) -> (Option<usize>, Record, (Duration, usize)) {
     assert_eq!(rules.number_of_players, players.len());
 
     let mut state = State::new(&rules, deck.clone());
@@ -701,8 +704,8 @@ pub fn record_game(
         state.go_to_next_player();
     }
 
-    #[allow(unused_variables)]
-    let mut turn = 1;
+    let mut requested_actions = 0;
+    let mut total_decision_duration = Duration::ZERO;
 
     loop {
         if let Some(score) = state.is_concluded() {
@@ -713,10 +716,15 @@ pub fn record_game(
                     deck,
                     actions: record,
                 },
+                (total_decision_duration, requested_actions),
             );
         }
 
+        requested_actions += 1;
+        let before = Instant::now();
         let mut action = players[state.active_player_id].request_action();
+        let after = Instant::now();
+        total_decision_duration += after - before;
 
         let (old, new) = state.apply_action(action, &rules).unwrap();
 
@@ -740,7 +748,6 @@ pub fn record_game(
         }
 
         state.go_to_next_player();
-        turn += 1;
     }
 }
 

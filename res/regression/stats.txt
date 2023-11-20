@@ -27,6 +27,6 @@ At least 23: 20.78%
 At least 24: 10.21%
 At least 25: 3.21%
 
-Average time: 7.620400999999999 ms
+Average time per decision: 88.601 µs
 
 r4r1g1y2b4b1r3w5r1g2y2g1y3w4r3g5r1b2r5w2y1b1w3g3b5b2w3g3y1g2y5r2y1b1g4w1w1b3r4y4b3g1b4r2w4w1g4w2y3y4

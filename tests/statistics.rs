@@ -1,8 +1,5 @@
 use std::io::Write;
-use std::{
-    fs::File,
-    time::{Duration, Instant},
-};
+use std::{fs::File, time::Duration};
 
 use ranabi::state::{record_game, Rules};
 use rand::SeedableRng;
@@ -20,7 +17,8 @@ fn stats() {
     let mut failed = 0;
     let mut specific_score = [0; 26];
 
-    let mut time = Duration::ZERO;
+    let mut total_decision_time = Duration::ZERO;
+    let mut total_decisions = 0;
 
     let mut failed_deck = None;
 
@@ -32,9 +30,8 @@ fn stats() {
         let deck = rules.get_shuffled_deck(&mut rng);
         let players = rules.get_basic_player();
 
-        let before = Instant::now();
-        let (score, _) = record_game(rules, deck.clone(), players);
-        let after = Instant::now();
+        let (score, _, (additional_decision_time, additional_decisions)) =
+            record_game(rules, deck.clone(), players);
 
         sum += score.unwrap_or_default();
         if let Some(score) = score {
@@ -46,12 +43,13 @@ fn stats() {
             failed += 1;
         }
 
-        time += after - before;
+        total_decision_time += additional_decision_time;
+        total_decisions += additional_decisions;
     }
 
     let average = sum as f64 / iterations as f64;
 
-    let average_time = time / iterations;
+    let average_time_per_decision = total_decision_time / total_decisions.try_into().unwrap();
 
     let mut file = File::create("res/regression/stats.txt").unwrap();
     writeln!(&mut file, "Average: {average}\n").unwrap();
@@ -76,8 +74,8 @@ fn stats() {
 
     writeln!(
         &mut file,
-        "\nAverage time: {} ms",
-        average_time.as_secs_f64() * 1000.
+        "\nAverage time per decision: {} µs",
+        average_time_per_decision.as_secs_f64() * 1000. * 1000.
     )
     .unwrap();
     if let Some(deck) = failed_deck {

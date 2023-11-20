@@ -6,7 +6,7 @@ use ranabi::state::{deck::Deck, record_game, Rules};
 fn regression_test(rules: Rules, deck: Deck, expected: Option<usize>, name: &str) {
     let players = rules.get_basic_player();
 
-    let (score, record) = record_game(rules, deck.clone(), players);
+    let (score, record, _) = record_game(rules, deck.clone(), players);
 
     let mut file = File::create(format!("res/regression/{name}.txt")).unwrap();
     writeln!(&mut file, "{record}").unwrap();
