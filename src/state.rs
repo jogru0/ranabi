@@ -49,7 +49,7 @@ impl PublicState {
                 color,
                 number: Number::Two,
             };
-            if self.discard_pile.contains(&two) && maybe_number.is_none() {
+            if self.discard_pile.contains(two) && maybe_number.is_none() {
                 result.add(two);
             }
 
@@ -57,7 +57,7 @@ impl PublicState {
                 color,
                 number: Number::Three,
             };
-            if self.discard_pile.contains(&three)
+            if self.discard_pile.contains(three)
                 && (maybe_number.is_none() || maybe_number == Some(Number::One))
             {
                 result.add(three);
@@ -67,7 +67,7 @@ impl PublicState {
                 color,
                 number: Number::Four,
             };
-            if self.discard_pile.contains(&four)
+            if self.discard_pile.contains(four)
                 && (maybe_number.is_none()
                     || maybe_number == Some(Number::One)
                     || maybe_number == Some(Number::Two))
@@ -499,7 +499,7 @@ impl Display for Firework {
 }
 
 impl Firework {
-    fn new(used_colors: &[Color]) -> Self {
+    pub fn new(used_colors: &[Color]) -> Self {
         let mut piles = IndexMap::with_capacity(used_colors.len());
         for &color in used_colors {
             piles.insert(color, None);
@@ -507,18 +507,18 @@ impl Firework {
         Self { piles }
     }
 
-    fn is_complete(&self) -> bool {
+    pub fn is_complete(&self) -> bool {
         self.piles.values().all(|n| n == &Some(Number::Five))
     }
 
-    fn score(&self) -> usize {
+    pub fn score(&self) -> usize {
         self.piles
             .values()
             .map(|mn| mn.map_or(0, |n| n.score()))
             .sum()
     }
 
-    fn add(&mut self, card: Card) -> bool {
+    pub fn add(&mut self, card: Card) -> bool {
         let current = &mut self.piles[&card.color];
 
         if card.number.comes_after(*current) {
@@ -541,7 +541,7 @@ impl Firework {
         result
     }
 
-    pub fn is_playable(&self, card: &Card) -> bool {
+    pub fn is_playable(&self, card: Card) -> bool {
         self.currently_playable().contains(card)
     }
 
@@ -559,7 +559,7 @@ impl Firework {
     }
 
     pub(crate) fn are_all_playable(&self, possibilities: &CardSet) -> bool {
-        possibilities.iter().all(|card| self.is_playable(&card))
+        possibilities.iter().all(|card| self.is_playable(card))
     }
 
     pub(crate) fn delayed_playable(

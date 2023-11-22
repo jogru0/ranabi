@@ -168,7 +168,7 @@ impl BasicPlayer {
         let new_cards = self.new_cards(positions, receiver);
         for &new_card in &new_cards {
             let succ = definitely_good_touchable_cards_definitely_known_by_this_player
-                .remove(&self.witnessed_cards[new_card].unwrap());
+                .remove(self.witnessed_cards[new_card].unwrap());
             if !succ {
                 return ActionAssessment::unconvectional();
             }
@@ -639,7 +639,7 @@ mod inter {
             self.card_id_to_possibilities
                 .iter()
                 .all(|(&card_id, possibilities)| {
-                    possibilities.contains(&witnessed_cards[card_id].unwrap())
+                    possibilities.contains(witnessed_cards[card_id].unwrap())
                 })
         }
     }

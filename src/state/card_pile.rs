@@ -25,7 +25,7 @@ impl Display for CardPile {
 }
 
 impl CardPile {
-    pub fn contains(&self, card: &Card) -> bool {
+    pub fn contains(&self, card: Card) -> bool {
         self.shifted_multiplicity_to_cards[0].contains(card)
     }
 
@@ -42,46 +42,46 @@ impl CardPile {
                 color,
                 number: Number::One,
             };
-            if self.shifted_multiplicity_to_cards[2].contains(&one) {
+            if self.shifted_multiplicity_to_cards[2].contains(one) {
                 continue;
             }
-            result.remove(&one);
+            result.remove(one);
 
             let two = Card {
                 color,
                 number: Number::Two,
             };
-            if self.shifted_multiplicity_to_cards[1].contains(&two) {
+            if self.shifted_multiplicity_to_cards[1].contains(two) {
                 continue;
             }
-            result.remove(&two);
+            result.remove(two);
 
             let three = Card {
                 color,
                 number: Number::Three,
             };
-            if self.shifted_multiplicity_to_cards[1].contains(&three) {
+            if self.shifted_multiplicity_to_cards[1].contains(three) {
                 continue;
             }
-            result.remove(&three);
+            result.remove(three);
 
             let four = Card {
                 color,
                 number: Number::Four,
             };
-            if self.shifted_multiplicity_to_cards[1].contains(&four) {
+            if self.shifted_multiplicity_to_cards[1].contains(four) {
                 continue;
             }
-            result.remove(&four);
+            result.remove(four);
 
             let five = Card {
                 color,
                 number: Number::Five,
             };
-            if self.shifted_multiplicity_to_cards[0].contains(&five) {
+            if self.shifted_multiplicity_to_cards[0].contains(five) {
                 continue;
             }
-            result.remove(&five);
+            result.remove(five);
         }
 
         result
